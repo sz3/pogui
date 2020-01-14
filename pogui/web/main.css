@@ -1,0 +1,8 @@
+
+.page {
+  display: none;
+}
+
+.page:target {
+  display: inline-block;
+}
