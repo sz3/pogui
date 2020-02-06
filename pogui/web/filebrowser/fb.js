@@ -1,13 +1,14 @@
 // https://tutorialzine.com/2014/09/cute-file-browser-jquery-ajax-php
 // https://github.com/tutorialzine/cute-files
 
-var FileBrowser = function() {
+var _FileBrowser = function(parent_id) {
 
+var _parent_id = parent_id;
 var _state = FileBrowserState;
 
 // private vars
-var _filemanager = $('.filemanager'),
-	_breadcrumbs = $('.breadcrumbs'),
+var _filemanager = $('[id="' + _parent_id + '"].filemanager'), // no space
+	_breadcrumbs = $('[id="' + _parent_id + '"] .breadcrumbs'),  // space
 	_fileList = _filemanager.find('.data');
 
 // private methods
@@ -278,7 +279,7 @@ function showFiles(data) {
 
 		var filePath = $(this).find('a.files').attr('href');
 		if (filePath.endsWith('.mfn')) {
-			loadManifest(filePath);
+			Page.loadArchive(filePath);
 		}
 	});
 
@@ -286,30 +287,67 @@ function showFiles(data) {
 	navigateTo('');
 }
 
-// public methods
-function loadManifest(mfn) {
-	window.pywebview.api.scanManifest(mfn).then(showFiles);
-}
-
 // public interface
 return {
-	onLoad : function()
-	{
-		window.pywebview.api.scanFiles().then(showFiles);
-	},
-
 	loadManifest : function(mfn)
 	{
-		loadManifest(mfn);
+			window.pywebview.api.scanManifest(mfn).then(showFiles);
 	},
 
 	showFiles : function(data)
 	{
+		console.log(_parent_id + ' in the showFiles');
 		showFiles(data);
+	}
+};
+}
+
+var FileBrowser = function() {
+// private vars
+var _fb = {};
+
+// private methods
+
+// public interface
+return {
+	init : function()
+	{
+		$('.filemanager').each(function() {
+			var id = $(this).attr('id');
+			FileBrowser.add(id);
+		});
+	},
+
+	add : function(id)
+	{
+		// turns <div class="filemanager"> into...
+		var html = `<div class="search">
+				<input type="search" placeholder="Find a file..">
+			</div>
+
+			<div class="breadcrumbs"></div>
+
+			<ul class="data"></ul>
+
+			<div class="nothingfound">
+				<div class="nofiles"></div>
+				<span>No files here.</span>
+			</div>`;
+		$('[id="' + id + '"]').append(html);
+
+		// after the dom is updated, create the JS class
+		_fb[id] = _FileBrowser(id);
+	},
+
+	get : function(id)
+	{
+		return _fb[id];
 	}
 };
 }();
 
+FileBrowser.init();
+
 var sample = [{"name":"Archives","type":"folder","path":"Archives/","items":[{"name":"7z","type":"folder","path":"Archives\/7z","items":[{"name":"archive.7z","type":"file","path":"Archives\/7z\/archive.7z","size":257}]},{"name":"targz","type":"folder","path":"Archives\/targz","items":[{"name":"archive.tar.gz","type":"file","path":"Archives\/targz\/archive.tar.gz","size":10074}]},{"name":"zip","type":"folder","path":"Archives\/zip","items":[{"name":"archive.zip","type":"file","path":"Archives\/zip\/archive.zip","size":10133}]}]},{"name":"Important Documents","type":"folder","path":"Important Documents","items":[{"name":"Microsoft Office","type":"folder","path":"Important Documents\/Microsoft Office","items":[{"name":"Geography.doc","type":"file","path":"Important Documents\/Microsoft Office\/Geography.doc","size":4096},{"name":"Table.xls","type":"file","path":"Important Documents\/Microsoft Office\/Table.xls","size":204800}]},{"name":"export.csv","type":"file","path":"Important Documents\/export.csv","size":4096}]},{"name":"Movies","type":"folder","path":"Movies","items":[{"name":"Conan The Librarian.mkv","type":"file","path":"Movies\/Conan The Librarian.mkv","size":0}]},{"name":"Music","type":"folder","path":"Music","items":[{"name":"awesome soundtrack.mp3","type":"file","path":"Music\/awesome soundtrack.mp3","size":10240000},{"name":"hello world.mp3","type":"file","path":"Music\/hello world.mp3","size":204800},{"name":"u2","type":"folder","path":"Music\/u2","items":[{"name":"Unwanted Album","type":"folder","path":"Music\/u2\/Unwanted Album","items":[{"name":"track1.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track1.mp3","size":204800},{"name":"track2.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track2.mp3","size":204800},{"name":"track3.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track3.mp3","size":204800},{"name":"track4.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track4.mp3","size":204800}]}]}]},{"name":"Nothing here","type":"folder","path":"Nothing here","items":[]},{"name":"Photos","type":"folder","path":"Photos","items":[{"name":"pic1.jpg","type":"file","path":"Photos\/pic1.jpg","size":204800},{"name":"pic2.jpg","type":"file","path":"Photos\/pic2.jpg","size":204800},{"name":"pic3.png","type":"file","path":"Photos\/pic3.png","size":204800},{"name":"pic4.gif","type":"file","path":"Photos\/pic4.gif","size":204800},{"name":"pic5.jpg","type":"file","path":"Photos\/pic5.jpg","size":204800}]},{"name":"Readme.html","type":"file","path":"Readme.html","size":344}];
-FileBrowser.showFiles(sample);
+FileBrowser.get('open-archive').showFiles(sample);
 //*/

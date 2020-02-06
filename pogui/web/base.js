@@ -38,30 +38,65 @@ return {
 
 var Page = function() {
 
+// private functions
+function basename(str) {
+    return str.substr(str.lastIndexOf('/') + 1);
+}
+
+function sideNavClick()
+{
+	var elem = $(this);
+	$('.pure-menu-item').toggleClass('pure-menu-selected', false);
+	elem.parent().toggleClass('pure-menu-selected', true);
+	console.log('in navigate! ' + elem.text());
+	$('#main .header h1').html(elem.text());
+	console.log(elem.text());
+	console.log(elem.attr('href'));
+}
+
+// public interface
 return {
-	init : function()
+	init : function(nav)
 	{
-		$('.pure-menu-link').click(function() {
-			console.log('clicked!');
-			Page.navigate($(this));
-		});
+		$('.pure-menu-link').click(sideNavClick);
+		if (nav)
+			Page.gotoNav(nav);
+	},
+
+	pyinit : function()
+	{
+		window.pywebview.api.scanFiles().then(FileBrowser.get('open-archive').showFiles);
+	},
+
+	gotoNav : function(id)
+	{
+		window.location.hash = id;
+	},
+
+	loadArchive : function(mfn)
+	{
+		var shortname = basename(mfn);
+		if ($('[id="' + shortname + '"]').length)
+			return;
+
+		// add to nav
+		var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
+			+ shortname + '" class="pure-menu-link">' + shortname + '</a></li>';
+		$('.pure-menu-list').append(html);
+
+		// add and load content
+		var html = '<div id="' + shortname + '" class="page filemanager"></div>';
+		$('#main .content').append(html);
+		FileBrowser.add(shortname);
+		FileBrowser.get(shortname).loadManifest(mfn);
+
+		Page.init(shortname);
 	},
 
 	showMessage : function(param)
 	{
 		alert('hello hello I am a log');
 		$("#messagebox").html(param);
-	},
-
-	navigate : function(elem)
-	{
-		$('.pure-menu-item').toggleClass('pure-menu-selected', false);
-		elem.parent().toggleClass('pure-menu-selected', true);
-		console.log('in navigate!');
-		$('#main .header h1').html(elem.text());
-		$('#main .header h2').html(elem.text());
-		console.log(elem.text());
-		console.log(elem.attr('href'));
 	},
 
 	setKeyFiles : function(files)
@@ -118,4 +153,5 @@ window.addEventListener("drop", function(e) {
   Actions.dragDrop(e);
 }, false);
 
-Page.init();
+Page.init('open-archive');
+//Page.loadArchive('reference/asymmetric-sample.mfn');

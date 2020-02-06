@@ -145,10 +145,10 @@ class Api():
         webview.windows[0].toggle_fullscreen()
 
 
-def populate_file_browser(window):
+def load_page_data(window):
     window.evaluate_js(
         r"""
-        FileBrowser.onLoad();
+        Page.pyinit();
         """
     )
 
@@ -157,7 +157,7 @@ def main():
     global window
     api = Api()
     window = webview.create_window('PogUI', 'web/index.html', js_api=api, min_size=(600, 450), text_select=True)
-    webview.start(populate_file_browser, window)
+    webview.start(load_page_data, window)
 
 
 if __name__ == '__main__':
