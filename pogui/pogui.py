@@ -25,6 +25,7 @@ def _dirname(path):
 
 
 def backfill_parent_dirs(paths):
+    paths = list(paths)
     all_paths = set(paths)
     for p in paths:
         while p:
@@ -149,9 +150,7 @@ class Api():
     def lookForManifests(self, where=None):
         where = where or ['test']
         res = []
-        print('in lookForManifests')
         for loc in self.config.get('fs', []) + where:
-            print('looking for {}'.format(loc))
             res += self._listManifests(loc)
         return res
 
