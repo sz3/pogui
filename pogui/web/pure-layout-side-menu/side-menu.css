@@ -52,7 +52,7 @@ The content `<div>` is where all your content goes.
      color: #333;
      text-align: center;
      padding: 2.5em 2em 0;
-     border-bottom: 1px solid #eee;
+     border-bottom: 1px solid DarkSlateGrey;
  }
     .header h1 {
         margin: 0px;
@@ -130,7 +130,7 @@ appears on the left side of the page.
     #menu .pure-menu-selected,
     #menu .pure-menu-selected a:hover,
     #menu .pure-menu-heading {
-        background: #1f8dd6 !important;
+        background: DarkSlateGrey !important;
     }
         /*
         This styles a link within a selected menu item `<li>`.

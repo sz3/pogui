@@ -27,7 +27,7 @@
 
 
 .filemanager .breadcrumbs {
-	color: black;
+	color: DarkSeaGreen;
 	margin-left:20px;
 	font-size: 24px;
 	font-weight: 700;
@@ -35,7 +35,7 @@
 }
 
 .filemanager .breadcrumbs a:link, .breadcrumbs a:visited {
-	color: black;
+	color: DarkSeaGreen;
 	text-decoration: none;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .filemanager .breadcrumbs .arrow {
-	color:  blue;
+	color:  #6a6a72;
 	font-size: 24px;
 	font-weight: 700;
 	line-height: 20px;
@@ -62,7 +62,7 @@
 	cursor: pointer;
 	right: 0;
 	font-size: 17px;
-	color: grey;
+	color: #ffffff;
 	display: block;
 	width: 40px;
 	height: 40px;
@@ -75,7 +75,7 @@
 	width: 10px;
 	height: 11px;
 	border-radius: 50%;
-	border: 2px solid black;
+	border: 2px solid #ffffff;
 	right: 8px;
 }
 
@@ -83,7 +83,7 @@
 	content: '';
 	width: 3px;
 	height: 10px;
-	background-color: black;
+	background-color: #ffffff;
 	border-radius: 2px;
 	position: absolute;
 	top: 23px;
@@ -94,13 +94,13 @@
 
 .filemanager .search input[type=search] {
 	border-radius: 2px;
-	color: red;
-	background-color: black;
+	color: #4D535E;
+	background-color: #FFF;
 	width: 250px;
 	height: 44px;
 	margin-left: -215px;
 	padding-left: 20px;
-	text-decoration-color: red;
+	text-decoration-color: #4d535e;
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 20px;
@@ -112,18 +112,18 @@
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-	color:    red;
+	color:    #4d535e;
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-	color:    red;
+	color:    #4d535e;
 	opacity:  1;
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-	color:    red;
+	color:    #4d535e;
 	opacity:  1;
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-	color:    red;
+	color:    #4d535e;
 }
 
 
@@ -143,7 +143,7 @@
 
 .filemanager .data li {
 	border-radius: 3px;
-	background-color: orange;
+	background-color: #373743;
 	width: 307px;
 	height: 118px;
 	list-style-type: none;
@@ -172,7 +172,7 @@
 }
 
 .filemanager .data li .name {
-	color: black;
+	color: #ffffff;
 	font-size: 15px;
 	font-weight: 700;
 	line-height: 20px;
@@ -198,7 +198,7 @@
 }
 
 .filemanager .nothingfound {
-	background-color: orange;
+	background-color: #373743;
 	width: 23em;
 	height: 21em;
 	margin: 0 auto;
@@ -221,7 +221,7 @@
 .filemanager .nothingfound .nofiles:after {
 	content: '×';
 	position: absolute;
-	color: black;
+	color: #ffffff;
 	font-size: 14em;
 	margin-right: 0.092em;
 	right: 0;
@@ -229,7 +229,7 @@
 
 .filemanager .nothingfound span {
 	margin: 0 auto auto 6.8em;
-	color: black;
+	color: #ffffff;
 	font-size: 16px;
 	font-weight: 700;
 	line-height: 20px;
@@ -305,7 +305,7 @@
 }
 .icon.folder.full:after {
 	height: 2.15em;
-	box-shadow: 0 -0.12em 0 0 black;
+	box-shadow: 0 -0.12em 0 0 #ffffff;
 }
 
 .icon.file {
@@ -314,13 +314,15 @@
 	line-height: 3em;
 	text-align: center;
 	border-radius: 0.25em;
-	color: black;
+	color: #FFF;
 	display: inline-block;
 	margin: 0.9em 1.2em 0.8em 1.3em;
 	position: relative;
 	overflow: hidden;
 	box-shadow: 1.74em -2.1em 0 0 #A4A7AC inset;
+	text-overflow: ellipsis;
 }
+
 .icon.file:first-line {
 	font-size: 13px;
 	font-weight: 700;
@@ -450,5 +452,3 @@
 .icon.file.f-scss:after {
 	border-bottom-color: #30837c;
 }
-
-

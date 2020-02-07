@@ -1,4 +1,16 @@
 
+body {
+  background-color:  #1C2F2F;
+}
+
+h1 {
+  color: DarkSeaGreen;
+}
+
+a {
+  color: DarkSeaGreen;
+}
+
 .page {
   display: none;
 }
@@ -12,6 +24,13 @@
 }
 
 .settings-remote-storage-add button {
-    background-color: lightcyan;
+    background-color: DarkSlateGrey;
+    color:  #6D8484;
     border-radius: 4px;
+}
+
+.settings-remote-storage-add .pure-button-active {
+  font-weight: bold;
+  color: DarkSeaGreen;
+  text-shadow: 1px 1px black;
 }
