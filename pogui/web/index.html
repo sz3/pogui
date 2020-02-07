@@ -25,8 +25,7 @@
             <a class="pure-menu-heading">PogUI</a>
 
             <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="#remotes" class="pure-menu-link">Remotes</a></li>
-                <li class="pure-menu-item"><a href="#settings" class="pure-menu-link">Settings</a></li>
+                <li class="pure-menu-item"><a href="#settings" class="pure-menu-link">⚙ Settings</a></li>
                 <li class="pure-menu-item pure-menu-selected"><a href="#open-archive" class="pure-menu-link">Open Archive</a></li>
                 <li class="pure-menu-item"><a href="#create-archive" class="pure-menu-link">Create Archive</a></li>
             </ul>
@@ -43,14 +42,28 @@
 <div id="open-archive" class="page filemanager"></div>
 
 
-<div id="settings" class="page keys">
-<ul class="key-list"></ul>
-<a href="#" onclick="Actions.updateKeyFilesDir()">Find Keyfiles</a>
-</div>
+<div id="settings" class="page settings">
+  <h2 class="content-subhead">Keyfiles</h2>
+  <a href="#" onclick="Actions.updateKeyFilesDir()">Find Keyfiles</a>
+  <ul class="key-list"></ul>
 
-<div id="remotes" class="page clouds">
-<h3>Remotes</h3>
-<ul class="cloud-list"></ul>
+  <h2 class="content-subhead">Remote Storage</h2>
+  <form class="pure-form settings-remote-storage">
+    <span class="settings-remote-storage-entry">
+      <input class="pure-u-1-2" type="text" value="s3://foo" readonly>
+      <a class="pure-button pure-input-rounded" href="javascript:void(0)">✖</a>
+    </span>
+  </form>
+
+  <h2 class="content-subhead">Add Remote Storage</h2>
+  <form class="pure-form settings-remote-storage-add">
+    <div class="pure-button-group" role="group" aria-label="...">
+      <button class="pure-button">B2</button>
+      <button class="pure-button pure-button-active">S3</button>
+    </div>
+    <input type="text" class="pure-u-1-2" placeholder="Bucket Name">
+    <a class="pure-button pure-button-primary" href="javascript:;">Add</a>
+  </div>
 </div>
 
 <div class="page existing-archives">

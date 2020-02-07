@@ -6,3 +6,12 @@
 .page:target {
   display: inline-block;
 }
+
+.settings-remote-storage-entry:hover input {
+  background-color: #FFEEEE;
+}
+
+.settings-remote-storage-add button {
+    background-color: lightcyan;
+    border-radius: 4px;
+}

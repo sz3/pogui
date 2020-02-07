@@ -54,11 +54,35 @@ function sideNavClick()
 	console.log(elem.attr('href'));
 }
 
+function addRemoteStorageClick()
+{
+	var elem = $(this).parent();
+	var storage_type = elem.find('button.pure-button-active').text();
+	var bucket = elem.find('input[type=text]').val();
+	Page.addRemoteStorage(storage_type, bucket);
+}
+
+function toggleRemoteStorageClick(e)
+{
+	e.preventDefault();
+
+	$('.settings-remote-storage-add button.pure-button').toggleClass('pure-button-active', false);
+	$(this).toggleClass('pure-button-active', true);
+}
+
+function removeRemoteStorageClick()
+{
+	var elem = $(this).parent();
+	Page.removeRemoteStorage(elem.attr('id'));
+}
+
 // public interface
 return {
 	init : function(nav)
 	{
 		$('.pure-menu-link').click(sideNavClick);
+		$('.settings-remote-storage-add button.pure-button').click(toggleRemoteStorageClick);
+		$('.settings-remote-storage-add a').click(addRemoteStorageClick);
 		if (nav)
 			Page.gotoNav(nav);
 	},
@@ -66,6 +90,11 @@ return {
 	pyinit : function()
 	{
 		window.pywebview.api.lookForManifests().then(FileBrowser.get('open-archive').showFiles);
+	},
+
+	pyinit2 : function()
+	{
+		window.pywebview.api.listFS().then(Page.refreshRemoteStorageView);
 	},
 
 	gotoNav : function(id)
@@ -77,6 +106,33 @@ return {
 			if (elem.attr('href') == expected_url)
 				elem.click();
 		});
+	},
+
+	addRemoteStorage : function(storage_type, bucket)
+	{
+		console.log('saveRemoteStorage ' + storage_type + ', ' + bucket);
+		window.pywebview.api.addFS([storage_type, bucket]).then(Page.refreshRemoteStorageView);
+	},
+
+	removeRemoteStorage : function(id)
+	{
+		console.log('removeRemoteStorage ' + id);
+		window.pywebview.api.removeFS(id).then(Page.refreshRemoteStorageView);
+	},
+
+	refreshRemoteStorageView : function(storage_list)
+	{
+		$('.settings-remote-storage').html('');
+		for (var i in storage_list)
+		{
+			var storage = storage_list[i];
+			var html = '<span id="' + storage + '" class="settings-remote-storage-entry">'
+				+ '<input class="pure-u-1-2" type="text" value="' + storage + '" readonly> '
+      	+ '<a class="pure-button pure-input-rounded" href="javascript:;">✖</a>'
+				+ '</span>';
+			$('.settings-remote-storage').append(html);
+			$('[id="' + storage + '"] a').click(removeRemoteStorageClick);
+		}
 	},
 
 	loadArchive : function(mfn)

@@ -62,6 +62,15 @@ class Config():
     def get(self, key, default=None):
         return self.content.get(key) or default
 
+    def spush(self, key, elem):
+        current = self.get(key, [])
+        self[key] = current + [elem]
+
+    def spop(self, key, elem):
+        current = self.get(key, [])
+        current.remove(elem)
+        self[key] = current
+
 
 def split_fs_path(full_url):
     url_tokens = full_url.split('/', 1)
@@ -86,6 +95,19 @@ class Api():
         self.cli = PogCli()
         self.config = Config()
         self.cli.set_keyfiles(self.config.get('keyfiles'))
+
+    def addFS(self, params):
+        fs_name, bucket = params
+        fs_path = '{}:{}'.format(fs_name.lower(), bucket)
+        self.config.spush('fs', fs_path)
+        return self.listFS()
+
+    def removeFS(self, fs_path):
+        self.config.spop('fs', fs_path)
+        return self.listFS()
+
+    def listFS(self, __=None):
+        return sorted(self.config.get('fs', []))
 
     def updateKeyFilesDir(self, __):
         print("Getting dem keyfiles {}".format(__))
@@ -127,7 +149,9 @@ class Api():
     def lookForManifests(self, where=None):
         where = where or ['test']
         res = []
+        print('in lookForManifests')
         for loc in self.config.get('fs', []) + where:
+            print('looking for {}'.format(loc))
             res += self._listManifests(loc)
         return res
 
@@ -184,6 +208,11 @@ def load_page_data(window):
     window.evaluate_js(
         r"""
         Page.pyinit();
+        """
+    )
+    window.evaluate_js(
+        r"""
+        Page.pyinit2();
         """
     )
 
