@@ -71,6 +71,12 @@ return {
 	gotoNav : function(id)
 	{
 		window.location.hash = id;
+		var expected_url = '#' + id;
+		$('.pure-menu-item a').each(function() {
+			var elem = $(this);
+			if (elem.attr('href') == expected_url)
+				elem.click();
+		});
 	},
 
 	loadArchive : function(mfn)
