@@ -143,7 +143,7 @@ function render(data, currentPath, breadcrumbsUrls) {
 	}
 	else {
 		_fileList.addClass('animated');
-		url += '<a href="#***"><span class="folderName">root</span></a> · ';
+		url += '<a href="📁"><span class="folderName">📁</span></a> · ';
 
 		breadcrumbsUrls.forEach(function (u, i) {
 			var name = u.split('/');
@@ -264,7 +264,7 @@ function showFiles(data) {
 		{
 			// sometimes we get erroneous(?) extra events. Sanity check them.
 			// the only readon we'd want to navigate is if we click the "root" link
-			if ($(this).attr('href') == '#***')
+			if ($(this).attr('href') == '📁')
 				navigateTo('');
 			return;
 		}
