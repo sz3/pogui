@@ -2,7 +2,6 @@ import json
 from collections import defaultdict
 from glob import iglob
 from os.path import join as path_join, isdir, dirname, basename
-from subprocess import STDOUT
 
 import webview
 
@@ -84,7 +83,7 @@ def join_fs_path(fs, bucket, path):
 # can also do window.evaluate_js('Page.doThing({})')
 class Api():
     def __init__(self):
-        self.cli = PogCli(kwargs={'stderr': STDOUT})
+        self.cli = PogCli()
         self.config = Config()
         self.cli.set_keyfiles(self.config.get('keyfiles'))
 
@@ -123,7 +122,6 @@ class Api():
 
         all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
         res = [{'path': f'{loc}/{filename}'} for filename in all_files]
-        print(res)
         return res
 
     def lookForManifests(self, where=None):
