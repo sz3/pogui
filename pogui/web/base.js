@@ -65,7 +65,7 @@ return {
 
 	pyinit : function()
 	{
-		window.pywebview.api.scanFiles().then(FileBrowser.get('open-archive').showFiles);
+		window.pywebview.api.lookForManifests().then(FileBrowser.get('open-archive').showFiles);
 	},
 
 	gotoNav : function(id)

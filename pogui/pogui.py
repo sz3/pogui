@@ -60,8 +60,25 @@ class Config():
         self.content[key] = value
         self.save()
 
-    def __getitem__(self, key):
-        return self.content.get(key)
+    def get(self, key, default=None):
+        return self.content.get(key) or default
+
+
+def split_fs_path(full_url):
+    url_tokens = full_url.split('/', 1)
+    path = url_tokens[1] if len(url_tokens) > 1 else None
+
+    fs_tokens = url_tokens[0].split(':', 1)
+    fs = fs_tokens[0]
+    bucket = fs_tokens[1] if len(fs_tokens) > 1 else ''
+    return fs, bucket, path
+
+
+def join_fs_path(fs, bucket, path):
+    full = f'{fs}://{bucket}/'
+    if path:
+        full += f'{path}'
+    return full
 
 
 # can also do window.evaluate_js('Page.doThing({})')
@@ -69,7 +86,7 @@ class Api():
     def __init__(self):
         self.cli = PogCli(kwargs={'stderr': STDOUT})
         self.config = Config()
-        self.cli.set_keyfiles(self.config['keyfiles'])
+        self.cli.set_keyfiles(self.config.get('keyfiles'))
 
     def updateKeyFilesDir(self, __):
         print("Getting dem keyfiles {}".format(__))
@@ -99,7 +116,27 @@ class Api():
         res = [{'path': f} for f in all_files]
         return res
 
+    def _listManifests(self, loc):
+        fs_name, bucket, path = split_fs_path(loc)
+        fs = get_cloud_fs(fs_name)(bucket, root=path)
+        kw = {'recursive': True} if fs_name == 'test' else {}
+
+        all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
+        res = [{'path': f'{loc}/{filename}'} for filename in all_files]
+        print(res)
+        return res
+
+    def lookForManifests(self, where=None):
+        where = where or ['test']
+        res = []
+        for loc in self.config.get('fs', []) + where:
+            res += self._listManifests(loc)
+        return res
+
     def scanManifest(self, mfn):
+        fs_name, bucket, path = split_fs_path(mfn)
+        mfn = join_fs_path(fs_name, bucket, path)
+
         blobs = self.cli.dumpManifest(mfn)
         paths = backfill_parent_dirs(blobs.keys())
         return [{'path': p, 'blobs': blobs.get(p)} for p in paths]
@@ -157,7 +194,7 @@ def main():
     global window
     api = Api()
     window = webview.create_window('PogUI', 'web/index.html', js_api=api, min_size=(600, 450), text_select=True)
-    webview.start(load_page_data, window)
+    webview.start(load_page_data, window, debug=True)
 
 
 if __name__ == '__main__':

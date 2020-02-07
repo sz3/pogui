@@ -4,7 +4,7 @@
 var _FileBrowser = function(parent_id) {
 
 var _parent_id = parent_id;
-var _state = FileBrowserState;
+var _state = FileBrowserState();
 
 // private vars
 var _filemanager = $('[id="' + _parent_id + '"].filemanager'), // no space
@@ -25,13 +25,12 @@ function updateSearch(query) {
 
 // Navigates to the given path
 function navigateTo(path) {
-	var rendered = '';
-
 	// make path legit
 	if (!path || !path.trim().length) {
 		path = '';
 	}
 	_state.setCurrentPath(path);
+	_state.log();
 	render(_state.getResponse(), _state.getCurrentPath(), _state.getBreadcrumbs());
 }
 
@@ -251,8 +250,6 @@ function showFiles(data) {
 		e.preventDefault();
 
 		var nextDir = $(this).find('a.folders').attr('href');
-		console.log('clicked folder!')
-
 		clearSearch();
 		navigateTo(nextDir);
 	});
@@ -265,7 +262,10 @@ function showFiles(data) {
 		var index = _breadcrumbs.find('a').index($(this)) - 1;
 		if (index < 0)
 		{
-			navigateTo('');
+			// sometimes we get erroneous(?) extra events. Sanity check them.
+			// the only readon we'd want to navigate is if we click the "root" link
+			if ($(this).attr('href') == '#***')
+				navigateTo('');
 			return;
 		}
 
@@ -296,7 +296,6 @@ return {
 
 	showFiles : function(data)
 	{
-		console.log(_parent_id + ' in the showFiles');
 		showFiles(data);
 	}
 };
@@ -348,6 +347,7 @@ return {
 
 FileBrowser.init();
 
-var sample = [{"name":"Archives","type":"folder","path":"Archives/","items":[{"name":"7z","type":"folder","path":"Archives\/7z","items":[{"name":"archive.7z","type":"file","path":"Archives\/7z\/archive.7z","size":257}]},{"name":"targz","type":"folder","path":"Archives\/targz","items":[{"name":"archive.tar.gz","type":"file","path":"Archives\/targz\/archive.tar.gz","size":10074}]},{"name":"zip","type":"folder","path":"Archives\/zip","items":[{"name":"archive.zip","type":"file","path":"Archives\/zip\/archive.zip","size":10133}]}]},{"name":"Important Documents","type":"folder","path":"Important Documents","items":[{"name":"Microsoft Office","type":"folder","path":"Important Documents\/Microsoft Office","items":[{"name":"Geography.doc","type":"file","path":"Important Documents\/Microsoft Office\/Geography.doc","size":4096},{"name":"Table.xls","type":"file","path":"Important Documents\/Microsoft Office\/Table.xls","size":204800}]},{"name":"export.csv","type":"file","path":"Important Documents\/export.csv","size":4096}]},{"name":"Movies","type":"folder","path":"Movies","items":[{"name":"Conan The Librarian.mkv","type":"file","path":"Movies\/Conan The Librarian.mkv","size":0}]},{"name":"Music","type":"folder","path":"Music","items":[{"name":"awesome soundtrack.mp3","type":"file","path":"Music\/awesome soundtrack.mp3","size":10240000},{"name":"hello world.mp3","type":"file","path":"Music\/hello world.mp3","size":204800},{"name":"u2","type":"folder","path":"Music\/u2","items":[{"name":"Unwanted Album","type":"folder","path":"Music\/u2\/Unwanted Album","items":[{"name":"track1.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track1.mp3","size":204800},{"name":"track2.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track2.mp3","size":204800},{"name":"track3.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track3.mp3","size":204800},{"name":"track4.mp3","type":"file","path":"Music\/u2\/Unwanted Album\/track4.mp3","size":204800}]}]}]},{"name":"Nothing here","type":"folder","path":"Nothing here","items":[]},{"name":"Photos","type":"folder","path":"Photos","items":[{"name":"pic1.jpg","type":"file","path":"Photos\/pic1.jpg","size":204800},{"name":"pic2.jpg","type":"file","path":"Photos\/pic2.jpg","size":204800},{"name":"pic3.png","type":"file","path":"Photos\/pic3.png","size":204800},{"name":"pic4.gif","type":"file","path":"Photos\/pic4.gif","size":204800},{"name":"pic5.jpg","type":"file","path":"Photos\/pic5.jpg","size":204800}]},{"name":"Readme.html","type":"file","path":"Readme.html","size":344}];
+var sample =
+[{'path': 's3:bucket/'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/

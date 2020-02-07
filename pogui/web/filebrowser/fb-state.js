@@ -41,6 +41,13 @@ return {
   getBreadcrumbs : function()
   {
     return generateBreadcrumbs(_currentPath);
-  }
+  },
+
+	log : function()
+	{
+		console.log('****logging state****');
+		console.log(_response);
+		console.log(_currentPath);
+	}
 };
-}();
+};
