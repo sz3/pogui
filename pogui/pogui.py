@@ -212,6 +212,11 @@ class Api():
     def toggleFullscreen(self, param):
         webview.windows[0].toggle_fullscreen()
 
+    def emergencyExit(self, url):
+        print('emergency exit -- tried to navigate elsewhere!')
+        import os
+        os._exit(1)
+
 
 def load_page_data(window):
     startups = [

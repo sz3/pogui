@@ -189,5 +189,9 @@ window.addEventListener("drop", function(e) {
   Actions.dragDrop(e);
 }, false);
 
+window.onbeforeunload = function (e) {
+	window.pywebview.api.emergencyExit();
+};
+
 Page.init('open-archive');
 //Page.loadArchive('reference/asymmetric-sample.mfn');
