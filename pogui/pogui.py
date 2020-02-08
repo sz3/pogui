@@ -1,5 +1,6 @@
+import itertools
 import json
-from collections import defaultdict
+from multiprocessing.dummy import Pool as ThreadPool
 from glob import iglob
 from os.path import join as path_join, isdir, dirname, basename
 
@@ -90,12 +91,42 @@ def join_fs_path(fs, bucket, path):
     return full
 
 
+class ListManifests():
+    def __init__(self, locations):
+        self.total = []
+        self.pool = ThreadPool(4)
+        self.waiter = self.pool.map_async(self._list_manifests, locations, callback=self._collect_result)
+
+    def _list_manifests(self, loc):
+        print('list manifests {}'.format(loc))
+        fs_name, bucket, path = split_fs_path(loc)
+        fs = get_cloud_fs(fs_name)(bucket, root=path)
+        kw = {'recursive': True} if fs_name == 'test' else {}
+
+        all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
+        return [{'path': f'{loc}/{filename}'} for filename in all_files]
+
+    def _collect_result(self, res):
+        self.total = list(itertools.chain(*res))
+
+    def wait(self):
+        self.waiter.wait()
+        self.pool.close()
+        self.pool.join()
+        return self.total
+
+
 # can also do window.evaluate_js('Page.doThing({})')
 class Api():
     def __init__(self):
         self.cli = PogCli()
         self.config = Config()
         self.cli.set_keyfiles(self.config.get('keyfiles'))
+        self._run_list_manifests()
+
+    def _run_list_manifests(self):
+        locations = self.config.get('fs', []) + ['test']
+        self.list_manifests = ListManifests(locations)
 
     def addFS(self, params):
         fs_name, bucket = params
@@ -138,20 +169,8 @@ class Api():
         res = [{'path': f} for f in all_files]
         return res
 
-    def _listManifests(self, loc):
-        fs_name, bucket, path = split_fs_path(loc)
-        fs = get_cloud_fs(fs_name)(bucket, root=path)
-        kw = {'recursive': True} if fs_name == 'test' else {}
-
-        all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
-        res = [{'path': f'{loc}/{filename}'} for filename in all_files]
-        return res
-
-    def lookForManifests(self, where=None):
-        where = where or ['test']
-        res = []
-        for loc in self.config.get('fs', []) + where:
-            res += self._listManifests(loc)
+    def lookForManifests(self, __=None):
+        res = self.list_manifests.wait()
         return res
 
     def scanManifest(self, mfn):
