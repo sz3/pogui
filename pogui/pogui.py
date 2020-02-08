@@ -204,16 +204,13 @@ class Api():
 
 
 def load_page_data(window):
-    window.evaluate_js(
-        r"""
-        Page.pyinit();
-        """
-    )
-    window.evaluate_js(
-        r"""
-        Page.pyinit2();
-        """
-    )
+    startups = [
+        'lookForManifests',
+        'listFS',
+    ]
+    for fun in startups:
+        js = 'Page.pyinit("{}");'.format(fun)
+        window.evaluate_js(js)
 
 
 def main():

@@ -87,14 +87,13 @@ return {
 			Page.gotoNav(nav);
 	},
 
-	pyinit : function()
+	pyinit : function(apifun)
 	{
-		window.pywebview.api.lookForManifests().then(FileBrowser.get('open-archive').showFiles);
-	},
-
-	pyinit2 : function()
-	{
-		window.pywebview.api.listFS().then(Page.refreshRemoteStorageView);
+		var targets = {
+			'lookForManifests': FileBrowser.get('open-archive').showFiles,
+			'listFS': Page.refreshRemoteStorageView
+		};
+		window.pywebview.api[apifun]().then(targets[apifun]);
 	},
 
 	gotoNav : function(id)
