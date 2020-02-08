@@ -3,8 +3,8 @@ body {
   background-color:  #1C2F2F;
 }
 
-h1 {
-  color: DarkSeaGreen;
+h1, h2 {
+  color: LightGray;
 }
 
 a {
@@ -20,7 +20,7 @@ a {
 }
 
 .settings-remote-storage-entry:hover input {
-  background-color: #FFEEEE;
+  background-color: LightPink;
 }
 
 .settings-remote-storage-add button {
