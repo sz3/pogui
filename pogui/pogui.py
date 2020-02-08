@@ -200,18 +200,6 @@ class Api():
         print("got {}".format(files))
         return sorted(dirs) + sorted(files)
 
-    def getManifestFiles(self, __):
-        print("Getting dem manifests {}".format(__))
-        file_types = ('Pog Manifest Files (*.mfn)',)
-        result = window.create_file_dialog(webview.OPEN_DIALOG, allow_multiple=True, file_types=file_types)
-
-        print("got {}".format(result))
-        mfninfo = {}
-        for mfn in result:
-            mfninfo[mfn] = self.cli.dumpManifest(mfn)
-        print('send it: {}'.format(mfninfo))
-        return mfninfo
-
     def dragDrop(self, mfn):
         print('dragDrop mfn %s' % mfn)
 

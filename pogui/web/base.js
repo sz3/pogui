@@ -5,11 +5,6 @@ return {
 		window.pywebview.api.updateKeyFilesDir().then(Page.setKeyFiles);
 	},
 
-	getManifestFiles : function()
-	{
-		window.pywebview.api.getManifestFiles().then(Page.addExistingArchive);
-	},
-
 	getFiles : function()
 	{
 		window.pywebview.api.getFiles().then(Page.addCandidateFiles);
@@ -168,26 +163,6 @@ return {
 		{
 			kl.append('<li>' + files[f] + '</li>');
 		}
-	},
-
-	addExistingArchive : function(backups)
-	{
-		let html = '';
-		for (let b in backups)
-		{
-			html += '<li>' + b + '<ul class="files">';
-			let files = backups[b];
-			for (let f in files)
-			{
-				html += '<li>' + f + '<ul class="blobs">';
-				let blobs = files[f];
-				for (let i in blobs)
-					html += '<li>' + blobs[i] + '</li>';
-				html += '</ul></li>';
-			}
-			html += '</ul></li>';
-		}
-		$('.existing-archive-list').html(html);
 	},
 
 	addCandidateFiles : function(files)
