@@ -233,7 +233,7 @@ function clearSearch() {
 }
 
 function showFiles(data) {
-	_state.setResponse(data);
+	_state.addResponse(data);
 
 	// Hiding and showing the search box
 	_filemanager.find('.search').click(uiSearch);
@@ -347,7 +347,7 @@ return {
 
 FileBrowser.init();
 
-var sample =
+/*var sample =
 [{'path': 's3:bucket/'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/

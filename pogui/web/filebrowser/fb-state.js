@@ -1,6 +1,6 @@
 var FileBrowserState = function() {
 // private vars
-var _response = '',
+var _response = [],
 	_currentPath = '',
 	_breadcrumbsUrls = [];
 
@@ -18,9 +18,14 @@ function generateBreadcrumbs(nextDir) {
 
 // public interface
 return {
-	setResponse : function(response)
+	clearResponse : function()
 	{
-		_response = response;
+		_response = [];
+	},
+
+	addResponse : function(response)
+	{
+		_response = _response.concat(response);
 	},
 
   getResponse : function()
