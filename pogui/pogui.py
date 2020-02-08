@@ -122,9 +122,9 @@ class Api():
         self.cli = PogCli()
         self.config = Config()
         self.cli.set_keyfiles(self.config.get('keyfiles'))
-        self._run_list_manifests()
+        self._refresh_list_manifests()
 
-    def _run_list_manifests(self):
+    def _refresh_list_manifests(self):
         locations = self.config.get('fs', []) + ['test']
         self.list_manifests = ListManifests(locations)
 
@@ -169,9 +169,12 @@ class Api():
         res = [{'path': f} for f in all_files]
         return res
 
-    def lookForManifests(self, __=None):
-        res = self.list_manifests.wait()
-        return res
+    def listManifests(self, __=None):
+        self._refresh_list_manifests()
+        return self.waitForManifests()
+
+    def waitForManifests(self, __=None):
+        return self.list_manifests.wait()
 
     def scanManifest(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
@@ -224,7 +227,7 @@ class Api():
 
 def load_page_data(window):
     startups = [
-        'lookForManifests',
+        'waitForManifests',
         'listFS',
     ]
     for fun in startups:

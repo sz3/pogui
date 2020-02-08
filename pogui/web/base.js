@@ -90,7 +90,7 @@ return {
 	pyinit : function(apifun)
 	{
 		var targets = {
-			'lookForManifests': FileBrowser.get('open-archive').showFiles,
+			'waitForManifests': FileBrowser.get('open-archive').showFiles,
 			'listFS': Page.refreshRemoteStorageView
 		};
 		window.pywebview.api[apifun]().then(targets[apifun]);
