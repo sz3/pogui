@@ -2,16 +2,14 @@ import itertools
 import json
 from multiprocessing.dummy import Pool as ThreadPool
 from glob import iglob
-from os.path import join as path_join, isdir, dirname, basename
+from os.path import join as path_join, isdir, dirname
 
 import webview
 
 from pog.cli import PogCli
 from pog.fs.pogfs import get_cloud_fs
 
-"""
-An example of serverless app architecture
-"""
+
 window = None
 
 
@@ -101,7 +99,7 @@ class ListManifests():
         print('list manifests {}'.format(loc))
         fs_name, bucket, path = split_fs_path(loc)
         fs = get_cloud_fs(fs_name)(bucket, root=path)
-        kw = {'recursive': True} if fs_name == 'test' else {}
+        kw = {'recursive': True} if fs_name == 'local' else {}
 
         all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
         return [{'path': f'{loc}/{filename}'} for filename in all_files]
@@ -125,7 +123,7 @@ class Api():
         self._refresh_list_manifests()
 
     def _refresh_list_manifests(self):
-        locations = self.config.get('fs', []) + ['test']
+        locations = self.config.get('fs', []) + ['local']
         self.list_manifests = ListManifests(locations)
 
     def addFS(self, params):
@@ -162,7 +160,7 @@ class Api():
         return keyfiles
 
     def scanFiles(self, where=None):
-        where = where or "test"
+        where = where or "local"
         fs = get_cloud_fs(where)()
 
         all_files = backfill_parent_dirs(fs.list_files(recursive=True))
