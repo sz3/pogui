@@ -5,7 +5,7 @@ var Settings = function() {
 function addRemoteStorageClick()
 {
   var elem = $(this).parent();
-  var storage_type = elem.find('button.pure-button-active').text();
+  var storage_type = elem.find('.settings-storage-choice button.pure-button-active').text();
   var bucket = elem.find('input[type=text]').val();
   Settings.addRemoteStorage(storage_type, bucket);
 }
@@ -14,7 +14,7 @@ function toggleRemoteStorageClick(e)
 {
   e.preventDefault();
 
-  $('.settings-remote-storage-add button.pure-button').toggleClass('pure-button-active', false);
+  $('.settings-storage-choice button').toggleClass('pure-button-active', false);
   $(this).toggleClass('pure-button-active', true);
 }
 
@@ -28,8 +28,8 @@ function removeRemoteStorageClick()
 return {
   init : function()
   {
-    $('.settings-remote-storage-add button.pure-button').click(toggleRemoteStorageClick);
-    $('.settings-remote-storage-add a').click(addRemoteStorageClick);
+    $('.settings-storage-choice button').click(toggleRemoteStorageClick);
+    $('.settings-storage-add').click(addRemoteStorageClick);
   },
 
   addRemoteStorage : function(storage_type, bucket)
@@ -52,7 +52,7 @@ return {
       var storage = storage_list[i];
       var html = '<span id="' + storage + '" class="settings-remote-storage-entry">'
         + '<input class="pure-u-1-2" type="text" value="' + storage + '" readonly> '
-        + '<a class="pure-button pure-input-rounded" href="javascript:;">✖</a>'
+        + '<a class="pure-button pure-input-rounded remove-storage" href="javascript:;">✖</a>'
         + '</span>';
       $('.settings-remote-storage').append(html);
       $('[id="' + storage + '"] a').click(removeRemoteStorageClick);
