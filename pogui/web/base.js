@@ -1,33 +1,33 @@
 var Actions = function() {
 return {
-	updateKeyFilesDir : function()
-	{
-		window.pywebview.api.updateKeyFilesDir().then(Page.setKeyFiles);
-	},
+  updateKeyFilesDir : function()
+  {
+    Api.updateKeyFilesDir().then(Page.setKeyFiles);
+  },
 
-	getFiles : function()
-	{
-		window.pywebview.api.getFiles().then(Page.addCandidateFiles);
-	},
+  getFiles : function()
+  {
+    Api.getFiles().then(Page.addCandidateFiles);
+  },
 
-	dragDrop : function(event)
-	{
-		// this will be for adding manifests (e.g. the viewing side) at most
-		// the browser wisely doesn't give us full path info
-		let files = [];
-		if (event && event.dataTransfer)
-		{
-			let ef = event.dataTransfer.files;
-			for (let i = 0; i < ef.length; i++)
-			{
-				let obj = {};
-				for (let key in ef[i])
-					obj[key] = ef[i][key];
-				files.push(obj);
-			}
-		}
-		window.pywebview.api.dragDrop(files);
-	}
+  dragDrop : function(event)
+  {
+    // this will be for adding manifests (e.g. the viewing side) at most
+    // the browser wisely doesn't give us full path info
+    let files = [];
+    if (event && event.dataTransfer)
+    {
+      let ef = event.dataTransfer.files;
+      for (let i = 0; i < ef.length; i++)
+      {
+        let obj = {};
+        for (let key in ef[i])
+          obj[key] = ef[i][key];
+        files.push(obj);
+      }
+    }
+    window.pywebview.api.dragDrop(files);
+  }
 };
 }();
 
@@ -38,142 +38,90 @@ function basename(str) {
     return str.substr(str.lastIndexOf('/') + 1);
 }
 
-function sideNavClick()
-{
-	var elem = $(this);
-	$('.pure-menu-item').toggleClass('pure-menu-selected', false);
-	elem.parent().toggleClass('pure-menu-selected', true);
-	console.log('in navigate! ' + elem.text());
-	$('#main .header h1').html(elem.text());
-	console.log(elem.text());
-	console.log(elem.attr('href'));
-}
-
 function addRemoteStorageClick()
 {
-	var elem = $(this).parent();
-	var storage_type = elem.find('button.pure-button-active').text();
-	var bucket = elem.find('input[type=text]').val();
-	Page.addRemoteStorage(storage_type, bucket);
+  var elem = $(this).parent();
+  var storage_type = elem.find('button.pure-button-active').text();
+  var bucket = elem.find('input[type=text]').val();
+  Page.addRemoteStorage(storage_type, bucket);
 }
 
 function toggleRemoteStorageClick(e)
 {
-	e.preventDefault();
+  e.preventDefault();
 
-	$('.settings-remote-storage-add button.pure-button').toggleClass('pure-button-active', false);
-	$(this).toggleClass('pure-button-active', true);
+  $('.settings-remote-storage-add button.pure-button').toggleClass('pure-button-active', false);
+  $(this).toggleClass('pure-button-active', true);
 }
 
 function removeRemoteStorageClick()
 {
-	var elem = $(this).parent();
-	Page.removeRemoteStorage(elem.attr('id'));
+  var elem = $(this).parent();
+  Page.removeRemoteStorage(elem.attr('id'));
 }
 
 // public interface
 return {
-	init : function(nav)
-	{
-		$('.pure-menu-link').click(sideNavClick);
-		$('.settings-remote-storage-add button.pure-button').click(toggleRemoteStorageClick);
-		$('.settings-remote-storage-add a').click(addRemoteStorageClick);
-		if (nav)
-			Page.gotoNav(nav);
-	},
+  init : function(nav)
+  {
+    Settings.init();
+    Navigation.init(nav);
+  },
 
-	pyinit : function(apifun)
-	{
-		var targets = {
-			'waitForManifests': FileBrowser.get('open-archive').showFiles,
-			'listFS': Page.refreshRemoteStorageView
-		};
-		window.pywebview.api[apifun]().then(targets[apifun]);
-	},
+  pyinit : function(apifun)
+  {
+    var targets = {
+      'waitForManifests': FileBrowser.get('open-archive').showFiles,
+      'listFS': Settings.refreshRemoteStorageView
+    };
+    Api[apifun]().then(targets[apifun]);
+  },
 
-	gotoNav : function(id)
-	{
-		window.location.hash = id;
-		var expected_url = '#' + id;
-		$('.pure-menu-item a').each(function() {
-			var elem = $(this);
-			if (elem.attr('href') == expected_url)
-				elem.click();
-		});
-	},
+  loadArchive : function(mfn)
+  {
+    var shortname = basename(mfn);
+    if ($('[id="' + shortname + '"]').length)
+      return;
 
-	addRemoteStorage : function(storage_type, bucket)
-	{
-		console.log('saveRemoteStorage ' + storage_type + ', ' + bucket);
-		window.pywebview.api.addFS([storage_type, bucket]).then(Page.refreshRemoteStorageView);
-	},
+    // add to nav
+    var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
+      + shortname + '" class="pure-menu-link">' + shortname + '</a></li>';
+    $('.pure-menu-list').append(html);
 
-	removeRemoteStorage : function(id)
-	{
-		console.log('removeRemoteStorage ' + id);
-		window.pywebview.api.removeFS(id).then(Page.refreshRemoteStorageView);
-	},
+    // add and load content
+    var html = '<div id="' + shortname + '" class="page filemanager"></div>';
+    $('#main .content').append(html);
+    FileBrowser.add(shortname);
+    FileBrowser.get(shortname).loadManifest(mfn);
 
-	refreshRemoteStorageView : function(storage_list)
-	{
-		$('.settings-remote-storage').html('');
-		for (var i in storage_list)
-		{
-			var storage = storage_list[i];
-			var html = '<span id="' + storage + '" class="settings-remote-storage-entry">'
-				+ '<input class="pure-u-1-2" type="text" value="' + storage + '" readonly> '
-      	+ '<a class="pure-button pure-input-rounded" href="javascript:;">✖</a>'
-				+ '</span>';
-			$('.settings-remote-storage').append(html);
-			$('[id="' + storage + '"] a').click(removeRemoteStorageClick);
-		}
-	},
+    Navigation.init(shortname);
+  },
 
-	loadArchive : function(mfn)
-	{
-		var shortname = basename(mfn);
-		if ($('[id="' + shortname + '"]').length)
-			return;
+  showMessage : function(param)
+  {
+    alert('hello hello I am a log');
+    $("#messagebox").html(param);
+  },
 
-		// add to nav
-		var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
-			+ shortname + '" class="pure-menu-link">' + shortname + '</a></li>';
-		$('.pure-menu-list').append(html);
+  setKeyFiles : function(files)
+  {
+    let kl = $('.key-list');
+    kl.html('');
+    for (let f in files)
+    {
+      kl.append('<li>' + files[f] + '</li>');
+    }
+  },
 
-		// add and load content
-		var html = '<div id="' + shortname + '" class="page filemanager"></div>';
-		$('#main .content').append(html);
-		FileBrowser.add(shortname);
-		FileBrowser.get(shortname).loadManifest(mfn);
-
-		Page.init(shortname);
-	},
-
-	showMessage : function(param)
-	{
-		alert('hello hello I am a log');
-		$("#messagebox").html(param);
-	},
-
-	setKeyFiles : function(files)
-	{
-		let kl = $('.key-list');
-		kl.html('');
-		for (let f in files)
-		{
-			kl.append('<li>' + files[f] + '</li>');
-		}
-	},
-
-	addCandidateFiles : function(files)
-	{
-		let kl = $('.create-archive-list');
-		kl.html('');
-		for (let f in files)
-		{
-			kl.append('<li>' + files[f] + '</li>');
-		}
-	}
+  addCandidateFiles : function(files)
+  {
+    let kl = $('.create-archive-list');
+    kl.html('');
+    for (let f in files)
+    {
+      kl.append('<li>' + files[f] + '</li>');
+    }
+  }
 };
 }();
 
@@ -190,7 +138,7 @@ window.addEventListener("drop", function(e) {
 }, false);
 
 window.onbeforeunload = function (e) {
-	window.pywebview.api.emergencyExit();
+  Api.emergencyExit();
 };
 
 Page.init('open-archive');
