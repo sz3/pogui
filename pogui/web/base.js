@@ -38,28 +38,6 @@ function basename(str) {
     return str.substr(str.lastIndexOf('/') + 1);
 }
 
-function addRemoteStorageClick()
-{
-  var elem = $(this).parent();
-  var storage_type = elem.find('button.pure-button-active').text();
-  var bucket = elem.find('input[type=text]').val();
-  Page.addRemoteStorage(storage_type, bucket);
-}
-
-function toggleRemoteStorageClick(e)
-{
-  e.preventDefault();
-
-  $('.settings-remote-storage-add button.pure-button').toggleClass('pure-button-active', false);
-  $(this).toggleClass('pure-button-active', true);
-}
-
-function removeRemoteStorageClick()
-{
-  var elem = $(this).parent();
-  Page.removeRemoteStorage(elem.attr('id'));
-}
-
 // public interface
 return {
   init : function(nav)
@@ -80,18 +58,10 @@ return {
   loadArchive : function(mfn)
   {
     var shortname = basename(mfn);
-    if ($('[id="' + shortname + '"]').length)
-      return;
+    if (!FileBrowser.add(shortname))
+      return;  // do nothing if the archive is already loaded
 
-    // add to nav
-    var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
-      + shortname + '" class="pure-menu-link">' + shortname + '</a></li>';
-    $('.pure-menu-list').append(html);
-
-    // add and load content
-    var html = '<div id="' + shortname + '" class="page filemanager"></div>';
-    $('#main .content').append(html);
-    FileBrowser.add(shortname);
+    Navigation.add(shortname);
     FileBrowser.get(shortname).loadManifest(mfn);
 
     Navigation.init(shortname);

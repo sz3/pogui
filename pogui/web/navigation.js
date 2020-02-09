@@ -33,6 +33,13 @@ return {
     // update nav
     $('.pure-menu-item').toggleClass('pure-menu-selected', false);
     elem.parent().toggleClass('pure-menu-selected', true);
+  },
+
+  add : function(pagename)
+  {
+    var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
+      + pagename + '" class="pure-menu-link">' + pagename + '</a></li>';
+    $('.pure-menu-list').append(html);
   }
 }
 }();

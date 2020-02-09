@@ -313,11 +313,24 @@ return {
   {
     $('.filemanager').each(function() {
       var id = $(this).attr('id');
-      FileBrowser.add(id);
+      FileBrowser.transform(id);
     });
   },
 
   add : function(id)
+  {
+    // if already exists, return false
+    if ($('[id="' + id + '"]').length)
+      return false;
+
+    // add and load content
+    var html = '<div id="' + id + '" class="page filemanager"></div>';
+    $('#main .content').append(html);
+    FileBrowser.transform(id);
+    return true;
+  },
+
+  transform : function(id)
   {
     // turns <div id="{id}" class="filemanager"> into...
     var html = `<div class="search">
