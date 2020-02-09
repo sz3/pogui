@@ -285,6 +285,13 @@ function showFiles(data) {
 
   // with everything ready, load the initial state
   navigateTo('');
+  loading(false);
+}
+
+function loading(is_loading)
+{
+  console.log('setting loading to ' + is_loading + ' for ' + _parent_id);
+  $('[id="' + _parent_id + '"]').toggleClass('lds-ripple', is_loading);
 }
 
 // public interface
@@ -297,6 +304,11 @@ return {
   showFiles : function(data)
   {
     showFiles(data);
+  },
+
+  loading : function(is_loading)
+  {
+    loading(is_loading);
   }
 };
 }
@@ -349,6 +361,7 @@ return {
 
     // after the dom is updated, create the JS class
     _fb[id] = _FileBrowser(id);
+    _fb[id].loading(true);
   },
 
   get : function(id)
