@@ -317,7 +317,7 @@ return {
     });
   },
 
-  add : function(id)
+  add : function(id, where)
   {
     // if already exists, return false
     if ($('[id="' + id + '"]').length)
@@ -325,7 +325,7 @@ return {
 
     // add and load content
     var html = '<div id="' + id + '" class="page filemanager"></div>';
-    $('#main .content').append(html);
+    $(where).append(html);
     FileBrowser.transform(id);
     return true;
   },

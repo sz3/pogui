@@ -58,7 +58,7 @@ return {
   loadArchive : function(mfn)
   {
     var shortname = basename(mfn);
-    if (!FileBrowser.add(shortname))
+    if (!FileBrowser.add(shortname, '#main .content'))
       return;  // do nothing if the archive is already loaded
 
     Navigation.add(shortname);
