@@ -94,13 +94,10 @@
 
 .filemanager .search input[type=search] {
 	border-radius: 2px;
-	color:  #405540;
-	background-color: #FFF;
 	width: 250px;
 	height: 44px;
 	margin-left: -215px;
 	padding-left: 20px;
-	text-decoration-color:  #405540;
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 20px;

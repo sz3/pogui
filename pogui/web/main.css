@@ -19,6 +19,13 @@ a {
   display: inline-block;
 }
 
+input[type="text"], input[type="search"] {
+  border: 1px solid DarkSlateGrey !important;
+  color: LightGray;
+  background-color: black;
+  box-shadow: -5px -5px 20px 0px DarkSlateGrey inset, 5px 5px 20px 0px black inset !important;
+}
+
 .settings-remote-storage-entry:hover input {
   background-color: LightPink;
 }
@@ -38,10 +45,4 @@ a {
 .pure-button.remove-storage {
   color: white;
   background-color: crimson;
-}
-
-.pure-button:hover {
-  background-image:-webkit-gradient(linear,left top,left bottom,from(transparent),color-stop(40%,rgba(0,0,0,.05)),to(rgba(0,0,0,.1)));
-  background-image:-webkit-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));
-  background-image:linear-gradient(transparent,rgba(0,0,0,.2) 40%,rgba(0,0,0,.5));
 }
