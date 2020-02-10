@@ -26,8 +26,15 @@ input[type="text"], input[type="search"] {
   box-shadow: -5px -5px 20px 0px DarkSlateGrey inset, 5px 5px 20px 0px black inset !important;
 }
 
+.settings-remote-storage-entry input {
+  color: black;
+  background-color: #404040;
+  background-image: linear-gradient(to top, #343434 0%, #404040 100%);
+  margin-bottom: 1em;
+}
+
 .settings-remote-storage-entry:hover input {
-  background-color: LightPink;
+  background-image: linear-gradient(to top, maroon 0%, #404040 100%) !important;
 }
 
 .settings-storage-choice button {

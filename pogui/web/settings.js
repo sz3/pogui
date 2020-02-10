@@ -50,7 +50,7 @@ return {
     for (var i in storage_list)
     {
       var storage = storage_list[i];
-      var html = '<span id="' + storage + '" class="settings-remote-storage-entry">'
+      var html = '<div id="' + storage + '" class="pure-button-group settings-remote-storage-entry">'
         + '<input class="pure-u-1-2" type="text" value="' + storage + '" readonly> '
         + '<a class="pure-button remove-storage" href="javascript:;">✖</a>'
         + '</span>';
