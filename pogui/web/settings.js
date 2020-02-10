@@ -5,7 +5,7 @@ var Settings = function() {
 function addRemoteStorageClick()
 {
   var elem = $(this).parent();
-  var storage_type = elem.find('.settings-storage-choice button.pure-button-active').text();
+  var storage_type = elem.parent().find('.settings-storage-choice button.pure-button-active').text();
   var bucket = elem.find('input[type=text]').val();
   Settings.addRemoteStorage(storage_type, bucket);
 }
@@ -28,6 +28,7 @@ function removeRemoteStorageClick()
 return {
   init : function()
   {
+    $('#settings form').submit(false);
     $('.settings-storage-choice button').click(toggleRemoteStorageClick);
     $('.settings-storage-add').click(addRemoteStorageClick);
   },
@@ -51,9 +52,9 @@ return {
     {
       var storage = storage_list[i];
       var html = '<div id="' + storage + '" class="pure-button-group settings-remote-storage-entry">'
-        + '<input class="pure-u-1-2" type="text" value="' + storage + '" readonly> '
+        + '<input class="pure-u-2-3" type="text" value="' + storage + '" readonly> '
         + '<button class="pure-button remove-storage" href="javascript:;">✖</button>'
-        + '</span>';
+        + '</div>';
       $('.settings-remote-storage').append(html);
       $('[id="' + storage + '"] button').click(removeRemoteStorageClick);
     }

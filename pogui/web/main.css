@@ -17,6 +17,12 @@ a {
 
 .page:target {
   display: inline-block;
+}
+
+/*-----
+load animations. fb.css also has one of these (may refactor)
+----*/
+#settings:target {
   animation: showSlowlyElement 500ms;
 }
 
