@@ -17,6 +17,7 @@ a {
 
 .page:target {
   display: inline-block;
+  animation: showSlowlyElement 500ms;
 }
 
 input[type="text"], input[type="search"] {
