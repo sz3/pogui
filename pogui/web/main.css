@@ -31,15 +31,23 @@ input[type="text"], input[type="search"] {
 }
 
 .settings-storage-choice button {
-    background-color: DarkSlateGrey;
-    color:  #6D8484;
-    border-radius: 4px;
+  background-color: black;
+  color: #6D8484;
+  text-shadow: 1px 1px DarkSlateGrey;
+  border-radius: 10px 10px 0 0 !important;
+  border-top: 1px solid DarkSlateGrey;
+  box-shadow: -5px -5px 20px 0px black inset, 5px 5px 20px 0px DarkSlateGrey inset;
+}
+
+.settings-storage-choice button:hover {
+  color:  LightGray;
 }
 
 .settings-storage-choice .pure-button-active {
+  background-color: DarkSlateGrey;
+  color:  LightGray;
+  box-shadow: none;
   font-weight: bold;
-  color: DarkSeaGreen;
-  text-shadow: 1px 1px black;
 }
 
 .pure-button.remove-storage {
