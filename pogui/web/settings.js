@@ -52,10 +52,10 @@ return {
       var storage = storage_list[i];
       var html = '<div id="' + storage + '" class="pure-button-group settings-remote-storage-entry">'
         + '<input class="pure-u-1-2" type="text" value="' + storage + '" readonly> '
-        + '<a class="pure-button remove-storage" href="javascript:;">✖</a>'
+        + '<button class="pure-button remove-storage" href="javascript:;">✖</button>'
         + '</span>';
       $('.settings-remote-storage').append(html);
-      $('[id="' + storage + '"] a').click(removeRemoteStorageClick);
+      $('[id="' + storage + '"] button').click(removeRemoteStorageClick);
     }
   }
 }

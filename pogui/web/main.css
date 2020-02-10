@@ -37,18 +37,26 @@ input[type="text"], input[type="search"] {
   background-image: linear-gradient(to top, maroon 0%, #404040 100%) !important;
 }
 
-.settings-storage-choice button {
-  font-size: 125%;
-  font-weight: bold;
+button {
   color: black;
   background-color: #404040;
-  background-image: linear-gradient(to top, #343434 0%, #404040 100%);
+  background-image: linear-gradient(to top, #343464 0%, #404040 100%);
   box-shadow: 0 20px 4px -21px white inset, 0 5px 10px 0 black;
   text-shadow: 0px 1px 1.5px #606060;
 }
 
-.settings-storage-choice button:hover {
+button:hover {
   color: LightBlue;
+  text-shadow: 0 0 4px rgba(255, 200, 200, .4);
+}
+
+.settings-storage-choice button {
+  font-size: 125%;
+  font-weight: bold;
+  background-image: linear-gradient(to top, #343434 0%, #404040 100%);
+}
+
+.settings-storage-choice button:hover {
   text-shadow: none;
 }
 
@@ -60,28 +68,13 @@ input[type="text"], input[type="search"] {
 }
 
 .pure-button.remove-storage {
-  color: black;
-  background-color: #404040;
   background-image: linear-gradient(to top, #643434 0%, #404040 100%);
-  box-shadow: 0 20px 4px -21px white inset, 0 5px 10px 0 black;
-  text-shadow: 0px 1px 1.5px #606060;
 }
 
 .pure-button.remove-storage:hover {
   color: crimson;
-  text-shadow: 0 0 4px rgba(255, 200, 200, .4);
 }
 
 .pure-button.settings-storage-add {
   font-weight: bold;
-  color: black;
-  background-color: #404040;
-  background-image: linear-gradient(to top, #343464 0%, #404040 100%);
-  box-shadow: 0 20px 4px -21px white inset, 0 5px 10px 0 black;
-  text-shadow: 0px 1px 1.5px #606060;
-}
-
-.pure-button.settings-storage-add:hover {
-  color: LightBlue;
-  text-shadow: 0 0 4px rgba(255, 200, 200, .4);
 }
