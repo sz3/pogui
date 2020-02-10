@@ -46,9 +46,9 @@ input[type="text"], input[type="search"] {
 }
 
 .settings-storage-choice .pure-button-active {
-  background-image: linear-gradient(to top, #151515 0%, #1d1d1d 100%);
+  background-image: linear-gradient(to top, green 0%, white 100%);
   color: LightBlue;
-  box-shadow: 0 5px 10px 0 black;
+  box-shadow: 0px 4px 25px 15px black inset, 0 5px 10px 0 black;
   text-shadow: 0 0 4px rgba(200, 200, 250, .4);
 }
 
