@@ -38,6 +38,7 @@ input[type="text"], input[type="search"] {
 }
 
 button {
+  font-weight: bold;
   color: black;
   background-color: #404040;
   background-image: linear-gradient(to top, #343464 0%, #404040 100%);
@@ -52,7 +53,6 @@ button:hover {
 
 .settings-storage-choice button {
   font-size: 125%;
-  font-weight: bold;
   background-image: linear-gradient(to top, #343434 0%, #404040 100%);
 }
 
@@ -75,6 +75,12 @@ button:hover {
   color: crimson;
 }
 
-.pure-button.settings-storage-add {
-  font-weight: bold;
+
+/*-------------------------
+Download, reload Links
+-----*/
+.filemanager-actions {
+  display: flex;
+  margin-top: -50px;
+  justify-content: space-evenly;
 }

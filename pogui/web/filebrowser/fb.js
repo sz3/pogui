@@ -325,11 +325,11 @@ return {
   {
     $('.filemanager').each(function() {
       var id = $(this).attr('id');
-      FileBrowser.transform(id);
+      FileBrowser.transform(id, {'refresh': true});
     });
   },
 
-  add : function(id, where)
+  add : function(id, where, actions)
   {
     // if already exists, return false
     if ($('[id="' + id + '"]').length)
@@ -338,13 +338,37 @@ return {
     // add and load content
     var html = '<div id="' + id + '" class="page filemanager"></div>';
     $(where).append(html);
-    FileBrowser.transform(id);
+    FileBrowser.transform(id, actions);
     return true;
   },
 
-  transform : function(id)
+  transform : function(id, actions)
   {
     // turns <div id="{id}" class="filemanager"> into...
+
+    if (actions)
+    {
+      var act = $('<div class="filemanager-actions">');
+      if (actions['download'])
+      {
+        var download = $(`
+          <button class="pure-button" href="javascript:;">⇩ Download</button>
+        `);
+        download.click(function() {
+          alert('downloading ' + id);
+        });
+        act.append(download);
+      }
+      if (actions['refresh'])
+      {
+        var refresh = `
+          <button class="pure-button" href="javascript:;">⟳ Refresh</button>
+        `;
+        act.append(refresh);
+      }
+      $('[id="' + id + '"]').append(act);
+    }
+
     var html = `<div class="search">
         <input type="search" placeholder="Find a file..">
       </div>
