@@ -53,6 +53,28 @@ input[type="text"], input[type="search"] {
 }
 
 .pure-button.remove-storage {
-  color: white;
-  background-color: crimson;
+  color: black;
+  background-color: #404040;
+  background-image: linear-gradient(to top, #643434 0%, #404040 100%);
+  box-shadow: 0 20px 4px -21px white inset, 0 5px 10px 0 black;
+  text-shadow: 0px 1px 1.5px #606060;
+}
+
+.pure-button.remove-storage:hover {
+  color: crimson;
+  text-shadow: 0 0 4px rgba(255, 200, 200, .4);
+}
+
+.pure-button.settings-storage-add {
+  font-weight: bold;
+  color: black;
+  background-color: #404040;
+  background-image: linear-gradient(to top, #343464 0%, #404040 100%);
+  box-shadow: 0 20px 4px -21px white inset, 0 5px 10px 0 black;
+  text-shadow: 0px 1px 1.5px #606060;
+}
+
+.pure-button.settings-storage-add:hover {
+  color: LightBlue;
+  text-shadow: 0 0 4px rgba(255, 200, 200, .4);
 }
