@@ -35,10 +35,12 @@ return {
     elem.parent().toggleClass('pure-menu-selected', true);
   },
 
-  add : function(pagename)
+  add : function(pagename, shortname)
   {
+    if (!shortname)
+      shortname = pagename;
     var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
-      + pagename + '" class="pure-menu-link">' + pagename + '</a></li>';
+      + pagename + '" class="pure-menu-link">' + shortname + '</a></li>';
     $('.pure-menu-list').append(html);
   }
 }

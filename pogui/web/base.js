@@ -59,13 +59,13 @@ return {
   {
     var shortname = basename(mfn);
     var actions = {'download': true};
-    if (!FileBrowser.add(shortname, '#main .content', actions))
+    if (!FileBrowser.add(mfn, '#main .content', actions))
       return;  // do nothing if the archive is already loaded
 
-    Navigation.add(shortname);
-    FileBrowser.get(shortname).loadManifest(mfn);
+    Navigation.add(mfn, shortname);
+    FileBrowser.get(mfn).loadManifest(mfn);
 
-    Navigation.init(shortname);
+    Navigation.init(mfn);
   },
 
   showMessage : function(param)

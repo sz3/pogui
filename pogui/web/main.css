@@ -79,8 +79,14 @@ button:hover {
 /*-------------------------
 Download, reload Links
 -----*/
+.lds-ripple .filemanager-actions {
+  display: none;
+}
+
 .filemanager-actions {
   display: flex;
-  margin-top: -50px;
   justify-content: space-evenly;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
