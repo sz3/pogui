@@ -21,6 +21,11 @@ return {
     return window.pywebview.api.waitForManifests();
   },
 
+  listManifests : function()
+  {
+    return window.pywebview.api.listManifests();
+  },
+
   scanManifest : function(mfn)
   {
     return window.pywebview.api.scanManifest(mfn);
@@ -39,6 +44,14 @@ return {
   removeFS : function(storage_path)
   {
     return window.pywebview.api.removeFS(storage_path);
+  },
+
+  downloadArchive : function(mfn)
+  {
+  },
+
+  downloadFile : function(mfn, filename)
+  {
   },
 
   emergencyExit : function()

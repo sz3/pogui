@@ -296,6 +296,14 @@ function loading(is_loading)
 
 // public interface
 return {
+  listManifests : function()
+  {
+    _state.clearResponse();
+    _fileList.empty().hide();
+    loading(true);
+    Api.listManifests().then(showFiles);
+  },
+
   loadManifest : function(mfn)
   {
       Api.scanManifest(mfn).then(showFiles);
@@ -361,9 +369,12 @@ return {
       }
       if (actions['refresh'])
       {
-        var refresh = `
+        var refresh = $(`
           <button class="pure-button" href="javascript:;">⟳ Refresh</button>
-        `;
+        `);
+        refresh.click(function() {
+          _fb[id].listManifests();
+        });
         act.append(refresh);
       }
       $('[id="' + id + '"]').append(act);
