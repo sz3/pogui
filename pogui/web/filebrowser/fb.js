@@ -300,6 +300,8 @@ return {
   {
     _state.clearResponse();
     _fileList.empty().hide();
+    _breadcrumbs.text('');
+    _filemanager.find('.nothingfound').hide();
     loading(true);
     Api.listManifests().then(showFiles);
   },
