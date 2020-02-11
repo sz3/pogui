@@ -1,5 +1,5 @@
 import itertools
-import json
+import yaml
 from multiprocessing.dummy import Pool as ThreadPool
 from glob import iglob
 from os.path import join as path_join, isdir, dirname
@@ -36,7 +36,7 @@ def backfill_parent_dirs(paths):
 
 
 class Config():
-    DEFAULT_PATH = '.pogui.cfg'
+    DEFAULT_PATH = '.pogui.yml'
 
     def __init__(self, path=None):
         self.path = path or self.DEFAULT_PATH
@@ -46,14 +46,14 @@ class Config():
     def load(self):
         try:
             with open(self.path, 'rt') as f:
-                self.content = json.load(f)
+                self.content = yaml.safe_load(f)
         except FileNotFoundError:
             pass
         return self
 
     def save(self):
         with open(self.path, 'wt') as f:
-            json.dump(self.content, f)
+            yaml.dump(self.content, f)
 
     def __setitem__(self, key, value):
         self.content[key] = value
