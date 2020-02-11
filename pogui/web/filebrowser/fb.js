@@ -363,7 +363,9 @@ return {
           <button class="pure-button" href="javascript:;">⇩ Download</button>
         `);
         download.click(function() {
-          alert('downloading ' + id);
+          Api.downloadArchive(id).then(function() {
+            alert('we downloaded ' + id);
+          });
         });
         act.append(download);
       }

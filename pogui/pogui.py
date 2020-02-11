@@ -182,6 +182,18 @@ class Api():
         paths = backfill_parent_dirs(blobs.keys())
         return [{'path': p, 'blobs': blobs.get(p)} for p in paths]
 
+    def downloadArchive(self, mfn):
+        fs_name, bucket, path = split_fs_path(mfn)
+        mfn = join_fs_path(fs_name, bucket, path)
+
+        path = window.create_file_dialog(webview.FOLDER_DIALOG)[0]
+        if not path:
+            return False
+
+        print('downloadin {} to {}'.format(mfn, path))
+        list(self.cli.decrypt(mfn, cwd=path))
+        return True
+
     def getFiles(self, __):
         print("Getting dem files {}".format(__))
         paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)

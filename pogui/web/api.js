@@ -48,6 +48,7 @@ return {
 
   downloadArchive : function(mfn)
   {
+    return window.pywebview.api.downloadArchive(mfn);
   },
 
   downloadFile : function(mfn, filename)
