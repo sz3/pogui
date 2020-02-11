@@ -194,6 +194,10 @@ class Api():
         list(self.cli.decrypt(mfn, cwd=path))
         return True
 
+    def downloadFile(self, mfn, filename):
+        print('download {} {}'.format(mfn, filename))
+        return True
+
     def getFiles(self, __):
         print("Getting dem files {}".format(__))
         paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)

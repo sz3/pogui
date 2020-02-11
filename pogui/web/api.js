@@ -53,6 +53,7 @@ return {
 
   downloadFile : function(mfn, filename)
   {
+    return window.pywebview.api.downloadFile(mfn, filename);
   },
 
   emergencyExit : function()

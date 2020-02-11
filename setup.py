@@ -20,7 +20,7 @@ setup(
 
     python_requires='>=3.6',
     install_requires=[
-        'pogcli==0.1',
+        'pogcli==0.1.1',
         'PyQtWebEngine',
         'PyQt5',
         'pywebview',
