@@ -40,7 +40,8 @@
 }
 
 .filemanager .breadcrumbs a:hover {
-	text-decoration: underline;
+  color: LightGray;
+  font-style: oblique;
 }
 
 .filemanager .breadcrumbs .arrow {

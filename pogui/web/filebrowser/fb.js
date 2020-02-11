@@ -360,7 +360,7 @@ return {
       if (actions['download'])
       {
         var download = $(`
-          <a href="javascript:;">⇩</a>
+          <a href="javascript:;" title="Download">⇩</a>
         `);
         download.click(function() {
           Api.downloadArchive(id).then(function() {
@@ -372,7 +372,7 @@ return {
       if (actions['refresh'])
       {
         var refresh = $(`
-          <a href="javascript:;">⟳</a>
+          <a href="javascript:;" title="Refresh">⟳</a>
         `);
         refresh.click(function() {
           _fb[id].listManifests();
@@ -382,7 +382,7 @@ return {
     }
 
     var search = $(`
-      <div class="search">
+      <div class="search" title="Search">
           <input type="search" placeholder="Find a file..">
       </div>
     `);

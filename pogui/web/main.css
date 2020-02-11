@@ -96,6 +96,7 @@ Download, reload Links
   display: inline-flex;
   flex-direction: row;
   justify-content: flex-end;
+  margin-top: -5px;
 }
 
 .filemanager-actions a {
@@ -108,5 +109,6 @@ Download, reload Links
 }
 
 .filemanager-actions a:hover {
-  text-decoration: underline;
+  color: LightGray;
+  text-shadow: 0px 1px 1.5px white;
 }
