@@ -91,9 +91,22 @@ Download, reload Links
 }
 
 .filemanager-actions {
-  display: flex;
-  justify-content: space-evenly;
-  position: fixed;
-  top: 0;
+  position: absolute;
   right: 0;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.filemanager-actions a {
+  color: LightBlue;
+  margin-left: 20px;
+  margin-top: 5px;
+  font-size: 28px;
+  line-height: 35px;
+  text-decoration: none;
+}
+
+.filemanager-actions a:hover {
+  text-decoration: underline;
 }

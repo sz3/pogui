@@ -354,13 +354,13 @@ return {
   {
     // turns <div id="{id}" class="filemanager"> into...
 
+    var act = $('<div class="filemanager-actions">');
     if (actions)
     {
-      var act = $('<div class="filemanager-actions">');
       if (actions['download'])
       {
         var download = $(`
-          <button class="pure-button" href="javascript:;">⇩ Download</button>
+          <a href="javascript:;">⇩</a>
         `);
         download.click(function() {
           Api.downloadArchive(id).then(function() {
@@ -372,20 +372,24 @@ return {
       if (actions['refresh'])
       {
         var refresh = $(`
-          <button class="pure-button" href="javascript:;">⟳ Refresh</button>
+          <a href="javascript:;">⟳</a>
         `);
         refresh.click(function() {
           _fb[id].listManifests();
         });
         act.append(refresh);
       }
-      $('[id="' + id + '"]').append(act);
     }
 
-    var html = `<div class="search">
-        <input type="search" placeholder="Find a file..">
+    var search = $(`
+      <div class="search">
+          <input type="search" placeholder="Find a file..">
       </div>
+    `);
+    act.append(search);
+    $('[id="' + id + '"]').append(act);
 
+    var html = `
       <div class="breadcrumbs"></div>
 
       <ul class="data"></ul>
@@ -410,7 +414,7 @@ return {
 
 FileBrowser.init();
 
-/*var sample =
+var sample =
 [{'path': 's3:bucket/'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/

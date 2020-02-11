@@ -57,14 +57,12 @@
 
 
 .filemanager .search {
-	position: absolute;
 	padding-right: 30px;
 	cursor: pointer;
-	right: 0;
 	font-size: 17px;
 	color: #ffffff;
 	display: block;
-	width: 40px;
+	width: 15px;
 	height: 40px;
 }
 
