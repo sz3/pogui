@@ -34,7 +34,7 @@ return {
       var entry = entry_list[i];
       var bg = $(`
         <div class="pure-button-group">
-          <input dir="rtl" class="pure-u-3-4" type="text" value="" readonly>
+          <input dir="rtl" class="pure-u-1-2" type="text" value="" readonly>
           <button class="pure-button remove-pog-checklist" href="javascript:void(0)">✖</button>
         </div>`);
       var input = bg.find('input');

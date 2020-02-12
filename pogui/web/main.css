@@ -16,7 +16,7 @@ a {
 }
 
 .page:target {
-  display: inline-block;
+  display: block;
 }
 
 /*-----
