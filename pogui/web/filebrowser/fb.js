@@ -335,7 +335,7 @@ return {
   {
     $('.filemanager').each(function() {
       var id = $(this).attr('id');
-      FileBrowser.transform(id, {'refresh': true});
+      FileBrowser.transform(id, {'refresh': true, 'download':true});
     });
   },
 
@@ -374,7 +374,7 @@ return {
       if (actions['refresh'])
       {
         var refresh = $(`
-          <a href="javascript:;" title="Refresh">⟳</a>
+          <div class="arrow-round" title="Refresh"></div>
         `);
         refresh.click(function() {
           _fb[id].listManifests();
