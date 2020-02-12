@@ -50,7 +50,8 @@ return {
   {
     var targets = {
       'waitForManifests': FileBrowser.get('open-archive').showFiles,
-      'listFS': Settings.refreshRemoteStorageView
+      'listFS': Settings.refreshRemoteStorageView,
+      'listKeyfiles': Settings.refreshKeyfilesView
     };
     Api[apifun]().then(targets[apifun]);
   },

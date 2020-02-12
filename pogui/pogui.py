@@ -159,6 +159,13 @@ class Api():
 
         return keyfiles
 
+    def removeKeyfile(self, path):
+        self.config.spop('keyfiles', path)
+        return self.listKeyfiles()
+
+    def listKeyfiles(self, __=None):
+        return self.config.get('keyfiles', [])
+
     def scanFiles(self, where=None):
         where = where or "local"
         fs = get_cloud_fs(where)()
@@ -236,6 +243,7 @@ def load_page_data(window):
     startups = [
         'waitForManifests',
         'listFS',
+        'listKeyfiles',
     ]
     for fun in startups:
         js = 'Page.pyinit("{}");'.format(fun)

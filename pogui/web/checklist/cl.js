@@ -34,7 +34,9 @@ return {
           <input class="pure-u-3-4" type="text" value="" readonly>
           <button class="pure-button remove-pog-checklist" href="javascript:void(0)">✖</button>
         </div>`);
-      bg.find('input').val(entry);
+      var input = bg.find('input');
+      input.val(entry);
+      input.attr('title', entry);
       bg.find('button').click(removeEntryClick);
       root.append(bg);
     }
@@ -79,3 +81,5 @@ CheckList.init();
 
 var sample = ['s3:test'];
 CheckList.get('settings-remote-storage').update(sample);
+CheckList.get('settings-keyfiles').update(['looooooooooooooooooong/path/to/keyfile.txt']);
+//*/

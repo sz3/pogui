@@ -6,11 +6,6 @@ var Api = function() {
 // public interface
 // return promises that will invoke a js function callback
 return {
-  updateKeyFilesDir : function()
-  {
-    return window.pywebview.api.updateKeyFilesDir();
-  },
-
   getFiles : function()
   {
     return window.pywebview.api.getFiles();
@@ -44,6 +39,21 @@ return {
   removeFS : function(storage_path)
   {
     return window.pywebview.api.removeFS(storage_path);
+  },
+
+  listKeyfiles : function()
+  {
+    return window.pywebview.api.listKeyfiles();
+  },
+
+  updateKeyFilesDir : function()
+  {
+    return window.pywebview.api.updateKeyFilesDir();
+  },
+
+  removeKeyfile : function(entry)
+  {
+    return window.pywebview.api.removeKeyfile(entry);
   },
 
   downloadArchive : function(mfn)
