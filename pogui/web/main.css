@@ -110,6 +110,10 @@ Download, reload Links
   text-decoration: none;
 }
 
+.filemanager-actions .download-icon {
+  text-decoration: underline;
+}
+
 .filemanager-actions a:hover {
   color: LightGray;
   text-shadow: 0px 0px 1.5px white;

@@ -362,7 +362,7 @@ return {
       if (actions['download'])
       {
         var download = $(`
-          <a href="javascript:;" title="Download">⇩</a>
+          <a href="javascript:;" title="Download" class="download-icon">⇩</a>
         `);
         download.click(function() {
           Api.downloadArchive(id).then(function() {
