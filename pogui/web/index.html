@@ -63,13 +63,15 @@
   <h2 class="content-subhead">Keyfiles</h2>
   <form id="settings-keyfiles" class="pog-checklist"></form>
   <button class="pure-button" href="javascript:;" onclick="Settings.updateKeyFilesDir()">Find</button>
-  <ul class="key-list"></ul>
 </div>
 
 <div id="create-archive" class="page create-archive">
-<h3>Create Archive</h3>
-<ul class="create-archive-list"></ul>
-<a href="javascript:;" onclick="Actions.getFiles()">Add Path</a>
+  <div class="pure-button-group">
+    <button class="pure-button" href="javascript:;" onclick="Actions.getFiles()">Add Path</button>
+    <button class="pure-button" href="javascript:;" onclick="Page.clearCandidateFiles()">Clear</button>
+    <button class="pure-button" href="javascript:;">Upload</button>
+  </div>
+  <form id="create-archive-list" class="pog-checklist"></form>
 </div>
         </div>
     </div>

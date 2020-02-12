@@ -21,10 +21,13 @@ return {
     _onRemove = onRemove;
   },
 
-  update : function(entry_list)
+  update : function(entry_list, append)
   {
+    append = append || false;
     var root = $('[id="' + _id + '"].pog-checklist');
-    root.html('');
+
+    if (!append)
+      root.html('');
 
     for (var i in entry_list)
     {

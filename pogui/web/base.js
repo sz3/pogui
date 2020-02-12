@@ -1,10 +1,5 @@
 var Actions = function() {
 return {
-  updateKeyFilesDir : function()
-  {
-    Api.updateKeyFilesDir().then(Page.setKeyFiles);
-  },
-
   getFiles : function()
   {
     Api.getFiles().then(Page.addCandidateFiles);
@@ -75,24 +70,15 @@ return {
     $("#messagebox").html(param);
   },
 
-  setKeyFiles : function(files)
-  {
-    let kl = $('.key-list');
-    kl.html('');
-    for (let f in files)
-    {
-      kl.append('<li>' + files[f] + '</li>');
-    }
-  },
-
   addCandidateFiles : function(files)
   {
-    let kl = $('.create-archive-list');
-    kl.html('');
-    for (let f in files)
-    {
-      kl.append('<li>' + files[f] + '</li>');
-    }
+    var append = true;
+    CheckList.get('create-archive-list').update(files, append);
+  },
+
+  clearCandidateFiles : function()
+  {
+    CheckList.get('create-archive-list').update([]);
   }
 };
 }();
