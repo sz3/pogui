@@ -18,12 +18,6 @@ function toggleRemoteStorageClick(e)
   $(this).toggleClass('pure-button-active', true);
 }
 
-function removeRemoteStorageClick()
-{
-  var elem = $(this).parent();
-  Settings.removeRemoteStorage(elem.attr('id'));
-}
-
 // public interface
 return {
   init : function()
@@ -31,6 +25,8 @@ return {
     $('#settings form').submit(false);
     $('.settings-storage-choice button').click(toggleRemoteStorageClick);
     $('.settings-storage-add').click(addRemoteStorageClick);
+
+    CheckList.get('settings-remote-storage').setOnRemove(Settings.removeRemoteStorage);
   },
 
   addRemoteStorage : function(storage_type, bucket)
@@ -39,25 +35,15 @@ return {
     Api.addFS(storage_type, bucket).then(Settings.refreshRemoteStorageView);
   },
 
-  removeRemoteStorage : function(id)
+  removeRemoteStorage : function(entry)
   {
-    console.log('removeRemoteStorage ' + id);
-    Api.removeFS(id).then(Settings.refreshRemoteStorageView);
+    console.log('removeRemoteStorage ' + entry);
+    Api.removeFS(entry).then(Settings.refreshRemoteStorageView);
   },
 
-  refreshRemoteStorageView : function(storage_list)
+  refreshRemoteStorageView : function(entry_list)
   {
-    $('.settings-remote-storage').html('');
-    for (var i in storage_list)
-    {
-      var storage = storage_list[i];
-      var html = '<div id="' + storage + '" class="pure-button-group settings-remote-storage-entry">'
-        + '<input class="pure-u-2-3" type="text" value="' + storage + '" readonly> '
-        + '<button class="pure-button remove-storage" href="javascript:;">✖</button>'
-        + '</div>';
-      $('.settings-remote-storage').append(html);
-      $('[id="' + storage + '"] button').click(removeRemoteStorageClick);
-    }
+    CheckList.get('settings-remote-storage').update(entry_list);
   }
 }
 }();

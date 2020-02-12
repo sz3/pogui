@@ -46,12 +46,7 @@
 
 <div id="settings" class="page settings">
   <h2 class="content-subhead">Remote Storage</h2>
-  <form class="pure-form settings-remote-storage">
-    <div class="pure-button-group settings-remote-storage-entry">
-      <input class="pure-u-3-4" type="text" value="s3://foo" readonly>
-      <button class="pure-button remove-storage" href="javascript:void(0)">✖</button>
-    </div>
-  </form>
+  <form id="settings-remote-storage" class="pog-checklist"></form>
 
   <h2 class="content-subhead">Add Remote Storage</h2>
   <form class="pure-form">
@@ -80,6 +75,7 @@
 </div>
 
 <script src="pure-layout-side-menu/ui.js"></script>
+<script src="checklist/cl.js"></script>
 <script src="filebrowser/fb-state.js"></script>
 <script src="filebrowser/fb.js"></script>
 

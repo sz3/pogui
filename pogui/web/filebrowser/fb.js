@@ -416,7 +416,7 @@ return {
 
 FileBrowser.init();
 
-var sample =
+/*var sample =
 [{'path': 's3:bucket/'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/
