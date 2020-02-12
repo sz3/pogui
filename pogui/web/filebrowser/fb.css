@@ -123,12 +123,12 @@
 
 .filemanager .search:hover:before {
   border: 2px solid LightGrey;
-  box-shadow: 0px 1px 1.5px white;
+  box-shadow: 0px 0px 1.5px white;
 }
 
 .filemanager .search:hover:after {
   background-color: LightGrey;
-  box-shadow: 0px 1px 1.5px white;
+  box-shadow: 0px 0px 1.5px white;
 }
 
 /*-------------------------
