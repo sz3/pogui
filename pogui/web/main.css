@@ -69,6 +69,7 @@ button:hover {
   background-image: linear-gradient(to top, #343434 0%, #404040 100%);
   margin-bottom: 1em;
   text-overflow: ellipsis;
+  text-align: left;
 }
 
 .pog-checklist .pure-button-group:hover input {

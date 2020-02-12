@@ -32,13 +32,11 @@ return {
 
   addRemoteStorage : function(storage_type, bucket)
   {
-    console.log('saveRemoteStorage ' + storage_type + ', ' + bucket);
     Api.addFS(storage_type, bucket).then(Settings.refreshRemoteStorageView);
   },
 
   removeRemoteStorage : function(entry)
   {
-    console.log('removeRemoteStorage ' + entry);
     Api.removeFS(entry).then(Settings.refreshRemoteStorageView);
   },
 
@@ -54,7 +52,7 @@ return {
 
   removeKeyFile : function(entry)
   {
-    Api.removeKeyfile().then(Settings.refreshKeyfilesView);
+    Api.removeKeyfile(entry).then(Settings.refreshKeyfilesView);
   },
 
   refreshKeyfilesView : function(entry_list)
