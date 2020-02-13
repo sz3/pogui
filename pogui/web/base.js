@@ -64,8 +64,9 @@ return {
     Navigation.init(mfn);
   },
 
-  showMessage : function(title, message)
+  showMessage : function(message, title)
   {
+    title = title || 'Error';
     $("#messagebox h2").html(title);
     $("#messagebox p").html(message);
     $("#messagebox").fadeIn("slow");
