@@ -21,26 +21,6 @@ function pluralize(num, label) {
   return text;
 }
 
-function truncate(text) {
-  if (!text)
-    return '';
-
-  if (text.length <= 10)
-    return text;
-
-  return text.substring(0, 10) + '…';
-}
-
-function blobListToString(blobs) {
-  if (!blobs)
-    return '';
-
-  var text = '(';
-  for (var i in blobs)
-    text += truncate(blobs[i]) + ', ';
-  return text.substring(0, text.length-2) + ')';
-}
-
 // search
 function updateSearch(query) {
   _filemanager.addClass('searching');
@@ -166,11 +146,11 @@ function render(data, currentPath, breadcrumbsUrls) {
       var icon = '<span class="icon file f-'+fileType+'">.'+fileType+'</span>';
 
       var details = '';
-      if (fp['blobs'])
+      if ('num_blobs' in fp)
       {
-        var num_blobs = fp['blobs'].length;
+        var num_blobs = fp['num_blobs'];
         details = pluralize(num_blobs, 'part');
-        details += ' ' + blobListToString(fp['blobs']);
+        details += ' (' + fp['extra_details'] + ')';
       }
 
       var file = $(

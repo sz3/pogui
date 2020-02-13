@@ -35,6 +35,15 @@ def backfill_parent_dirs(paths):
     return sorted(all_paths)
 
 
+def blob_details(blobs):
+    blobs = blobs or []
+    shortened = [name[:10] + '…' if len(name) > 10 else name for name in blobs]
+    return {
+        'num_blobs': len(blobs),
+        'extra_details': ', '.join(shortened),
+    }
+
+
 class Config():
     DEFAULT_PATH = '.pogui.yml'
 
@@ -187,7 +196,7 @@ class Api():
 
         blobs = self.cli.dumpManifest(mfn)
         paths = backfill_parent_dirs(blobs.keys())
-        return [{'path': p, 'blobs': blobs.get(p) or []} for p in paths]
+        return [{'path': p, **blob_details(blobs.get(p))} for p in paths]
 
     def downloadArchive(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
