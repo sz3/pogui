@@ -64,10 +64,17 @@ return {
     Navigation.init(mfn);
   },
 
-  showMessage : function(param)
+  showMessage : function(title, message)
   {
-    alert('hello hello I am a log');
-    $("#messagebox").html(param);
+    $("#messagebox h2").html(title);
+    $("#messagebox p").html(message);
+    $("#messagebox").fadeIn("slow");
+  },
+
+  hideMessage : function(e)
+  {
+    console.log('hidemessage?');
+    $("#messagebox").fadeOut("slow");
   },
 
   addCandidateFiles : function(files)

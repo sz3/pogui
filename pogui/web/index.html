@@ -2,7 +2,7 @@
 <html lang="en" data-framework="javascript">
 <head>
 <meta charset="utf-8">
-<title>Todos</title>
+<title>PogUI</title>
 <link rel="stylesheet" href="pure/pure.css">
 <link rel="stylesheet" href="pure-layout-side-menu/side-menu.css">
 <link rel="stylesheet" href="loading/ripple.css">
@@ -13,7 +13,13 @@
 </head>
 <body>
 
-<div id="messagebox"></div>
+<div id="messagebox" class="toast">
+  <a class="close" href="javascript:;" onclick="Page.hideMessage(this)">✖</a>
+  <div class="toast-content">
+    <h2>Hello!</h2>
+    <p>Welcome to PogUI!</p>
+  </div>
+</div>
 
 <div id="layout">
     <!-- Menu toggle -->
