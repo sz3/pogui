@@ -73,8 +73,8 @@
 
 <div id="create-archive" class="page create-archive">
   <div class="pure-button-group">
-    <button class="pure-button" href="javascript:;" onclick="Actions.getFiles()">Add Path</button>
-    <button class="pure-button" href="javascript:;" onclick="Page.clearCandidateFiles()">Clear</button>
+    <button class="pure-button" href="javascript:;" onclick="CreateArchive.askForFiles()">Add Path</button>
+    <button class="pure-button" href="javascript:;" onclick="CreateArchive.clearCandidateFiles()">Clear</button>
     <button class="pure-button" href="javascript:;">Upload</button>
   </div>
   <form id="create-archive-list" class="pog-checklist"></form>
@@ -91,6 +91,10 @@
 <script src="api.js"></script>
 <script src="navigation.js"></script>
 <script src="settings.js"></script>
+<script src="create-archive.js"></script>
 <script src="base.js"></script>
+<script>
+Page.init('open-archive');
+</script>
 </body>
 </html>

@@ -1,30 +1,3 @@
-var Actions = function() {
-return {
-  getFiles : function()
-  {
-    Api.getFiles().then(Page.addCandidateFiles);
-  },
-
-  dragDrop : function(event)
-  {
-    // this will be for adding manifests (e.g. the viewing side) at most
-    // the browser wisely doesn't give us full path info
-    let files = [];
-    if (event && event.dataTransfer)
-    {
-      let ef = event.dataTransfer.files;
-      for (let i = 0; i < ef.length; i++)
-      {
-        let obj = {};
-        for (let key in ef[i])
-          obj[key] = ef[i][key];
-        files.push(obj);
-      }
-    }
-    window.pywebview.api.dragDrop(files);
-  }
-};
-}();
 
 var Page = function() {
 
@@ -78,15 +51,23 @@ return {
     $("#messagebox").fadeOut("slow");
   },
 
-  addCandidateFiles : function(files)
+  dragDrop : function(event)
   {
-    var append = true;
-    CheckList.get('create-archive-list').update(files, append);
-  },
-
-  clearCandidateFiles : function()
-  {
-    CheckList.get('create-archive-list').update([]);
+    // this will be for adding manifests (e.g. the viewing side) at most
+    // the browser wisely doesn't give us full path info
+    let files = [];
+    if (event && event.dataTransfer)
+    {
+      let ef = event.dataTransfer.files;
+      for (let i = 0; i < ef.length; i++)
+      {
+        let obj = {};
+        for (let key in ef[i])
+          obj[key] = ef[i][key];
+        files.push(obj);
+      }
+    }
+    window.pywebview.api.dragDrop(files);
   }
 };
 }();
@@ -100,7 +81,7 @@ window.addEventListener("drop", function(e) {
   e = e || event;
   e.preventDefault();
   e.stopPropagation();
-  Actions.dragDrop(e);
+  Page.dragDrop(e);
 }, false);
 
 window.onhashchange = function(e) {
@@ -112,6 +93,3 @@ window.onhashchange = function(e) {
 window.onbeforeunload = function (e) {
   Api.emergencyExit();
 };
-
-Page.init('open-archive');
-//Page.loadArchive('reference/asymmetric-sample.mfn');
