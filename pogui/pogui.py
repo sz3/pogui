@@ -239,6 +239,12 @@ class Api():
         os._exit(1)
 
 
+def on_closed():
+    # workaround: sometimes pywebview doesn't close the parent app when the window is closed
+    import os
+    os._exit(1)
+
+
 def load_page_data(window):
     startups = [
         'waitForManifests',
@@ -254,6 +260,7 @@ def main():
     global window
     api = Api()
     window = webview.create_window('PogUI', 'web/index.html', js_api=api, min_size=(600, 450), text_select=True)
+    window.closed += on_closed
     webview.start(load_page_data, window, debug=True)
 
 
