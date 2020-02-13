@@ -12,6 +12,35 @@ var _filemanager = $('[id="' + _parent_id + '"].filemanager'), // no space
   _fileList = _filemanager.find('.data');
 
 // private methods
+function pluralize(num, label) {
+  if (!num)
+    return 'Empty';
+  var text = num + ' ' + label;
+  if (num != 1)
+    text += 's';
+  return text;
+}
+
+function truncate(text) {
+  if (!text)
+    return '';
+
+  if (text.length <= 10)
+    return text;
+
+  return text.substring(0, 10) + '…';
+}
+
+function blobListToString(blobs) {
+  if (!blobs)
+    return '';
+
+  var text = '(';
+  for (var i in blobs)
+    text += truncate(blobs[i]) + ', ';
+  return text.substring(0, text.length-2) + ')';
+}
+
 // search
 function updateSearch(query) {
   _filemanager.addClass('searching');
@@ -56,30 +85,42 @@ function searchData(data, searchTerms) {
   return {folders: folders, files: files};
 }
 
+// get number of files in directory, based on `data`
+function scanForDir(data, dirpath) {
+  if (!Array.isArray(data))
+    return '';
+  var folders = [];
+  var files = [];
+  data.forEach(function (fp) {
+    var tokens = fp.path.split('/');
+    if (!tokens.pop()) {
+      tokens.pop();
+    }
+    if (tokens.length > 0) {
+      tokens.push('');
+    }
+    if (tokens.join('/') != dirpath || fp.path == dirpath) {
+      ;
+    }
+    else if (fp.path.endsWith('/')) {
+      folders.push(fp);
+    }
+    else {
+      files.push(fp);
+    }
+  });
+  return {folders: folders, files: files};
+}
+
 // Render the HTML for the file manager
 function render(data, currentPath, breadcrumbsUrls) {
   var scannedFolders = [],
     scannedFiles = [];
 
   if(Array.isArray(data)) {
-    data.forEach(function (fp) {
-      var tokens = fp.path.split('/');
-      if (!tokens.pop()) {
-        tokens.pop();
-      }
-      if (tokens.length > 0) {
-        tokens.push('');
-      }
-      if (tokens.join('/') != currentPath || fp.path == currentPath) {
-        ;
-      }
-      else if (fp.path.endsWith('/')) {
-        scannedFolders.push(fp);
-      }
-      else {
-        scannedFiles.push(fp);
-      }
-    });
+    var scan = scanForDir(data, currentPath);
+    scannedFolders = scan.folders;
+    scannedFiles = scan.files;
   }
   else if(typeof data === 'object') {
     scannedFolders = data.folders;
@@ -99,22 +140,16 @@ function render(data, currentPath, breadcrumbsUrls) {
 
   if(scannedFolders.length) {
     scannedFolders.forEach(function(fp) {
-      var itemsLength = 1,
-        name = escapeHTML(basename(fp.path)),
+      var name = escapeHTML(basename(fp.path)),
         icon = '<span class="icon folder"></span>';
 
-      if(itemsLength) {
+      var itemsLength = '';
+      var scan = scanForDir(data, fp.path);
+      if (scan) {
+        itemsLength = pluralize(scan.folders.length + scan.files.length, 'item');
+      }
+      if(itemsLength != 'Empty') {
         icon = '<span class="icon folder full"></span>';
-      }
-
-      if(itemsLength == 1) {
-        itemsLength += ' item';
-      }
-      else if(itemsLength > 1) {
-        itemsLength += ' items';
-      }
-      else {
-        itemsLength = 'Empty';
       }
 
       var folder = $('<li class="folders"><a href="'+ fp.path +'" title="'+ fp.path +'" class="folders">'+icon+'<span class="name">' + name + '</span> <span class="details">' + itemsLength + '</span></a></li>');
@@ -130,7 +165,18 @@ function render(data, currentPath, breadcrumbsUrls) {
       fileType = fileType[fileType.length-1];
       var icon = '<span class="icon file f-'+fileType+'">.'+fileType+'</span>';
 
-      var file = $('<li class="files"><a href="'+ fp.path +'" title="'+ fp.path +'" class="files">'+icon+'<span class="name">'+ name +'</span> <span class="details">42</span></a></li>');
+      var details = '';
+      if (fp['blobs'])
+      {
+        var num_blobs = fp['blobs'].length;
+        details = pluralize(num_blobs, 'part');
+        details += ' ' + blobListToString(fp['blobs']);
+      }
+
+      var file = $(
+        '<li class="files"><a href="'+ fp.path +'" title="'+ fp.path +'" class="files">'
+        + icon+'<span class="name">'+ name +'</span> <span class="details">' + details
+        + '</span></a></li>');
       file.appendTo(_fileList);
     });
   }

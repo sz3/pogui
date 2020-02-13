@@ -187,7 +187,7 @@ class Api():
 
         blobs = self.cli.dumpManifest(mfn)
         paths = backfill_parent_dirs(blobs.keys())
-        return [{'path': p, 'blobs': blobs.get(p)} for p in paths]
+        return [{'path': p, 'blobs': blobs.get(p) or []} for p in paths]
 
     def downloadArchive(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
