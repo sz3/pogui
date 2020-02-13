@@ -102,6 +102,12 @@ window.addEventListener("drop", function(e) {
   Actions.dragDrop(e);
 }, false);
 
+window.onhashchange = function(e) {
+  e = e || event;
+  // show the title when we switch pages
+  window.scrollTo(0, 0);
+};
+
 window.onbeforeunload = function (e) {
   Api.emergencyExit();
 };
