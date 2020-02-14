@@ -1,3 +1,4 @@
+QUnit.module( "filebrowser" );
 
 QUnit.testStart(function(details) {
   FileBrowser.get('open-archive').showFiles([

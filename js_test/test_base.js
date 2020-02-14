@@ -1,4 +1,4 @@
-
+QUnit.module( "base" );
 
 QUnit.test( "message box", function( assert ) {
   $('#messagebox').hide();
