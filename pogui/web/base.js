@@ -55,14 +55,14 @@ return {
   {
     // this will be for adding manifests (e.g. the viewing side) at most
     // the browser wisely doesn't give us full path info
-    let files = [];
+    var files = [];
     if (event && event.dataTransfer)
     {
-      let ef = event.dataTransfer.files;
-      for (let i = 0; i < ef.length; i++)
+      var ef = event.dataTransfer.files;
+      for (var i = 0; i < ef.length; i++)
       {
-        let obj = {};
-        for (let key in ef[i])
+        var obj = {};
+        for (var key in ef[i])
           obj[key] = ef[i][key];
         files.push(obj);
       }

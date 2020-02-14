@@ -8,7 +8,7 @@ var Api = function() {
 return {
   getFiles : function()
   {
-    return window.pywebview.api.getFiles();
+    return window.pywebview.api.getFiles().catch(Page.showMessage);
   },
 
   waitForManifests : function()

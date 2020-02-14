@@ -324,11 +324,7 @@ function loading(is_loading)
 return {
   listManifests : function()
   {
-    _state.clearResponse();
-    _fileList.empty().hide();
-    _breadcrumbs.text('');
-    _filemanager.find('.nothingfound').hide();
-    loading(true);
+    this.clear();
     Api.listManifests().then(showFiles);
   },
 
@@ -345,6 +341,15 @@ return {
   loading : function(is_loading)
   {
     loading(is_loading);
+  },
+
+  clear : function()
+  {
+    _state.clearResponse();
+    _fileList.empty().hide();
+    _breadcrumbs.text('');
+    _filemanager.find('.nothingfound').hide();
+    loading(true);
   }
 };
 }
@@ -387,9 +392,7 @@ return {
     {
       if (actions['download'])
       {
-        var download = $(`
-          <a href="javascript:;" title="Download" class="download-icon">⇩</a>
-        `);
+        var download = $('<a href="javascript:;" title="Download" class="download-icon">⇩</a>');
         download.click(function() {
           Api.downloadArchive(id).then(function() {
             alert('we downloaded ' + id);
@@ -399,9 +402,7 @@ return {
       }
       if (actions['refresh'])
       {
-        var refresh = $(`
-          <a href="javascript:;" title="Refresh">⟳</a>
-        `);
+        var refresh = $('<a href="javascript:;" title="Refresh">⟳</a>');
         refresh.click(function() {
           _fb[id].listManifests();
         });
@@ -409,23 +410,21 @@ return {
       }
     }
 
-    var search = $(`
-      <div class="search" title="Search">
-          <input type="search" placeholder="Find a file..">
-      </div>
-    `);
+    var search = $('\
+      <div class="search" title="Search">\
+          <input type="search" placeholder="Find a file..">\
+      </div>\
+    ');
     act.append(search);
     $('[id="' + id + '"]').append(act);
 
-    var html = `
-      <div class="breadcrumbs"></div>
-
-      <ul class="data"></ul>
-
-      <div class="nothingfound">
-        <div class="nofiles"></div>
-        <span>No files here.</span>
-      </div>`;
+    var html = '\
+      <div class="breadcrumbs"></div>\
+      <ul class="data"></ul>\
+      <div class="nothingfound">\
+        <div class="nofiles"></div>\
+        <span>No files here.</span>\
+      </div>';
     $('[id="' + id + '"]').append(html);
 
     // after the dom is updated, create the JS class
@@ -443,6 +442,6 @@ return {
 FileBrowser.init();
 
 /*var sample =
-[{'path': 's3:bucket/'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
+[{'path': 's3:bucket/'}, {'path': 's3:bucket/dir/'}, {'path': 's3:bucket/dir/foo'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/
