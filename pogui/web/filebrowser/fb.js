@@ -39,7 +39,6 @@ function navigateTo(path) {
     path = '';
   }
   _state.setCurrentPath(path);
-  _state.log();
   render(_state.getResponse(), _state.getCurrentPath(), _state.getBreadcrumbs());
 }
 

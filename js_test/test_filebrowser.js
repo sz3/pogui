@@ -47,6 +47,22 @@ QUnit.test( "open dir", function( assert ) {
 
   assert.deepEqual( folders, ['s3:bucket/dir/'] );
   assert.deepEqual( files, ['s3:bucket/file.txt'] );
+
+  // dig in more
+  $('#open-archive a.folders')[0].click();
+
+  folders = [];
+  $('#open-archive a.folders').each(function(elem) {
+    folders.push($(this).attr('href'));
+  });
+
+  files = [];
+  $('#open-archive a.files').each(function(elem) {
+    files.push($(this).attr('href'));
+  });
+
+  assert.deepEqual( folders, [] );
+  assert.deepEqual( files, ['s3:bucket/dir/foo'] );
 });
 
 QUnit.test( "open archive", function( assert ) {
@@ -69,4 +85,31 @@ QUnit.test( "open archive", function( assert ) {
 
   assert.deepEqual( folders, [] );
   assert.deepEqual( files, ['1.txt'] );
+});
+
+QUnit.test( "breadcrumbs", function( assert ) {
+  // dig in
+  $('#open-archive a.folders')[0].click();
+
+  var breadcrumbUrls = [];
+  $('#open-archive .breadcrumbs a').each(function(elem) {
+    breadcrumbUrls.push($(this).attr('href'));
+  });
+  assert.deepEqual( breadcrumbUrls, ['📁', 's3:bucket'] );
+
+  // more
+  breadcrumbUrls = [];
+  $('#open-archive a.folders')[0].click();
+  $('#open-archive .breadcrumbs a').each(function(elem) {
+    breadcrumbUrls.push($(this).attr('href'));
+  });
+  assert.deepEqual( breadcrumbUrls, ['📁', 's3:bucket', 's3:bucket/dir'] );
+
+  // back to top
+  breadcrumbUrls = [];
+  $('#open-archive .breadcrumbs a')[0].click();
+  $('#open-archive .breadcrumbs a').each(function(elem) {
+    breadcrumbUrls.push($(this).attr('href'));
+  });
+  assert.deepEqual( breadcrumbUrls, ['📁'] );
 });
