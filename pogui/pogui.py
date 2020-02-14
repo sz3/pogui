@@ -125,9 +125,9 @@ class ListManifests():
 
 # can also do window.evaluate_js('Page.doThing({})')
 class Api():
-    def __init__(self):
+    def __init__(self, config):
         self.cli = PogCli()
-        self.config = Config()
+        self.config = config
         self.cli.set_keyfiles(self.config.get('keyfiles'))
         self._refresh_list_manifests()
 
@@ -267,10 +267,11 @@ def load_page_data(window):
 
 def main():
     global window
-    api = Api()
+    config = Config()
+    api = Api(config)
     window = webview.create_window('PogUI', 'web/index.html', js_api=api, min_size=(600, 450), text_select=True)
     window.closed += on_closed
-    webview.start(load_page_data, window, debug=True)
+    webview.start(load_page_data, window, debug=config.get('debug', False))
 
 
 if __name__ == '__main__':
