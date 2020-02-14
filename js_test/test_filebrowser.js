@@ -48,3 +48,25 @@ QUnit.test( "open dir", function( assert ) {
   assert.deepEqual( folders, ['s3:bucket/dir/'] );
   assert.deepEqual( files, ['s3:bucket/file.txt'] );
 });
+
+QUnit.test( "open archive", function( assert ) {
+  Api.setResponseForCall('scanManifest', [{'path': '1.txt'}]);
+
+  $('#open-archive a.files')[0].click();
+
+  assert.equal(window.location.hash, '#local:local.mfn');
+  assert.deepEqual(Api.calls(), ['scanManifest(local:local.mfn)']);
+
+  var folders = [];
+  $('[id="local:local.mfn"] a.folders').each(function(elem) {
+    folders.push($(this).attr('href'));
+  });
+
+  var files = [];
+  $('[id="local:local.mfn"] a.files').each(function(elem) {
+    files.push($(this).attr('href'));
+  });
+
+  assert.deepEqual( folders, [] );
+  assert.deepEqual( files, ['1.txt'] );
+});
