@@ -24,26 +24,6 @@ function getFiles(id) {
   return files;
 }
 
-QUnit.testStart(function(details) {
-  FileBrowser.get('open-archive').showFiles([
-    {'path': 's3:bucket/'},
-    {'path': 's3:bucket/dir/'},
-    {'path': 's3:bucket/dir/foo'},
-    {'path': 's3:bucket/file.txt'},
-    {'path': 'local:local.mfn'},
-    {'path': 'local:mydir/'},
-    {'path': 'local:mydir/home/'},
-    {'path': 'local:mydir/home/1.txt'}
-  ]);
-  Navigation.goto('open-archive');
-});
-
-QUnit.testDone(function(details) {
-  FileBrowser.get('open-archive').clear();
-  Api.clear();
-  Api.clearResponses();
-});
-
 QUnit.test( "initial load manifest list", function( assert ) {
   // testStart does the actual load
   var folders = getFolders('open-archive');
@@ -110,7 +90,6 @@ QUnit.test( "refresh", function( assert ) {
 QUnit.test( "open archive and download", function( assert ) {
   Api.setResponseForCall('scanManifest', [{'path': 'zdir/'}, {'path': '1.txt'}]);
 
-  console.log($('#open-archive').html());
   $('#open-archive a.files')[0].click();
 
   assert.equal(window.location.hash, '#local:local.mfn');

@@ -24,7 +24,7 @@ return {
   {
     $('#settings form').submit(false);
     $('.settings-storage-choice button').click(toggleRemoteStorageClick);
-    $('.settings-storage-add').click(addRemoteStorageClick);
+    $('button.settings-storage-add').click(addRemoteStorageClick);
 
     CheckList.get('settings-remote-storage').setOnRemove(Settings.removeRemoteStorage);
     CheckList.get('settings-keyfiles').setOnRemove(Settings.removeKeyFile);
