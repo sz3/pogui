@@ -1,8 +1,9 @@
 import itertools
+import webbrowser
 import yaml
 from multiprocessing.dummy import Pool as ThreadPool
 from glob import iglob
-from os.path import join as path_join, isdir, dirname
+from os.path import join as path_join, isdir, abspath, dirname
 
 import webview
 
@@ -210,6 +211,7 @@ class Api():
         if not path:
             return False
 
+        # need to hold on to path and call systemOpenFolder(path) when we're done...
         print('downloadin {} to {}'.format(mfn, path))
         list(self.cli.decrypt(mfn, cwd=path))
         return True
@@ -250,6 +252,10 @@ class Api():
         print('emergency exit -- tried to navigate elsewhere!')
         import os
         os._exit(1)
+
+    def systemOpenFolder(self, path):
+        # https://stackoverflow.com/questions/6631299/python-opening-a-folder-in-explorer-nautilus-mac-thingie/16204023
+        webbrowser.open(abspath(path))
 
 
 def on_closed():
