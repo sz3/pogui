@@ -35,11 +35,13 @@ QUnit.testStart(function(details) {
     {'path': 'local:mydir/home/'},
     {'path': 'local:mydir/home/1.txt'}
   ]);
+  Navigation.goto('open-archive');
 });
 
 QUnit.testDone(function(details) {
   FileBrowser.get('open-archive').clear();
   Api.clear();
+  Api.clearResponses();
 });
 
 QUnit.test( "initial load manifest list", function( assert ) {
@@ -68,21 +70,6 @@ QUnit.test( "open dir", function( assert ) {
 
   assert.deepEqual( folders, [] );
   assert.deepEqual( files, ['s3:bucket/dir/foo'] );
-});
-
-QUnit.test( "open archive", function( assert ) {
-  Api.setResponseForCall('scanManifest', [{'path': '1.txt'}]);
-
-  $('#open-archive a.files')[0].click();
-
-  assert.equal(window.location.hash, '#local:local.mfn');
-  assert.deepEqual(Api.calls(), ['scanManifest(local:local.mfn)']);
-
-  var folders = getFolders('local:local.mfn');
-  var files = getFiles('local:local.mfn');
-
-  assert.deepEqual( folders, [] );
-  assert.deepEqual( files, ['1.txt'] );
 });
 
 QUnit.test( "breadcrumbs", function( assert ) {
@@ -118,4 +105,29 @@ QUnit.test( "refresh", function( assert ) {
 
   assert.deepEqual( folders, ['s3:mfns/'] );
   assert.deepEqual( files, ['refresh.mfn'] );
+});
+
+QUnit.test( "open archive and download", function( assert ) {
+  Api.setResponseForCall('scanManifest', [{'path': 'zdir/'}, {'path': '1.txt'}]);
+
+  console.log($('#open-archive').html());
+  $('#open-archive a.files')[0].click();
+
+  assert.equal(window.location.hash, '#local:local.mfn');
+  assert.deepEqual(Api.calls(), ['scanManifest(local:local.mfn)']);
+
+  var folders = getFolders('local:local.mfn');
+  var files = getFiles('local:local.mfn');
+
+  assert.deepEqual( folders, ['zdir/'] );
+  assert.deepEqual( files, ['1.txt'] );
+
+  Api.clear();
+
+  // download
+  var elem = $('[id="local:local.mfn"] .filemanager-actions a');
+  assert.equal(elem.attr('title'), 'Download');
+  $('[id="local:local.mfn"] .filemanager-actions a')[0].click();
+
+  assert.deepEqual(Api.calls(), ['downloadArchive(local:local.mfn)']);
 });

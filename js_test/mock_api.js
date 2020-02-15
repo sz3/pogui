@@ -29,6 +29,11 @@ return {
     _response[name] = res;
   },
 
+  clearResponses : function()
+  {
+    _response = {};
+  },
+
   getFiles : function()
   {
     _calls.push('getFiles()');

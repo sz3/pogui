@@ -29,7 +29,11 @@ return {
     var shortname = basename(mfn);
     var actions = {'download': true};
     if (!FileBrowser.add(mfn, '#main .content', actions))
-      return;  // do nothing if the archive is already loaded
+    {
+      // just go to page if the archive is already loaded
+      Navigation.goto(mfn);
+      return;
+    }
 
     Navigation.add(mfn, shortname);
     FileBrowser.get(mfn).loadManifest(mfn);
