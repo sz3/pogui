@@ -22,7 +22,7 @@ a {
 /*-----
 load animations. fb.css also has one of these (may refactor)
 ----*/
-#settings:target {
+#settings:target, #create-archive:target {
   animation: showSlowlyElement 500ms;
 }
 
@@ -126,6 +126,7 @@ create archive page
 #create-archive .actions {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 /*-------------------------
