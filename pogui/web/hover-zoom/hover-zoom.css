@@ -2,6 +2,7 @@
 
 .hover-zoom-box {
  color: LightGrey;
+ cursor: pointer;
 }
 
  .hover-zoom-container {
@@ -97,6 +98,7 @@
    width: 170px;
    top: 111px;
    opacity: 0;
+   text-align: center;
    font-size: 13px;
    line-height: 20px;
    transition: all 0.3s ease;
