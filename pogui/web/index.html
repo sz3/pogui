@@ -5,6 +5,7 @@
 <title>PogUI</title>
 <link rel="stylesheet" href="pure/pure.css">
 <link rel="stylesheet" href="pure-layout-side-menu/side-menu.css">
+<link rel="stylesheet" href="hover-zoom/hover-zoom.css">
 <link rel="stylesheet" href="loading/ripple.css">
 
 <link rel="stylesheet" href="filebrowser/fb.css">
@@ -72,10 +73,15 @@
 </div>
 
 <div id="create-archive" class="page create-archive">
-  <div class="pure-button-group">
-    <button class="pure-button" href="javascript:;" onclick="CreateArchive.askForFiles()">Add Path</button>
-    <button class="pure-button" href="javascript:;" onclick="CreateArchive.clearCandidateFiles()">Clear</button>
-    <button class="pure-button" href="javascript:;">Upload</button>
+  <div class="actions">
+    <div class="hover-zoom-box" onclick="CreateArchive.askForFiles()"
+       title="Add Path" data-description="Add paths to pull in for a new archive">🔍</div>
+
+    <div class="hover-zoom-box" onclick="CreateArchive.clearCandidateFiles()"
+      title="Clear" data-description="Start over, clearing all paths added">⌧</div>
+
+    <div class="hover-zoom-box"
+      title="Upload" data-description="Create archive and upload it">⎆</div>
   </div>
   <form id="create-archive-list" class="pog-checklist"></form>
 </div>
@@ -85,6 +91,8 @@
 
 <script src="pure-layout-side-menu/ui.js"></script>
 <script src="checklist/cl.js"></script>
+<script src="hover-zoom/hz.js"></script>
+
 <script src="filebrowser/fb-state.js"></script>
 <script src="filebrowser/fb.js"></script>
 

@@ -120,6 +120,15 @@ Download, reload Links
 }
 
 /*-------------------------
+create archive page
+----*/
+
+#create-archive .actions {
+  display: flex;
+  justify-content: center;
+}
+
+/*-------------------------
 error message toast
 ----*/
 

@@ -35,7 +35,7 @@ return {
       var bg = $('\
         <div class="pure-button-group">\
           <input dir="rtl" class="pure-u-1-2" type="text" value="" readonly>\
-          <button class="pure-button remove-pog-checklist" href="javascript:void(0)">✖</button>\
+          <button class="pure-button remove-pog-checklist" href="javascript:void(0)">🗙</button>\
         </div>');
       var input = bg.find('input');
       input.val(entry);
