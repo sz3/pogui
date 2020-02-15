@@ -110,7 +110,11 @@ class ListManifests():
         fs = get_cloud_fs(fs_name)(bucket, root=path)
         kw = {'recursive': True} if fs_name == 'local' else {}
 
-        all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
+        try:
+            all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
+        except Exception as e:
+            print('ListManifests failed for {} -- {}'.format(loc, str(e)))
+            return []
         return [{'path': f'{loc}/{filename}'} for filename in all_files]
 
     def _collect_result(self, res):
