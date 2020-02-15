@@ -79,11 +79,12 @@
  
  .text {
    position: relative;
-   top: -32px;
+   top: -56px;
    width: 200px;
    text-align: center;
    transition: all 0.4s ease;
    transition-delay: 0.32s;
+   margin-bottom: -56px;
  }
  
  .hover-zoom-box:hover .text {
