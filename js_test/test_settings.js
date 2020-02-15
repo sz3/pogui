@@ -53,15 +53,57 @@ QUnit.test( "empty keyfiles", function( assert ) {
   assert.deepEqual(getKeyfileEntries(), []);
 });
 
-QUnit.test( "add remote storage", function( assert ) {
+QUnit.test( "add remote storage -- default", function( assert ) {
   settingsSetup();
   Api.setResponseForCall('addFS', ['resultA', 'resultB']);
-
-  console.log($('#settings input.settings-storage-add'));
 
   $('#settings input.settings-storage-add').val('megabux');
   $('#settings button.settings-storage-add').click();
 
+  assert.deepEqual(Api.calls(), ['addFS(S3, megabux)']);
   assert.deepEqual(getStorageEntries(), ['resultA', 'resultB']);
-  assert.deepEqual(Api.calls(), ['foo']);
+});
+
+QUnit.test( "add remote storage -- choice", function( assert ) {
+  settingsSetup();
+  Api.setResponseForCall('addFS', ['resultA', 'resultB']);
+
+  $('#settings .settings-storage-choice button')[0].click();
+  $('#settings input.settings-storage-add').val('my fav bucket');
+  $('#settings button.settings-storage-add').click();
+
+  assert.deepEqual(Api.calls(), ['addFS(B2, my fav bucket)']);
+  assert.deepEqual(getStorageEntries(), ['resultA', 'resultB']);
+});
+
+QUnit.test( "remove remote storage", function( assert ) {
+  settingsSetup();
+  Api.setResponseForCall('removeFS', ['s3:buck1']);
+
+  // remove first element
+  $('#settings-remote-storage button.remove-pog-checklist')[0].click();
+
+  assert.deepEqual(Api.calls(), ['removeFS(s3:bucket)']);
+  assert.deepEqual(getStorageEntries(), ['s3:buck1']);
+});
+
+QUnit.test( "update keyfiles", function( assert ) {
+  settingsSetup();
+  Api.setResponseForCall('updateKeyFilesDir', ['/path/to/key']);
+
+  $('#settings button.settings-keyfiles-add').click();
+
+  assert.deepEqual(Api.calls(), ['updateKeyFilesDir()']);
+  assert.deepEqual(getKeyfileEntries(), ['/path/to/key']);
+});
+
+QUnit.test( "remove keyfile", function( assert ) {
+  settingsSetup();
+  Api.setResponseForCall('removeKeyfile', ['/path/to/key']);
+
+  // remove first element
+  $('#settings-keyfiles button.remove-pog-checklist')[0].click();
+
+  assert.deepEqual(Api.calls(), ['removeKeyfile(key.one)']);
+  assert.deepEqual(getKeyfileEntries(), ['/path/to/key']);
 });

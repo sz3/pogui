@@ -13,7 +13,7 @@ QUnit.testStart(function(details) {
     {'path': 'local:mydir/home/'},
     {'path': 'local:mydir/home/1.txt'}
   ]);
-  Navigation.goto('open-archive');
+  Page.init('open-archive');
 });
 
 QUnit.testDone(function(details) {

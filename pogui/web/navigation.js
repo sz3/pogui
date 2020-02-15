@@ -6,7 +6,7 @@ var Navigation = function() {
 return {
   init : function(nav)
   {
-    $('.pure-menu-link').click(Navigation.click);
+    $('.pure-menu-link').unbind().click(Navigation.click);
     if (nav)
       Navigation.goto(nav);
   },
