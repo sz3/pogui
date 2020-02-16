@@ -31,6 +31,7 @@
 	font-size: 24px;
 	font-weight: 700;
 	line-height: 35px;
+	display: inline-block;
 }
 
 .filemanager .breadcrumbs a:link, .breadcrumbs a:visited {
@@ -84,7 +85,7 @@
 	background-color: LightBlue;
 	border-radius: 2px;
 	position: absolute;
-	top: 23px;
+	top: 18px;
 	right: 6px;
 	-webkit-transform: rotate(-45deg);
 	transform: rotate(-45deg);
@@ -136,7 +137,7 @@
 -------------------------*/
 
 .filemanager .data {
-	margin-top: 60px;
+	margin-top: 40px;
   padding-left: 20px;
 	z-index: -3;
 }

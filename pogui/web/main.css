@@ -93,9 +93,8 @@ Download, reload Links
 }
 
 .filemanager-actions {
-  position: absolute;
-  right: 0;
-  display: inline-flex;
+  float: right;
+  display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-top: -5px;
