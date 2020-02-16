@@ -26,9 +26,9 @@ return {
     var elem = $('[id="progress-bar-' + id + '"]');
     elem.find('h1').html(percent);
     elem.find('.bar').width(percent);
-    if (status == '100.00%')
+    if (percent == '100.00%')
     {
-      elem.toggleClass('done');
+      elem.toggleClass('done', true);
       elem.click(finishedClick);
     }
   },
@@ -43,5 +43,5 @@ return {
 
 /*
 ProgressBar.add('testprogress.mfn');
-ProgressBar.update('testprogress.mfn', '25.00%');
+ProgressBar.update('testprogress.mfn', '100.00%');
 //*/

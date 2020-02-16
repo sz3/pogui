@@ -14,8 +14,13 @@
 .progress-bar.done .bar {
   top: 0;
   height: 100%;
-  width: 100%;
   transition: all .33s ease;
+  background: #2A4747;
+  z-index: -1;
+}
+
+.progress-bar.done:hover .bar {
+  background: #3C6565;
 }
 
 .progress-bar h1 {
