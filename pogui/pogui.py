@@ -2,8 +2,10 @@ import itertools
 import webbrowser
 import yaml
 from multiprocessing.dummy import Pool as ThreadPool
+from threading import Thread
 from glob import iglob
 from os.path import join as path_join, isdir, abspath, dirname
+from time import sleep
 
 import webview
 
@@ -203,18 +205,31 @@ class Api():
         paths = backfill_parent_dirs(blobs.keys())
         return [{'path': p, **blob_details(blobs.get(p))} for p in paths]
 
+    def _backgroundDownload(self, status_iter, mfn, dest_path):
+        for info in status_iter:
+            # need to snapshot these better
+            percent = info['current'] * 100 / info['total']
+            print('giving {} to window'.format(info))
+            window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(mfn, percent))
+
     def downloadArchive(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
-        mfn = join_fs_path(fs_name, bucket, path)
+        real_mfn_path = join_fs_path(fs_name, bucket, path)
 
         path = window.create_file_dialog(webview.FOLDER_DIALOG)[0]
         if not path:
             return False
 
         # need to hold on to path and call systemOpenFolder(path) when we're done...
-        print('downloadin {} to {}'.format(mfn, path))
-        list(self.cli.decrypt(mfn, cwd=path))
-        return True
+        # maybe do one `next()` of the iter to make sure things are going ol?
+        print('downloadin {} to {}'.format(real_mfn_path, path))
+        status_iter = self.cli.decrypt(real_mfn_path, cwd=path)
+        first_chunk = next(status_iter)
+        Thread(
+            target=self._backgroundDownload,
+            kwargs={'status_iter': status_iter, 'mfn': mfn, 'dest_path': path}
+        ).start()
+        return first_chunk
 
     def downloadFile(self, mfn, filename):
         print('download {} {}'.format(mfn, filename))

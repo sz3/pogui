@@ -385,7 +385,6 @@ return {
   transform : function(id, actions)
   {
     // turns <div id="{id}" class="filemanager"> into...
-
     var act = $('<div class="filemanager-actions">');
     if (actions)
     {
@@ -393,9 +392,8 @@ return {
       {
         var download = $('<a href="javascript:;" title="Download" class="download-icon">⇩</a>');
         download.click(function() {
-          Api.downloadArchive(id).then(function() {
-            console.log('we downloaded ' + id);
-          });
+          ProgressBar.add(id);
+          Api.downloadArchive(id);
         });
         act.append(download);
       }

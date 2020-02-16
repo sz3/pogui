@@ -4,15 +4,14 @@
   position: sticky;
 }
 
-.progress-bar:after {
-  content: "";
+.progress-bar .bar {
   position: absolute;
-  width: 50%;
+  width: 0%;
   background: linear-gradient(to right top, #CDDC39 0%, #03A9F4 50%, #e6f0f5 50%);
   height: 2px;
 }
 
-.progress-bar.done:after {
+.progress-bar.done .bar {
   top: 0;
   height: 100%;
   width: 100%;
