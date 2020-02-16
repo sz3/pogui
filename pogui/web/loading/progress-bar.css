@@ -1,0 +1,29 @@
+.progress-bars {
+  min-height: 2.4em;
+  margin-bottom: -2.4em;
+  position: sticky;
+}
+
+.progress-bar:after {
+  content: "";
+  position: absolute;
+  width: 50%;
+  background: linear-gradient(to right top, #CDDC39 0%, #03A9F4 50%, #e6f0f5 50%);
+  height: 2px;
+}
+
+.progress-bar.done:after {
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transition: all .33s ease;
+}
+
+.progress-bar h1 {
+  width: 100%;
+  text-align: center;
+  font-weight: 100;
+  font-size: 2em;
+  color: LightGrey;
+  margin: 0px;
+}
