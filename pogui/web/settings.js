@@ -43,6 +43,7 @@ return {
   refreshRemoteStorageView : function(entry_list)
   {
     CheckList.get('settings-remote-storage').update(entry_list);
+    CreateArchive.init();
   },
 
   updateKeyFilesDir : function()
