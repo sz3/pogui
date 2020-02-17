@@ -9,7 +9,6 @@ return {
   init : function()
   {
     $('.hover-zoom-box').each(function() {
-      console.log('transfoooooorm!');
       HoverZoom.transform($(this));
     });
   },
@@ -20,11 +19,11 @@ return {
     var content = elem.html();
     var title = elem.attr('title');
 
-    var html = `
-    <div class="hover-zoom-container">
-      <div class="box">
-        <div class="icon_bg"></div>
-      </div>`;
+    var html = '\
+    <div class="hover-zoom-container">\
+      <div class="box">\
+        <div class="icon_bg"></div>\
+      </div>';
     html += '<div class="icon" >' + content + '</div>';
     html += '</div><div class="text"><p class="title">' + title + '</p></div>';
 

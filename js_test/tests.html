@@ -72,10 +72,18 @@
 </div>
 
 <div id="create-archive" class="page create-archive">
-  <div class="pure-button-group">
-    <button class="pure-button" href="javascript:;" onclick="CreateArchive.askForFiles()">Add Path</button>
-    <button class="pure-button" href="javascript:;" onclick="CreateArchive.clearCandidateFiles()">Clear</button>
-    <button class="pure-button" href="javascript:;">Upload</button>
+  <div class="actions">
+    <div class="hover-zoom-box" onclick="CreateArchive.askForFiles()"
+      title="Add Files" data-description="Add files to be archived">🔍</div>
+
+    <div class="hover-zoom-box" onclick="CreateArchive.askForFolders()"
+      title="Add Folders" data-description="Add a folder or folders to be archived">🗁</div>
+
+    <div class="hover-zoom-box" onclick="CreateArchive.clearCandidatePaths()"
+      title="Clear" data-description="Start over, clearing all files and folders added">⌧</div>
+
+    <div class="hover-zoom-box" onclick="CreateArchive.create()"
+      title="Upload" data-description="Confirm archive create, and upload the archive">📤</div>
   </div>
   <form id="create-archive-list" class="pog-checklist"></form>
 </div>
@@ -85,6 +93,9 @@
 
 <script src="../pogui/web/pure-layout-side-menu/ui.js"></script>
 <script src="../pogui/web/checklist/cl.js"></script>
+<script src="../pogui/web/hover-zoom/hz.js"></script>
+<script src="../pogui/web/loading/progress-bar.js"></script>
+
 <script src="../pogui/web/filebrowser/fb-state.js"></script>
 <script src="../pogui/web/filebrowser/fb.js"></script>
 
