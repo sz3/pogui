@@ -236,21 +236,13 @@ class Api():
         print('download {} {}'.format(mfn, filename))
         return True
 
-    def getFiles(self, __):
-        print("Getting dem files {}".format(__))
+    def getLocalFolders(self, __):
         paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)
+        return paths
 
-        dirs = []
-        files = []
-        for p in paths:
-            for f in iglob(path_join(p, '*')):
-                if isdir(f):
-                    dirs.append('{}/'.format(f))
-                else:
-                    files.append(f)
-
-        print("got {}".format(files))
-        return sorted(dirs) + sorted(files)
+    def getLocalFiles(self, __):
+        paths = window.create_file_dialog(webview.OPEN_DIALOG, allow_multiple=True)
+        return paths
 
     def dragDrop(self, mfn):
         print('dragDrop mfn %s' % mfn)

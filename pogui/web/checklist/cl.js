@@ -43,6 +43,15 @@ return {
       bg.find('button').click(removeEntryClick);
       root.append(bg);
     }
+  },
+
+  items : function()
+  {
+    var current_items = [];
+    $('[id="' + _id + '"].pog-checklist input[type="text"]').each(function() {
+      current_items.push($(this).val());
+    });
+    return current_items;
   }
 };
 };

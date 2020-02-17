@@ -34,12 +34,6 @@ return {
     _response = {};
   },
 
-  getFiles : function()
-  {
-    _calls.push('getFiles()');
-    return _thenDoIt(_response['getFiles']);
-  },
-
   waitForManifests : function()
   {
     _calls.push('waitForManifests()');
@@ -104,6 +98,18 @@ return {
   {
     _calls.push('downloadFile(' + mfn + ', ' + filename + ')');
     return _thenDoIt(_response['downloadFile']);
+  },
+
+  getLocalFolders : function()
+  {
+    _calls.push('getLocalFolders()');
+    return _thenDoIt(_response['getLocalFolders']);
+  },
+
+  getLocalFiles : function()
+  {
+    _calls.push('getLocalFiles()');
+    return _thenDoIt(_response['getLocalFiles']);
   },
 
   emergencyExit : function()

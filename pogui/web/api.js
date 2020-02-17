@@ -6,11 +6,6 @@ var Api = function() {
 // public interface
 // return promises that will invoke a js function callback
 return {
-  getFiles : function()
-  {
-    return window.pywebview.api.getFiles().catch(Page.showMessage);
-  },
-
   waitForManifests : function()
   {
     return window.pywebview.api.waitForManifests().catch(Page.showMessage);
@@ -64,6 +59,16 @@ return {
   downloadFile : function(mfn, filename)
   {
     return window.pywebview.api.downloadFile(mfn, filename).catch(Page.showMessage);
+  },
+
+  getLocalFolders : function()
+  {
+    return window.pywebview.api.getLocalFolders().catch(Page.showMessage);
+  },
+
+  getLocalFiles : function()
+  {
+    return window.pywebview.api.getLocalFiles().catch(Page.showMessage);
   },
 
   emergencyExit : function()

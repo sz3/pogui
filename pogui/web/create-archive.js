@@ -5,20 +5,32 @@ var CreateArchive = function() {
 
 // public interface
 return {
+  askForFolders : function()
+  {
+    Api.getLocalFolders().then(CreateArchive.addCandidatePaths);
+  },
+
   askForFiles : function()
   {
-    Api.getFiles().then(CreateArchive.addCandidateFiles);
+    Api.getLocalFiles().then(CreateArchive.addCandidatePaths);
   },
 
-  addCandidateFiles : function(files)
+  addCandidatePaths : function(paths)
   {
     var append = true;
-    CheckList.get('create-archive-list').update(files, append);
+    CheckList.get('create-archive-list').update(paths, append);
   },
 
-  clearCandidateFiles : function()
+  clearCandidatePaths : function()
   {
     CheckList.get('create-archive-list').update([]);
+  },
+
+  create : function()
+  {
+    var items = CheckList.get('create-archive-list').items();
+    console.log('creating :');
+    console.log(items);
   }
 }
 }();

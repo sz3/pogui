@@ -78,13 +78,16 @@
 <div id="create-archive" class="page create-archive">
   <div class="actions">
     <div class="hover-zoom-box" onclick="CreateArchive.askForFiles()"
-       title="Add Path" data-description="Add paths to pull in for a new archive">🔍</div>
+      title="Add Files" data-description="Add files to be archived">🔍</div>
 
-    <div class="hover-zoom-box" onclick="CreateArchive.clearCandidateFiles()"
-      title="Clear" data-description="Start over, clearing all paths added">⌧</div>
+    <div class="hover-zoom-box" onclick="CreateArchive.askForFolders()"
+      title="Add Folders" data-description="Add a folder or folders to be archived">🗁</div>
 
-    <div class="hover-zoom-box"
-      title="Upload" data-description="Create archive and upload it">📤</div>
+    <div class="hover-zoom-box" onclick="CreateArchive.clearCandidatePaths()"
+      title="Clear" data-description="Start over, clearing all files and folders added">⌧</div>
+
+    <div class="hover-zoom-box" onclick="CreateArchive.create()"
+      title="Upload" data-description="Confirm archive create, and upload the archive">📤</div>
   </div>
   <form id="create-archive-list" class="pog-checklist"></form>
 </div>
