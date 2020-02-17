@@ -20,10 +20,11 @@ setup(
 
     python_requires='>=3.6',
     install_requires=[
-        'pogcli==0.1.1',
+        'pogcli==0.1.2',
         'PyQtWebEngine',
         'PyQt5',
         'pywebview',
+        'pyyaml',
     ],
 
     description='Pog User Interface',
@@ -36,6 +37,7 @@ setup(
 
     classifiers=[
         "License :: OSI Approved :: MIT License",
+        "Programming Language :: JavaScript",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
