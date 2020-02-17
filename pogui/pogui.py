@@ -211,6 +211,7 @@ class Api():
             percent = info['current'] * 100 / info['total']
             print('giving {} to window'.format(info))
             window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(mfn, percent))
+        self.systemOpenFolder(dest_path)
 
     def downloadArchive(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
