@@ -1,11 +1,6 @@
 ## Installation
 
-Use `pip`:
-```
-pip install pogui
-```
-
-or from source,
+From source,
 ```
 python setup.py build
 python setup.py install
