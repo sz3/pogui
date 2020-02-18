@@ -43,9 +43,11 @@ return {
     chooser.empty();
 
     var dests = CheckList.get('settings-remote-storage').items();
+    dests.push('local');
     for (var i in dests)
     {
-      var item = $('<button class="pure-button pure-button-active">' + dests[i] + '</button>');
+      var active = (dests[i] != 'local')? ' pure-button-active' : '';
+      var item = $('<button class="pure-button' + active + '">' + dests[i] + '</button>');
       item.click(toggleDestinationClick);
       chooser.append(item);
     }
@@ -62,10 +64,11 @@ return {
 
   create : function()
   {
-    var items = CheckList.get('create-archive-list').items();
-    console.log('creating :');
-    console.log(CreateArchive.getDestinations());
-    console.log(items);
+    var paths = CheckList.get('create-archive-list').items();
+    var destinations = CreateArchive.getDestinations();
+    Api.createArchive(paths, destinations).then(function() {
+      ProgressBar.add('create-archive');
+    });
   }
 }
 }();

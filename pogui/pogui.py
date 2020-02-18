@@ -4,8 +4,7 @@ import yaml
 from multiprocessing.dummy import Pool as ThreadPool
 from threading import Thread
 from glob import iglob
-from os.path import join as path_join, isdir, abspath, dirname
-from time import sleep
+from os.path import join as path_join, abspath, dirname
 
 import webview
 
@@ -135,7 +134,7 @@ class Api():
     def __init__(self, config):
         self.cli = PogCli()
         self.config = config
-        self.cli.set_keyfiles(self.config.get('keyfiles'))
+        self.cli.set_keyfiles(*self.config.get('keyfiles', []))
         self._refresh_list_manifests()
 
     def _refresh_list_manifests(self):
@@ -171,7 +170,7 @@ class Api():
             keyfiles.append(f)
 
         self.config['keyfiles'] = keyfiles
-        self.cli.set_keyfiles(keyfiles)
+        self.cli.set_keyfiles(*keyfiles)
 
         return keyfiles
 
@@ -205,16 +204,20 @@ class Api():
         paths = backfill_parent_dirs(blobs.keys())
         return [{'path': p, **blob_details(blobs.get(p))} for p in paths]
 
-    def _backgroundDownload(self, status_iter, mfn, dest_path):
+    def _backgroundProgress(self, status_iter, mfn, dest_path=None):
         for info in status_iter:
             # need to snapshot these better
             percent = info['current'] * 100 / info['total']
             print('giving {} to window'.format(info))
             window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(mfn, percent))
-        self.systemOpenFolder(dest_path)
+
+        if dest_path:
+            self.systemOpenFolder(dest_path)
 
     def downloadArchive(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
+        if fs_name == 'local' and path:
+            path = abspath(path)
         real_mfn_path = join_fs_path(fs_name, bucket, path)
 
         path = window.create_file_dialog(webview.FOLDER_DIALOG)[0]
@@ -227,14 +230,27 @@ class Api():
         status_iter = self.cli.decrypt(real_mfn_path, cwd=path)
         first_chunk = next(status_iter)
         Thread(
-            target=self._backgroundDownload,
+            target=self._backgroundProgress,
             kwargs={'status_iter': status_iter, 'mfn': mfn, 'dest_path': path}
         ).start()
         return first_chunk
 
-    def downloadFile(self, mfn, filename):
+    def downloadFile(self, params):
+        mfn, filename = params
         print('download {} {}'.format(mfn, filename))
         return True
+
+    def createArchive(self, params):
+        paths, destinations = params
+        print('paths: {}'.format(paths))
+        print('destinations: {}'.format(destinations))
+        status_iter = self.cli.encrypt(paths, destinations)
+        first_chunk = next(status_iter)
+        Thread(
+            target=self._backgroundProgress,
+            kwargs={'status_iter': status_iter, 'mfn': 'create-archive'}
+        ).start()
+        return first_chunk
 
     def getLocalFolders(self, __):
         paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)

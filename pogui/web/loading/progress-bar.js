@@ -13,9 +13,10 @@ function finishedClick()
 return {
   add : function(id)
   {
+    console.log('ProgressBar.add() for ' + id);
     var elem = $('\
       <div id="progress-bar-' + id + '" class="progress-bar">\
-      <h1></h1><div class="bar"></div></div>'
+      <h1>' + id + '</h1><div class="bar"></div></div>'
     );
     $('.progress-bars').append(elem);
   },

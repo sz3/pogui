@@ -58,7 +58,12 @@ return {
 
   downloadFile : function(mfn, filename)
   {
-    return window.pywebview.api.downloadFile(mfn, filename).catch(Page.showMessage);
+    return window.pywebview.api.downloadFile([mfn, filename]).catch(Page.showMessage);
+  },
+
+  createArchive : function(paths, destinations)
+  {
+    return window.pywebview.api.createArchive([paths, destinations]).catch(Page.showMessage);
   },
 
   getLocalFolders : function()
