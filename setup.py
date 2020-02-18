@@ -20,12 +20,15 @@ setup(
 
     python_requires='>=3.6',
     install_requires=[
+        'b2',
+        'boto3',
         'pogcli==0.1.2',
-        'PyQtWebEngine',
-        'PyQt5',
         'pywebview',
         'pyyaml',
     ],
+    extras_require={
+        'qt': ['PyQt5', 'PyQtWebEngine'],
+    },
 
     description='Pog User Interface',
     long_description=(
