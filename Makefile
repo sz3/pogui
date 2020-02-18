@@ -6,5 +6,5 @@ clean:
 	rm -rf build/ dist/ *.egg *.egg-info/
 
 js_test:
-	node_modules/.bin/node-qunit-phantomjs js_test/tests.html
+	node_modules/.bin/node-qunit-phantomjs js_tests/tests.html
 
