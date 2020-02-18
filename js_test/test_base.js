@@ -14,6 +14,9 @@ QUnit.testStart(function(details) {
     {'path': 'local:mydir/home/1.txt'}
   ]);
   Page.init('open-archive');
+
+  Settings.refreshRemoteStorageView(['s3:test']);
+  CreateArchive.clearCandidatePaths();
 });
 
 QUnit.testDone(function(details) {

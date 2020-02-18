@@ -100,6 +100,12 @@ return {
     return _thenDoIt(_response['downloadFile']);
   },
 
+  createArchive : function(paths, destinations)
+  {
+    _calls.push('createArchive(' + paths + ', ' + destinations + ')');
+    return _thenDoIt(_response['createArchive']);
+  },
+
   getLocalFolders : function()
   {
     _calls.push('getLocalFolders()');
