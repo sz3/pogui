@@ -13,18 +13,23 @@ function finishedClick()
 return {
   add : function(id)
   {
-    console.log('ProgressBar.add() for ' + id);
-    var elem = $('\
-      <div id="progress-bar-' + id + '" class="progress-bar">\
-      <h1>' + id + '</h1><div class="bar"></div></div>'
-    );
-    $('.progress-bars').append(elem);
+    // really more of a find_or_create()
+    var elem = $('[id="progress-bar-' + id + '"]');
+    if (!elem.length)
+    {
+      elem = $('\
+        <div id="progress-bar-' + id + '" class="progress-bar">\
+        <h1>' + id + '</h1><div class="bar"></div></div>'
+      );
+      $('.progress-bars').append(elem);
+    }
+    return elem;
   },
 
   update : function(id, percent)
   {
     console.log('ProgressBar.update() with ' + id + ' ... ' + percent);
-    var elem = $('[id="progress-bar-' + id + '"]');
+    var elem = ProgressBar.add(id);
     elem.find('h1').html(percent);
     elem.find('.bar').width(percent);
     if (percent == '100.00%')
