@@ -392,8 +392,9 @@ return {
       {
         var download = $('<a href="javascript:;" title="Download" class="download-icon">⇩</a>');
         download.click(function() {
-          Api.downloadArchive(id).then(function() {
-            ProgressBar.add(id);
+          Api.downloadArchive(id).then(function(res) {
+            if (res)
+              ProgressBar.add(id);
           });
         });
         act.append(download);

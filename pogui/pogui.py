@@ -100,6 +100,11 @@ def join_fs_path(fs, bucket, path):
     return full
 
 
+def system_open_folder(path):
+    # https://stackoverflow.com/questions/6631299/python-opening-a-folder-in-explorer-nautilus-mac-thingie/16204023
+    webbrowser.open(abspath(path))
+
+
 class ListManifests():
     def __init__(self, locations):
         self.total = []
@@ -156,9 +161,9 @@ class Api():
     def updateKeyFilesDir(self, __=None):
         print("Getting dem keyfiles {}".format(__))
         path = window.create_file_dialog(webview.FOLDER_DIALOG)
-        print("got {}".format(path))
-        if path:
-            path = path[0]
+        if not path:
+            return self.listKeyfiles()
+        path = path[0]
 
         keyfiles = []
         for f in iglob(path_join(path, '*.encrypt')):
@@ -179,14 +184,6 @@ class Api():
 
     def listKeyfiles(self, __=None):
         return self.config.get('keyfiles', [])
-
-    def scanFiles(self, where=None):
-        where = where or "local"
-        fs = get_cloud_fs(where)()
-
-        all_files = backfill_parent_dirs(fs.list_files(recursive=True))
-        res = [{'path': f} for f in all_files]
-        return res
 
     def listManifests(self, __=None):
         self._refresh_list_manifests()
@@ -211,7 +208,7 @@ class Api():
             window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(mfn, percent))
 
         if dest_path:
-            self.systemOpenFolder(dest_path)
+            system_open_folder(dest_path)
 
     def downloadArchive(self, mfn):
         fs_name, bucket, path = split_fs_path(mfn)
@@ -219,13 +216,11 @@ class Api():
             path = abspath(path)
         real_mfn_path = join_fs_path(fs_name, bucket, path)
 
-        path = window.create_file_dialog(webview.FOLDER_DIALOG)[0]
+        path = window.create_file_dialog(webview.FOLDER_DIALOG)
         if not path:
-            return False
+            return None
+        path = path[0]
 
-        # need to hold on to path and call systemOpenFolder(path) when we're done...
-        # maybe do one `next()` of the iter to make sure things are going ol?
-        print('downloadin {} to {}'.format(real_mfn_path, path))
         status_iter = self.cli.decrypt(real_mfn_path, cwd=path)
         first_chunk = next(status_iter)
         Thread(
@@ -241,8 +236,6 @@ class Api():
 
     def createArchive(self, params):
         paths, destinations = params
-        print('paths: {}'.format(paths))
-        print('destinations: {}'.format(destinations))
         status_iter = self.cli.encrypt(paths, destinations)
         first_chunk = next(status_iter)
         Thread(
@@ -252,33 +245,19 @@ class Api():
         return first_chunk
 
     def getLocalFolders(self, __):
-        paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)
-        return paths
+        folder_paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)
+        return folder_paths
 
     def getLocalFiles(self, __):
-        paths = window.create_file_dialog(webview.OPEN_DIALOG, allow_multiple=True)
-        return paths
+        file_paths = window.create_file_dialog(webview.OPEN_DIALOG, allow_multiple=True)
+        return file_paths
 
     def dragDrop(self, mfn):
         print('dragDrop mfn %s' % mfn)
 
-    def editItem(self, item):
-        print('Edited item %s' % item)
-
-    def toggleItem(self, item):
-        print('Toggled item %s' % item)
-
-    def toggleFullscreen(self, param):
-        webview.windows[0].toggle_fullscreen()
-
-    def emergencyExit(self, url):
+    def emergencyExit(self, url=None):
         print('emergency exit -- tried to navigate elsewhere!')
-        import os
-        os._exit(1)
-
-    def systemOpenFolder(self, path):
-        # https://stackoverflow.com/questions/6631299/python-opening-a-folder-in-explorer-nautilus-mac-thingie/16204023
-        webbrowser.open(abspath(path))
+        on_closed()
 
 
 def on_closed():
