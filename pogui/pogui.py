@@ -109,10 +109,9 @@ class ListManifests():
     def _list_manifests(self, loc):
         print('list manifests {}'.format(loc))
         fs_name, bucket, path = split_fs_path(loc)
-        fs = get_cloud_fs(fs_name)(bucket, root=path)
-        kw = {'recursive': True} if fs_name == 'local' else {}
-
         try:
+            fs = get_cloud_fs(fs_name)(bucket, root=path)
+            kw = {'recursive': True} if fs_name == 'local' else {}
             all_files = backfill_parent_dirs(fs.list_files(pattern='*.mfn', **kw))
         except Exception as e:
             print('ListManifests failed for {} -- {}'.format(loc, str(e)))
@@ -154,7 +153,7 @@ class Api():
     def listFS(self, __=None):
         return sorted(self.config.get('fs', []))
 
-    def updateKeyFilesDir(self, __):
+    def updateKeyFilesDir(self, __=None):
         print("Getting dem keyfiles {}".format(__))
         path = window.create_file_dialog(webview.FOLDER_DIALOG)
         print("got {}".format(path))
@@ -303,7 +302,8 @@ def main():
     global window
     config = Config()
     api = Api(config)
-    window = webview.create_window('PogUI', 'web/index.html', js_api=api, min_size=(600, 450), text_select=True)
+    index_html = path_join(dirname(abspath(__file__)), 'web', 'index.html')
+    window = webview.create_window('PogUI', index_html, js_api=api, min_size=(600, 450), text_select=True)
     window.closed += on_closed
     webview.start(load_page_data, window, debug=config.get('debug', False))
 
