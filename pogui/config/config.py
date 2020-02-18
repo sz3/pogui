@@ -28,11 +28,12 @@ class Config():
     def get(self, key, default=None):
         return self.content.get(key) or default
 
-    def spush(self, key, elem):
-        current = self.get(key, [])
-        self[key] = current + [elem]
+    def lpush(self, key, elem):
+        current = set(self.get(key, []))
+        current.add(elem)
+        self[key] = sorted(current)
 
-    def spop(self, key, elem):
-        current = self.get(key, [])
-        current.remove(elem)
-        self[key] = current
+    def lpop(self, key, elem):
+        current = set(self.get(key, []))
+        current.discard(elem)
+        self[key] = sorted(current)

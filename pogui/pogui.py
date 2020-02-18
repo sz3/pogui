@@ -49,15 +49,15 @@ class Api():
     def addFS(self, params):
         fs_name, bucket = params
         fs_path = '{}:{}'.format(fs_name.lower(), bucket)
-        self.config.spush('fs', fs_path)
+        self.config.lpush('fs', fs_path)
         return self.listFS()
 
     def removeFS(self, fs_path):
-        self.config.spop('fs', fs_path)
+        self.config.lpop('fs', fs_path)
         return self.listFS()
 
     def listFS(self, __=None):
-        return sorted(self.config.get('fs', []))
+        return self.config.get('fs', [])
 
     def updateKeyFilesDir(self, __=None):
         print("Getting dem keyfiles {}".format(__))
@@ -80,7 +80,7 @@ class Api():
         return keyfiles
 
     def removeKeyfile(self, path):
-        self.config.spop('keyfiles', path)
+        self.config.lpop('keyfiles', path)
         return self.listKeyfiles()
 
     def listKeyfiles(self, __=None):
