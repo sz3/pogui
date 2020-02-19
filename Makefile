@@ -1,4 +1,8 @@
-.PHONY: clean test js_test
+.PHONY: pypi clean test js_test
+
+pypi:
+	python setup.py sdist
+	twine upload dist/*.tar.gz
 
 clean:
 	find . -name '*.py[co]' -delete
