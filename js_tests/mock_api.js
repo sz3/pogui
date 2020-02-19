@@ -76,10 +76,10 @@ return {
     return _thenDoIt(_response['listKeyfiles']);
   },
 
-  updateKeyFilesDir : function()
+  updateKeyfilesDir : function()
   {
-    _calls.push('updateKeyFilesDir()');
-    return _thenDoIt(_response['updateKeyFilesDir']);
+    _calls.push('updateKeyfilesDir()');
+    return _thenDoIt(_response['updateKeyfilesDir']);
   },
 
   removeKeyfile : function(entry)

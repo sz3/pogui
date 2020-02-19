@@ -59,21 +59,13 @@ class Api():
     def listFS(self, __=None):
         return self.config.get('fs', [])
 
-    def updateKeyFilesDir(self, __=None):
-        print("Getting dem keyfiles {}".format(__))
+    def updateKeyfilesDir(self, __=None):
         path = window.create_file_dialog(webview.FOLDER_DIALOG)
         if not path:
             return self.listKeyfiles()
         path = path[0]
 
-        keyfiles = []
-        for f in iglob(path_join(path, '*.encrypt')):
-            keyfiles.append(f)
-        for f in iglob(path_join(path, '*.decrypt')):
-            keyfiles.append(f)
-        for f in iglob(path_join(path, '*.keyfile')):
-            keyfiles.append(f)
-
+        keyfiles = sorted([f for f in iglob(path_join(path, '*'))])
         self.config['keyfiles'] = keyfiles
         self.cli.set_keyfiles(*keyfiles)
 
@@ -81,7 +73,9 @@ class Api():
 
     def removeKeyfile(self, path):
         self.config.lpop('keyfiles', path)
-        return self.listKeyfiles()
+        keyfiles = self.listKeyfiles()
+        self.cli.set_keyfiles(*keyfiles)
+        return keyfiles
 
     def listKeyfiles(self, __=None):
         return self.config.get('keyfiles', [])

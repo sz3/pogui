@@ -27,7 +27,7 @@ return {
     $('button.settings-storage-add').unbind().click(addRemoteStorageClick);
 
     CheckList.get('settings-remote-storage').setOnRemove(Settings.removeRemoteStorage);
-    CheckList.get('settings-keyfiles').setOnRemove(Settings.removeKeyFile);
+    CheckList.get('settings-keyfiles').setOnRemove(Settings.removeKeyfile);
   },
 
   addRemoteStorage : function(storage_type, bucket)
@@ -46,12 +46,12 @@ return {
     CreateArchive.init();
   },
 
-  updateKeyFilesDir : function()
+  updateKeyfilesDir : function()
   {
-    Api.updateKeyFilesDir().then(Settings.refreshKeyfilesView);
+    Api.updateKeyfilesDir().then(Settings.refreshKeyfilesView);
   },
 
-  removeKeyFile : function(entry)
+  removeKeyfile : function(entry)
   {
     Api.removeKeyfile(entry).then(Settings.refreshKeyfilesView);
   },

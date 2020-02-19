@@ -89,11 +89,11 @@ QUnit.test( "remove remote storage", function( assert ) {
 
 QUnit.test( "update keyfiles", function( assert ) {
   settingsSetup();
-  Api.setResponseForCall('updateKeyFilesDir', ['/path/to/key']);
+  Api.setResponseForCall('updateKeyfilesDir', ['/path/to/key']);
 
   $('#settings button.settings-keyfiles-add').click();
 
-  assert.deepEqual(Api.calls(), ['updateKeyFilesDir()']);
+  assert.deepEqual(Api.calls(), ['updateKeyfilesDir()']);
   assert.deepEqual(getKeyfileEntries(), ['/path/to/key']);
 });
 

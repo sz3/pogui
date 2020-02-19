@@ -24,7 +24,7 @@ class AsyncListManifestsTest(TestCase):
         mock_local.return_value = mock_local
         mock_local.list_files.return_value = ['foo/', 'bar.txt']
 
-        alm = AsyncListManifests(['s3:foo', 'b2://mybucket', 'kaboom:onoes', 'local'])
+        alm = AsyncListManifests(['s3:foo', 'b2:mybucket', 'kaboom:onoes', 'local'])
         res = alm.wait()
 
         self.assertEqual(res, [
@@ -34,12 +34,19 @@ class AsyncListManifestsTest(TestCase):
             {'path': 's3:foo/path/'},
             {'path': 's3:foo/path/to/'},
             {'path': 's3:foo/path/to/3.txt'},
-            {'path': 'b2://mybucket/'},
-            {'path': 'b2://mybucket/a.txt'},
-            {'path': 'b2://mybucket/b.txt'},
-            {'path': 'b2://mybucket/mydir/'},
-            {'path': 'b2://mybucket/mydir/c.txt'},
+            {'path': 'b2:mybucket/'},
+            {'path': 'b2:mybucket/a.txt'},
+            {'path': 'b2:mybucket/b.txt'},
+            {'path': 'b2:mybucket/mydir/'},
+            {'path': 'b2:mybucket/mydir/c.txt'},
             {'path': 'local/'},
             {'path': 'local/bar.txt'},
             {'path': 'local/foo/'},
         ])
+
+        mock_s3.assert_called_once_with('foo', root=None)
+        mock_s3.list_files.assert_called_once_with(pattern='*.mfn')
+        mock_b2.assert_called_once_with('mybucket', root=None)
+        mock_b2.list_files.assert_called_once_with(pattern='*.mfn')
+        mock_local.assert_called_once_with('', root=None)
+        mock_local.list_files.assert_called_once_with(pattern='*.mfn', recursive=True)

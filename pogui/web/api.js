@@ -41,9 +41,9 @@ return {
     return window.pywebview.api.listKeyfiles().catch(Page.showMessage);
   },
 
-  updateKeyFilesDir : function()
+  updateKeyfilesDir : function()
   {
-    return window.pywebview.api.updateKeyFilesDir().catch(Page.showMessage);
+    return window.pywebview.api.updateKeyfilesDir().catch(Page.showMessage);
   },
 
   removeKeyfile : function(entry)
