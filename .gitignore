@@ -1,4 +1,6 @@
+__pycache__/
 build/
 dist/
 node_modules/
+test/__pycache__/
 .pogui.yml
