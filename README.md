@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/sz3/pogui.svg?branch=master)](https://travis-ci.org/sz3/pogui)
+[![Coverage Status](https://coveralls.io/repos/github/sz3/pogui/badge.svg?branch=master)](https://coveralls.io/github/sz3/pogui?branch=master)
+
 ## Installation
 
 From source,
