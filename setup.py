@@ -1,5 +1,10 @@
+from os import path
 from setuptools import setup, find_packages
 
+
+here = path.abspath(path.dirname(__file__))
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='pogui',
@@ -30,10 +35,9 @@ setup(
         'qt': ['PyQt5', 'PyQtWebEngine'],
     },
 
-    description='Pog User Interface',
-    long_description=(
-        'File encryption and backup UI.'
-    ),
+    description='File encryption and backup GUI',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
 
     author="Stephen Zimmerman",
     author_email="sz@galacticicecube.com",
