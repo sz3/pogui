@@ -7,7 +7,7 @@
 
 A desktop application for encrypting and/or backing up files. Uses [pog](https://github.com/sz3/pog) under the hood, as the name suggests.
 
-pogui is beta software! But it is *functional*, so there's that!
+pogui is beta software! But it does mostly work, so there's that!
 
 ## Installation
 
