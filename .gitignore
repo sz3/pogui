@@ -3,4 +3,5 @@ build/
 dist/
 node_modules/
 test/__pycache__/
+.coverage
 .pogui.yml

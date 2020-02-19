@@ -6,7 +6,8 @@ clean:
 	rm -rf build/ dist/ *.egg *.egg-info/
 
 test:
-	python -m unittest
+	coverage run -m unittest
+	coverage report
 
 js_test:
 	node_modules/.bin/node-qunit-phantomjs js_tests/tests.html
