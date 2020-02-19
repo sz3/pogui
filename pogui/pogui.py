@@ -26,7 +26,9 @@ def on_closed():
     os._exit(1)
 
 
-def blob_details(blobs):
+def blob_details(path, blobs):
+    if not path or path.endswith('/'):
+        return {}
     blobs = blobs or []
     shortened = [name[:10] + '…' if len(name) > 10 else name for name in blobs]
     return {
@@ -93,7 +95,7 @@ class Api():
 
         blobs = self.cli.dumpManifest(mfn)
         paths = backfill_parent_dirs(blobs.keys())
-        return [{'path': p, **blob_details(blobs.get(p))} for p in paths]
+        return [{'path': p, **blob_details(p, blobs.get(p))} for p in paths]
 
     def _backgroundProgress(self, status_iter, mfn, dest_path=None):
         for info in status_iter:
@@ -139,11 +141,11 @@ class Api():
         ).start()
         return first_chunk
 
-    def getLocalFolders(self, __):
+    def getLocalFolders(self, __=None):
         folder_paths = window.create_file_dialog(webview.FOLDER_DIALOG, allow_multiple=True)
         return folder_paths
 
-    def getLocalFiles(self, __):
+    def getLocalFiles(self, __=None):
         file_paths = window.create_file_dialog(webview.OPEN_DIALOG, allow_multiple=True)
         return file_paths
 
