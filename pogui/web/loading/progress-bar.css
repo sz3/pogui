@@ -5,18 +5,17 @@
 }
 
 .progress-bar .bar {
-  position: absolute;
   width: 0%;
-  background: linear-gradient(to right top, #CDDC39 0%, #03A9F4 50%, #e6f0f5 50%);
-  height: 2px;
+  background: linear-gradient(#03A9F4 0%, DarkSlateGrey 5%, #1C2F2F 95%, yellowgreen 100%);
+  height: 2.4em;
+  margin-top: -2.4em;
+  z-index: -2;
+  border-bottom: 2px DarkSlateGrey;
 }
 
 .progress-bar.done .bar {
-  top: 0;
-  height: 100%;
   transition: all .33s ease;
   background: #2A4747;
-  z-index: -1;
 }
 
 .progress-bar.done:hover .bar {
@@ -30,4 +29,19 @@
   font-size: 2em;
   color: LightGrey;
   margin: 0px;
+  z-index: 2;
+  text-shadow: 0.5px 0.5px 5px black;
+}
+
+.progress-bar .status {
+  position: relative;
+  color: lightblue;
+  top: 10px;
+  left: 10px;
+  margin-bottom: -20px;
+  height: 20px;
+  width: 30%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 0;
 }

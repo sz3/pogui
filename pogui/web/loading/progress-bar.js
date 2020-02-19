@@ -19,7 +19,7 @@ return {
     {
       elem = $('\
         <div id="progress-bar-' + id + '" class="progress-bar">\
-        <h1>' + id + '</h1><div class="bar"></div></div>'
+        <div class="status">' + id + '</div><h1></h1><div class="bar"></div></div>'
       );
       $('.progress-bars').append(elem);
     }
@@ -49,5 +49,11 @@ return {
 
 /*
 ProgressBar.add('testprogress.mfn');
-ProgressBar.update('testprogress.mfn', '100.00%');
+ProgressBar.update('testprogress.mfn', '50.00%');
+
+ProgressBar.add('areallyreallyreallylongmfnhoooooboy.mfn');
+ProgressBar.update('areallyreallyreallylongmfnhoooooboy.mfn', '100.00%');
+
+ProgressBar.add('ooo.mfn');
+ProgressBar.update('ooo.mfn', '100.00%');
 //*/
