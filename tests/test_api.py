@@ -10,12 +10,16 @@ from pogui.config import Config
 
 
 @patch('pogui.pogui.window', autoSpec=True)
-@patch('pogui.pogui.AsyncListManifests', autoSpec=True)
 class ApiTest(TestCase):
     def setUp(self):
         self.tempdir = TemporaryDirectory()
         self.config = Config(path_join(self.tempdir.name, 'config.yml'))
         self.mock_cli = MagicMock()
+
+        patcher = patch('pogui.pogui.AsyncListManifests', autoSpec=True)
+        self.mock_async_list = patcher.start()
+        self.mock_async_list.return_value = self.mock_async_list
+        self.addCleanup(patcher.stop)
 
         self.api = Api(self.config)
         self.api.cli = self.mock_cli
@@ -24,23 +28,24 @@ class ApiTest(TestCase):
         with self.tempdir:
             pass
 
-    def test_list_manifests_on_init(self, mock_async_list, mock_window):
-        mock_async_list.return_value = mock_async_list
+    def test_list_manifests_on_init(self, mock_window):
+        self.mock_async_list.assert_called_once_with(['local'])  # from setUp()
+        self.mock_async_list.reset_mock()
 
         self.config.lpush('fs', 'foobar')
         self.api = Api(self.config)
         self.api.cli = self.mock_cli
 
-        mock_async_list.assert_called_once_with(['foobar', 'local'])
+        self.mock_async_list.assert_any_call(['foobar', 'local'])
 
-    def test_addFS(self, mock_async_list, mock_window):
+    def test_addFS(self, mock_window):
         res = self.api.addFS(('s3', 'bucket'))
         self.assertEqual(res, ['s3:bucket'])
 
         res = self.api.addFS(('s3', 'another'))
         self.assertEqual(res, ['s3:another', 's3:bucket'])
 
-    def test_removeFS(self, mock_async_list, mock_window):
+    def test_removeFS(self, mock_window):
         res = self.api.removeFS('s3:bucket')
         self.assertEqual(res, [])
 
@@ -54,7 +59,7 @@ class ApiTest(TestCase):
         res = self.api.removeFS('b2:hello')
         self.assertEqual(res, ['s3:another'])
 
-    def test_listFS(self, mock_async_list, mock_window):
+    def test_listFS(self, mock_window):
         res = self.api.listFS()
         self.assertEqual(res, [])
 
@@ -66,7 +71,7 @@ class ApiTest(TestCase):
         res = self.api.listFS()
         self.assertEqual(res, ['s3:bucket', 's3:two'])
 
-    def test_updateKeyfilesDir(self, mock_async_list, mock_window):
+    def test_updateKeyfilesDir(self, mock_window):
         keyfiles = ['key.encrypt', 'key.decrypt', 'foofile']
         for fn in keyfiles:
             with open(path_join(self.tempdir.name, fn), 'wt'):
@@ -82,7 +87,7 @@ class ApiTest(TestCase):
 
         mock_window.create_file_dialog.assert_called_once_with(webview.FOLDER_DIALOG)
 
-    def test_updateKeyfilesDir_cancel(self, mock_async_list, mock_window):
+    def test_updateKeyfilesDir_cancel(self, mock_window):
         mock_window.create_file_dialog.return_value = tuple()
 
         self.assertEqual(self.api.updateKeyfilesDir(), [])
@@ -90,7 +95,7 @@ class ApiTest(TestCase):
         self.assertEqual(self.api.cli.set_keyfiles.call_count, 0)
         mock_window.create_file_dialog.assert_called_once_with(webview.FOLDER_DIALOG)
 
-    def test_removeKeyfile(self, mock_async_list, mock_window):
+    def test_removeKeyfile(self, mock_window):
         keyfiles = ['key.encrypt', 'key.decrypt', 'foofile']
         self.config['keyfiles'] = keyfiles
 
@@ -98,3 +103,19 @@ class ApiTest(TestCase):
         self.assertEqual(self.api.removeKeyfile('foofile'), new_keyfiles)
         self.assertEqual(self.config.get('keyfiles'), new_keyfiles)
         self.api.cli.set_keyfiles.assert_called_once_with(*new_keyfiles)
+
+    def test_waitForManifests(self, mock_window):
+        # part of the startup routine. Expects AsyncListManifests to be running
+        self.mock_async_list.wait.return_value = ['foo', 'bar']
+
+        self.assertEqual(self.api.waitForManifests(), ['foo', 'bar'])
+        self.mock_async_list.wait.assert_called_once_with()
+
+    def test_listManifests(self, mock_window):
+        self.mock_async_list.reset_mock()
+        self.mock_async_list.wait.return_value = ['foo', 'bar']
+        self.config.lpush('fs', 'foobar')
+
+        self.assertEqual(self.api.listManifests(), ['foo', 'bar'])
+        self.mock_async_list.assert_called_once_with(['foobar', 'local'])
+        self.mock_async_list.wait.assert_called_once_with()
