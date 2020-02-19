@@ -22,6 +22,10 @@
   background: #3C6565;
 }
 
+.progress-bar {
+  padding-bottom: 5px;
+}
+
 .progress-bar h1 {
   width: 100%;
   text-align: center;

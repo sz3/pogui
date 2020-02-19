@@ -53,7 +53,4 @@ ProgressBar.update('testprogress.mfn', '50.00%');
 
 ProgressBar.add('areallyreallyreallylongmfnhoooooboy.mfn');
 ProgressBar.update('areallyreallyreallylongmfnhoooooboy.mfn', '100.00%');
-
-ProgressBar.add('ooo.mfn');
-ProgressBar.update('ooo.mfn', '100.00%');
 //*/
