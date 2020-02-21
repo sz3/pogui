@@ -104,6 +104,26 @@ class ApiTest(TestCase):
         self.assertEqual(self.config.get('keyfiles'), new_keyfiles)
         self.api.cli.set_keyfiles.assert_called_once_with(*new_keyfiles)
 
+    def test_zoom(self, mock_window):
+        self.assertEqual(self.api.zoom(), 100)
+
+        self.config['zoom'] = 150
+        self.assertEqual(self.api.zoom(), 150)
+
+    def test_zoomChange(self, mock_window):
+        self.assertEqual(self.api.zoomChange(10), 110)  # from default
+        self.assertEqual(self.api.zoomChange(10), 120)
+        self.assertEqual(self.api.zoomChange(10), 130)
+        self.assertEqual(self.api.zoomChange(-10), 120)
+        self.assertEqual(self.api.zoomChange(-20), 100)
+        self.assertEqual(self.api.zoomChange(-10), 90)
+        self.assertEqual(self.config.get('zoom'), 90)
+
+    def test_zoomReset(self, mock_window):
+        self.config['zoom'] = 150
+        self.assertEqual(self.api.zoomReset(), 100)
+        self.assertEqual(self.config.get('zoom'), None)
+
     def test_waitForManifests(self, mock_window):
         # part of the startup routine. Expects AsyncListManifests to be running
         self.mock_async_list.wait.return_value = ['foo', 'bar']
