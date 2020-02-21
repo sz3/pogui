@@ -30,7 +30,7 @@ QUnit.test( "initial load manifest list", function( assert ) {
   var files = getFiles('open-archive');
 
   assert.deepEqual( folders, ['s3:bucket/', 'local:mydir/'] );
-  assert.deepEqual( files, ['local:local.mfn'] );
+  assert.deepEqual( files, ['local:local.mfn', 'local:local2.mfn'] );
 });
 
 QUnit.test( "open dir", function( assert ) {
@@ -71,7 +71,7 @@ QUnit.test( "breadcrumbs", function( assert ) {
 });
 
 QUnit.test( "refresh", function( assert ) {
-  Api.setResponseForCall('listManifests', [{'path': 's3:mfns/'}, {'path': 'refresh.mfn'}]);
+  Api.setResponseForCall('listManifests', [{'path': ''}, {'path': 's3:mfns/'}, {'path': 'refresh.mfn'}]);
 
   // dig in
   $('#open-archive a.folders')[0].click();
@@ -88,7 +88,7 @@ QUnit.test( "refresh", function( assert ) {
 });
 
 QUnit.test( "open archive and download", function( assert ) {
-  Api.setResponseForCall('scanManifest', [{'path': 'zdir/'}, {'path': '1.txt'}]);
+  Api.setResponseForCall('scanManifest', [{'path': ''}, {'path': 'zdir/'}, {'path': '1.txt'}]);
 
   $('#open-archive a.files')[0].click();
 
@@ -109,4 +109,19 @@ QUnit.test( "open archive and download", function( assert ) {
   $('[id="local:local.mfn"] .filemanager-actions a')[0].click();
 
   assert.deepEqual(Api.calls(), ['downloadArchive(local:local.mfn)']);
+});
+
+QUnit.test( "open archive with absolute paths", function( assert ) {
+  Api.setResponseForCall('scanManifest', [{'path': '/'}, {'path': '/dir/'}, {'path': '/dir/file.txt'}]);
+
+  $('#open-archive a.files')[1].click();
+
+  assert.equal(window.location.hash, '#local:local2.mfn');
+  assert.deepEqual(Api.calls(), ['scanManifest(local:local2.mfn)']);
+
+  var folders = getFolders('local:local2.mfn');
+  var files = getFiles('local:local2.mfn');
+
+  assert.deepEqual( folders, ['/dir/'] );
+  assert.deepEqual( files, [] );
 });

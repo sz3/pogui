@@ -4,11 +4,13 @@ QUnit.config.reorder = false;
 QUnit.testStart(function(details) {
   FileBrowser.get('open-archive').clear();
   FileBrowser.get('open-archive').showFiles([
+    {'path': ''},
     {'path': 's3:bucket/'},
     {'path': 's3:bucket/dir/'},
     {'path': 's3:bucket/dir/foo'},
     {'path': 's3:bucket/file.txt'},
     {'path': 'local:local.mfn'},
+    {'path': 'local:local2.mfn'},
     {'path': 'local:mydir/'},
     {'path': 'local:mydir/home/'},
     {'path': 'local:mydir/home/1.txt'}
