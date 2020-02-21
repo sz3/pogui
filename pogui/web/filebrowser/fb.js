@@ -11,6 +11,8 @@ var _filemanager = $('[id="' + _parent_id + '"].filemanager'), // no space
   _breadcrumbs = $('[id="' + _parent_id + '"] .breadcrumbs'),  // space
   _fileList = _filemanager.find('.data');
 
+var _rootPath = '';
+
 // private methods
 function pluralize(num, label) {
   if (!num)
@@ -36,7 +38,7 @@ function updateSearch(query) {
 function navigateTo(path) {
   // make path legit
   if (!path || !path.trim().length) {
-    path = '';
+    path = _rootPath;
   }
   _state.setCurrentPath(path);
   render(_state.getResponse(), _state.getCurrentPath(), _state.getBreadcrumbs());
@@ -259,6 +261,7 @@ function clearSearch() {
 
 function showFiles(data) {
   _state.addResponse(data);
+  _rootPath = _state.firstPath();
 
   // Hiding and showing the search box
   _filemanager.find('.search').click(uiSearch);
@@ -290,7 +293,7 @@ function showFiles(data) {
       // sometimes we get erroneous(?) extra events. Sanity check them.
       // the only readon we'd want to navigate is if we click the "root" link
       if ($(this).attr('href') == '📁')
-        navigateTo('');
+        navigateTo(_rootPath);
       return;
     }
 
@@ -309,13 +312,12 @@ function showFiles(data) {
   });
 
   // with everything ready, load the initial state
-  navigateTo('');
+  navigateTo(_rootPath);
   loading(false);
 }
 
 function loading(is_loading)
 {
-  console.log('setting loading to ' + is_loading + ' for ' + _parent_id);
   $('[id="' + _parent_id + '"]').toggleClass('lds-ripple', is_loading);
 }
 
@@ -441,6 +443,6 @@ return {
 FileBrowser.init();
 
 /*var sample =
-[{'path': 's3:bucket/'}, {'path': 's3:bucket/dir/'}, {'path': 's3:bucket/dir/foo'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
+[{'path': ''}, {'path': 's3:bucket/'}, {'path': 's3:bucket/dir/'}, {'path': 's3:bucket/dir/foo'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/

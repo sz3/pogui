@@ -28,6 +28,7 @@ class AsyncListManifestsTest(TestCase):
         res = alm.wait()
 
         self.assertEqual(res, [
+            {'path': ''},
             {'path': 's3:foo/'},
             {'path': 's3:foo/1.txt'},
             {'path': 's3:foo/2.txt'},
