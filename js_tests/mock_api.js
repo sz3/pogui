@@ -88,6 +88,24 @@ return {
     return _thenDoIt(_response['removeKeyfile']);
   },
 
+  zoom : function()
+  {
+    _calls.push('zoom()');
+    return _thenDoIt(_response['zoom']);
+  },
+
+  zoomChange : function(amount)
+  {
+    _calls.push('zoomChange(' + amount + ')');
+    return _thenDoIt(_response['zoomChange']);
+  },
+
+  zoomReset : function()
+  {
+    _calls.push('zoomReset()');
+    return _thenDoIt(_response['zoomReset']);
+  },
+
   downloadArchive : function(mfn)
   {
     _calls.push('downloadArchive(' + mfn + ')');

@@ -64,7 +64,7 @@ return {
   zoom : function(percent)
   {
     percent += '%';
-    $('#settings .current-zoom').text(percent);
+    $('#settings .zoom-setting-current').text(percent);
     document.body.style.zoom = percent;
   },
 
