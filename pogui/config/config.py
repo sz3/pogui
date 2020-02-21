@@ -28,6 +28,10 @@ class Config():
     def get(self, key, default=None):
         return self.content.get(key) or default
 
+    def unset(self, key):
+        self.content.pop(key, None)
+        self.save()
+
     def lpush(self, key, elem):
         current = set(self.get(key, []))
         current.add(elem)

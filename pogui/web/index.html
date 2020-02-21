@@ -73,6 +73,13 @@
   <h2 class="content-subhead">Keyfiles</h2>
   <form id="settings-keyfiles" class="pog-checklist"></form>
   <button class="pure-button settings-keyfiles-add" href="javascript:;" onclick="Settings.updateKeyfilesDir()">Find</button>
+
+  <h2 class="content-subhead">Zoom</h2>
+  <div class="pure-button-group" role="group" aria-label="...">
+    <button class="pure-button" href="javascript:;" onclick="Settings.zoomOut()">-</button>
+    <button class="current-zoom pure-button" href="javascript:;" onclick="Settings.zoomReset()">100%</button>
+    <button class="pure-button" href="javascript:;" onclick="Settings.zoomIn()">+</button>
+  </div>
 </div>
 
 <div id="create-archive" class="page create-archive">

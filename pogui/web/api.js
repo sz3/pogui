@@ -51,6 +51,21 @@ return {
     return window.pywebview.api.removeKeyfile(entry).catch(Page.showMessage);
   },
 
+  zoom : function()
+  {
+    return window.pywebview.api.zoom().catch(Page.showMessage);
+  },
+
+  zoomChange : function(amount)
+  {
+    return window.pywebview.api.zoomChange(amount).catch(Page.showMessage);
+  },
+
+  zoomReset : function()
+  {
+    return window.pywebview.api.zoomReset().catch(Page.showMessage);
+  },
+
   downloadArchive : function(mfn)
   {
     return window.pywebview.api.downloadArchive(mfn).catch(Page.showMessage);

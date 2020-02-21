@@ -82,6 +82,18 @@ class Api():
     def listKeyfiles(self, __=None):
         return self.config.get('keyfiles', [])
 
+    def zoom(self, __=None):
+        return self.config.get('zoom', 100)
+
+    def zoomChange(self, amount):
+        new_zoom = self.zoom() + amount;
+        self.config['zoom'] = new_zoom
+        return new_zoom
+
+    def zoomReset(self, __=None):
+        self.config.unset('zoom')
+        return self.zoom()
+
     def listManifests(self, __=None):
         self._refresh_list_manifests()
         return self.waitForManifests()
@@ -162,6 +174,7 @@ def load_page_data(window):
         'waitForManifests',
         'listFS',
         'listKeyfiles',
+        'zoom',
     ]
     for fun in startups:
         js = 'Page.pyinit("{}");'.format(fun)
