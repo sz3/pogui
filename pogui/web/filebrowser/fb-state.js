@@ -34,7 +34,7 @@ return {
     return _response;
   },
 
-  firstPath : function()
+  rootPath : function()
   {
     if (!_response || !_response[0])
       return '';

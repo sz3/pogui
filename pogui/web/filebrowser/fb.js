@@ -11,8 +11,6 @@ var _filemanager = $('[id="' + _parent_id + '"].filemanager'), // no space
   _breadcrumbs = $('[id="' + _parent_id + '"] .breadcrumbs'),  // space
   _fileList = _filemanager.find('.data');
 
-var _rootPath = '';
-
 // private methods
 function pluralize(num, label) {
   if (!num)
@@ -38,7 +36,7 @@ function updateSearch(query) {
 function navigateTo(path) {
   // make path legit
   if (!path || !path.trim().length) {
-    path = _rootPath;
+    path = _state.rootPath();
   }
   _state.setCurrentPath(path);
   render(_state.getResponse(), _state.getCurrentPath(), _state.getBreadcrumbs());
@@ -261,7 +259,6 @@ function clearSearch() {
 
 function showFiles(data) {
   _state.addResponse(data);
-  _rootPath = _state.firstPath();
 
   // Hiding and showing the search box
   _filemanager.find('.search').click(uiSearch);
@@ -293,7 +290,7 @@ function showFiles(data) {
       // sometimes we get erroneous(?) extra events. Sanity check them.
       // the only readon we'd want to navigate is if we click the "root" link
       if ($(this).attr('href') == '📁')
-        navigateTo(_rootPath);
+        navigateTo(_state.rootPath());
       return;
     }
 
@@ -312,7 +309,7 @@ function showFiles(data) {
   });
 
   // with everything ready, load the initial state
-  navigateTo(_rootPath);
+  navigateTo(_state.rootPath());
   loading(false);
 }
 
