@@ -15,7 +15,7 @@ def backfill_parent_dirs(paths):
     paths = list(paths)
     all_paths = set(paths)
     for p in paths:
-        while p:
+        while p and p != '/':
             p = _dirname(p)
             if p in all_paths:
                 break

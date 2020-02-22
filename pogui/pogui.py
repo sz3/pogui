@@ -43,6 +43,7 @@ class Api():
         self.config = config
         self.cli.set_keyfiles(*self.config.get('keyfiles', []))
         self._refresh_list_manifests()
+        self._progress_count = 0
 
     def _refresh_list_manifests(self):
         locations = self.config.get('fs', []) + ['local']
@@ -82,6 +83,18 @@ class Api():
     def listKeyfiles(self, __=None):
         return self.config.get('keyfiles', [])
 
+    def zoom(self, __=None):
+        return self.config.get('zoom', 100)
+
+    def zoomChange(self, amount):
+        new_zoom = self.zoom() + amount;
+        self.config['zoom'] = new_zoom
+        return new_zoom
+
+    def zoomReset(self, __=None):
+        self.config.unset('zoom')
+        return self.zoom()
+
     def listManifests(self, __=None):
         self._refresh_list_manifests()
         return self.waitForManifests()
@@ -97,12 +110,12 @@ class Api():
         paths = backfill_parent_dirs(blobs.keys())
         return [{'path': p, **blob_details(p, blobs.get(p))} for p in paths]
 
-    def _backgroundProgress(self, status_iter, mfn, dest_path=None):
+    def _backgroundProgress(self, status_iter, progress_id, dest_path=None):
         for info in status_iter:
             # need to snapshot these better
             percent = info['current'] * 100 / info['total']
             print('giving {} to window'.format(info))
-            window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(mfn, percent))
+            window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(progress_id, percent))
 
         if dest_path:
             system_open_folder(dest_path)
@@ -120,10 +133,15 @@ class Api():
 
         status_iter = self.cli.decrypt(real_mfn_path, cwd=path)
         first_chunk = next(status_iter)
+
+        self._progress_count += 1
+        progress_id = f'{mfn}.{self._progress_count}'
         Thread(
             target=self._backgroundProgress,
-            kwargs={'status_iter': status_iter, 'mfn': mfn, 'dest_path': path}
+            kwargs={'status_iter': status_iter, 'progress_id': progress_id, 'dest_path': path}
         ).start()
+
+        first_chunk['progress_id'] = progress_id
         return first_chunk
 
     def downloadFile(self, params):
@@ -135,10 +153,15 @@ class Api():
         paths, destinations = params
         status_iter = self.cli.encrypt(paths, destinations)
         first_chunk = next(status_iter)
+
+        self._progress_count += 1
+        progress_id = f'NewArchive.{self._progress_count}'
         Thread(
             target=self._backgroundProgress,
-            kwargs={'status_iter': status_iter, 'mfn': 'create-archive'}
+            kwargs={'status_iter': status_iter, 'progress_id': progress_id}
         ).start()
+
+        first_chunk['progress_id'] = progress_id
         return first_chunk
 
     def getLocalFolders(self, __=None):
@@ -162,6 +185,7 @@ def load_page_data(window):
         'waitForManifests',
         'listFS',
         'listKeyfiles',
+        'zoom',
     ]
     for fun in startups:
         js = 'Page.pyinit("{}");'.format(fun)

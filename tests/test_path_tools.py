@@ -55,12 +55,11 @@ class PathToolsTest(TestCase):
         ])
         self.assertEqual(res, ['', 'bar/', 'bar/hello', 'foo'])
 
-        # this one still needs some work
+        # first path is `/`
         res = backfill_parent_dirs([
             '/my/directory/',
         ])
         self.assertEqual(res, [
-            '',
             '/',
             '/my/',
             '/my/directory/'

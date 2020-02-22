@@ -39,6 +39,19 @@ class ConfigTest(TestCase):
         self.assertEqual(conf.get('new'), ['hello'])
         self.assertEqual(conf.get('number'), 52)
 
+    def test_unset(self):
+        conf = Config(self.config_path)
+        another = Config(self.config_path)
+
+        conf['foo'] = 'hello'
+        another.load()
+
+        conf.unset('foo')
+        another.load()
+
+        self.assertEqual(conf.get('foo'), None)
+        self.assertEqual(another.get('foo'), None)
+
     def test_list_ops(self):
         '''
         no dups -- so basically a set

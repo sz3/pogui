@@ -36,7 +36,7 @@ function updateSearch(query) {
 function navigateTo(path) {
   // make path legit
   if (!path || !path.trim().length) {
-    path = '';
+    path = _state.rootPath();
   }
   _state.setCurrentPath(path);
   render(_state.getResponse(), _state.getCurrentPath(), _state.getBreadcrumbs());
@@ -290,7 +290,7 @@ function showFiles(data) {
       // sometimes we get erroneous(?) extra events. Sanity check them.
       // the only readon we'd want to navigate is if we click the "root" link
       if ($(this).attr('href') == '📁')
-        navigateTo('');
+        navigateTo(_state.rootPath());
       return;
     }
 
@@ -309,13 +309,12 @@ function showFiles(data) {
   });
 
   // with everything ready, load the initial state
-  navigateTo('');
+  navigateTo(_state.rootPath());
   loading(false);
 }
 
 function loading(is_loading)
 {
-  console.log('setting loading to ' + is_loading + ' for ' + _parent_id);
   $('[id="' + _parent_id + '"]').toggleClass('lds-ripple', is_loading);
 }
 
@@ -394,7 +393,7 @@ return {
         download.click(function() {
           Api.downloadArchive(id).then(function(res) {
             if (res)
-              ProgressBar.add(id);
+              ProgressBar.add(res['progress_id']);
           });
         });
         act.append(download);
@@ -441,6 +440,6 @@ return {
 FileBrowser.init();
 
 /*var sample =
-[{'path': 's3:bucket/'}, {'path': 's3:bucket/dir/'}, {'path': 's3:bucket/dir/foo'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
+[{'path': ''}, {'path': 's3:bucket/'}, {'path': 's3:bucket/dir/'}, {'path': 's3:bucket/dir/foo'}, {'path': 's3:bucket/file.mfn'}, {'path': 'local:dir/'}, {'path': 'local:dir/nested/'}, {'path': 'local:dir/nested/bar.mfn'}, {'path': 'local:file.mfn'}];
 FileBrowser.get('open-archive').showFiles(sample);
 //*/

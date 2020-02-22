@@ -59,6 +59,28 @@ return {
   refreshKeyfilesView : function(entry_list)
   {
     CheckList.get('settings-keyfiles').update(entry_list);
+  },
+
+  zoom : function(percent)
+  {
+    percent += '%';
+    $('#settings .zoom-setting-current').text(percent);
+    document.body.style.zoom = percent;
+  },
+
+  zoomIn : function()
+  {
+    Api.zoomChange(10).then(Settings.zoom);
+  },
+
+  zoomOut : function()
+  {
+    Api.zoomChange(-10).then(Settings.zoom);
+  },
+
+  zoomReset : function()
+  {
+    Api.zoomReset().then(Settings.zoom);
   }
 }
 }();

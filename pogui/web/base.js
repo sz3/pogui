@@ -19,7 +19,8 @@ return {
     var targets = {
       'waitForManifests': FileBrowser.get('open-archive').showFiles,
       'listFS': Settings.refreshRemoteStorageView,
-      'listKeyfiles': Settings.refreshKeyfilesView
+      'listKeyfiles': Settings.refreshKeyfilesView,
+      'zoom': Settings.zoom
     };
     Api[apifun]().then(targets[apifun]);
   },

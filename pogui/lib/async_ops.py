@@ -26,6 +26,8 @@ class AsyncListManifests():
 
     def _collect_result(self, res):
         self.total = list(itertools.chain(*res))
+        if self.total:
+            self.total = [{'path': ''}] + self.total
 
     def wait(self):
         self.waiter.wait()

@@ -107,3 +107,51 @@ QUnit.test( "remove keyfile", function( assert ) {
   assert.deepEqual(Api.calls(), ['removeKeyfile(key.one)']);
   assert.deepEqual(getKeyfileEntries(), ['/path/to/key']);
 });
+
+QUnit.test( "change zoom", function( assert ) {
+  settingsSetup();
+  Api.setResponseForCall('zoomChange', 120);
+  Api.setResponseForCall('zoomReset', 100);
+
+  // increase zoom
+  $('#settings .zoom-setting button')[2].click();
+
+  assert.deepEqual(Api.calls(), ['zoomChange(10)']);
+  assert.equal(document.body.style.zoom, '120%');
+  Api.clear();
+
+  // decrease zoom
+  $('#settings .zoom-setting button')[0].click();
+  assert.deepEqual(Api.calls(), ['zoomChange(-10)']);
+  Api.clear();
+
+  // reset zoom
+  $('#settings .zoom-setting button')[1].click();
+  assert.deepEqual(Api.calls(), ['zoomReset()']);
+  assert.equal(document.body.style.zoom, '100%');
+});
+
+QUnit.test( "change zoom", function( assert ) {
+  settingsSetup();
+  Api.setResponseForCall('zoomChange', 120);
+  Api.setResponseForCall('zoomReset', 100);
+
+  // increase zoom
+  $('#settings .zoom-setting button')[2].click();
+
+  assert.deepEqual(Api.calls(), ['zoomChange(10)']);
+  assert.equal(document.body.style.zoom, '120%');
+  assert.equal($('#settings .zoom-setting-current').text(), '120%');
+  Api.clear();
+
+  // decrease zoom
+  $('#settings .zoom-setting button')[0].click();
+  assert.deepEqual(Api.calls(), ['zoomChange(-10)']);
+  Api.clear();
+
+  // reset zoom
+  $('#settings .zoom-setting-current').click();
+  assert.deepEqual(Api.calls(), ['zoomReset()']);
+  assert.equal(document.body.style.zoom, '100%');
+  assert.equal($('#settings .zoom-setting-current').text(), '100%');
+});

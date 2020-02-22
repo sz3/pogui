@@ -9,10 +9,11 @@ var _response = [],
 // public methods
 // Splits a file path and turns it into clickable breadcrumbs
 function generateBreadcrumbs(nextDir) {
-  var paths = nextDir.split('/').slice(0);
-  for(var i=1;i<paths.length;i++){
+  var paths = nextDir.split('/');
+  for (var i = 1; i < paths.length; i++)
     paths[i] = paths[i-1] + '/' + paths[i];
-  }
+  if (!paths[0])
+    paths = paths.slice(1);
   return paths;
 }
 
@@ -31,6 +32,13 @@ return {
   getResponse : function()
   {
     return _response;
+  },
+
+  rootPath : function()
+  {
+    if (!_response || !_response[0])
+      return '';
+    return _response[0].path;
   },
 
   setCurrentPath : function(currentPath)

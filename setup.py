@@ -10,7 +10,7 @@ setup(
     name='pogui',
     license='MIT',
     url='https://github.com/sz3/pogui',
-    version='0.0.1',
+    version='0.0.2',
 
     entry_points={
         'console_scripts': [
@@ -27,7 +27,7 @@ setup(
     install_requires=[
         'b2',
         'boto3',
-        'pogcli==0.1.2',
+        'pogcli==0.1.3',
         'pywebview',
         'pyyaml',
     ],
