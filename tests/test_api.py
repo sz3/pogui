@@ -179,10 +179,10 @@ class ApiTest(TestCase):
         ])
 
         res = self.api.downloadArchive('s3:bucket/dir/file.mfn')
-        self.assertEqual(res, {'current': 1, 'total': 2, 'filename': 'foo'})
+        self.assertEqual(res, {'current': 1, 'total': 2, 'filename': 'foo', 'progress_id': 's3:bucket/dir/file.mfn.1'})
         mock_thread.assert_called_once_with(target=self.api._backgroundProgress, kwargs={
             'status_iter': self.api.cli.decrypt.return_value,
-            'mfn': 's3:bucket/dir/file.mfn',
+            'progress_id': 's3:bucket/dir/file.mfn.1',
             'dest_path': '/home/user/',
         })
 
@@ -208,11 +208,11 @@ class ApiTest(TestCase):
         ])
 
         res = self.api.createArchive((['foo', 'bar'], ['s3:bucket1', 'b2:bucket2']))
-        self.assertEqual(res, {'current': 1, 'total': 2, 'filename': 'foo'})
+        self.assertEqual(res, {'current': 1, 'total': 2, 'filename': 'foo', 'progress_id': 'NewArchive.1'})
 
         mock_thread.assert_called_once_with(target=self.api._backgroundProgress, kwargs={
             'status_iter': self.api.cli.encrypt.return_value,
-            'mfn': 'create-archive',
+            'progress_id': 'NewArchive.1',
         })
 
     def test_getLocalFolders(self, mock_window):

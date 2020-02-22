@@ -393,7 +393,7 @@ return {
         download.click(function() {
           Api.downloadArchive(id).then(function(res) {
             if (res)
-              ProgressBar.add(id);
+              ProgressBar.add(res['progress_id']);
           });
         });
         act.append(download);

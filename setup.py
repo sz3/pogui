@@ -27,7 +27,7 @@ setup(
     install_requires=[
         'b2',
         'boto3',
-        'pogcli==0.1.2',
+        'pogcli==0.1.3',
         'pywebview',
         'pyyaml',
     ],

@@ -66,8 +66,9 @@ return {
   {
     var paths = CheckList.get('create-archive-list').items();
     var destinations = CreateArchive.getDestinations();
-    Api.createArchive(paths, destinations).then(function() {
-      ProgressBar.add('create-archive');
+    Api.createArchive(paths, destinations).then(function(res) {
+      if (res)
+        ProgressBar.add(res['progress_id']);
     });
   }
 }
