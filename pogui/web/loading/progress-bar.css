@@ -10,7 +10,6 @@
   height: 2.4em;
   margin-top: -2.4em;
   z-index: -2;
-  border-bottom: 2px DarkSlateGrey;
 }
 
 .progress-bar.done .bar {
@@ -35,6 +34,7 @@
   margin: 0px;
   z-index: 2;
   text-shadow: 0.5px 0.5px 5px black;
+  box-shadow: 0px 1px 1px black;
 }
 
 .progress-bar .status {
@@ -45,6 +45,7 @@
   margin-bottom: -20px;
   height: 20px;
   width: 30%;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   z-index: 0;
