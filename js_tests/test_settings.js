@@ -18,7 +18,7 @@ function getStorageEntries()
 {
   var sl = [];
   $('#settings-remote-storage input[type=text]').each(function() {
-    sl.push($(this).val());
+    sl.push($(this).attr('data-entry'));
   });
   return sl;
 }
@@ -27,7 +27,7 @@ function getKeyfileEntries()
 {
   var kf = [];
   $('#settings-keyfiles input[type=text]').each(function() {
-    kf.push($(this).val());
+    kf.push($(this).attr('data-entry'));
   });
   return kf;
 }

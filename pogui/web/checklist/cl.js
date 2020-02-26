@@ -7,12 +7,17 @@ var _onRemove = onRemove;
 function removeEntryClick()
 {
   var bg = $(this).parent();
-  var val = bg.find('input').val();
+  var val = bg.find('input').attr('data-entry');
   if (_onRemove)
     _onRemove(val, _id);
   else {
     bg.remove();
   }
+}
+
+function ltrEncoding(value)
+{
+  return "\u202A" + value + "\u202C";
 }
 
 return {
@@ -38,8 +43,11 @@ return {
           <button class="pure-button remove-pog-checklist" href="javascript:void(0)">🗙</button>\
         </div>');
       var input = bg.find('input');
-      input.val(entry);
-      input.attr('title', entry);
+      input.attr('data-entry', entry);
+
+      var encodedEntry = ltrEncoding(entry);
+      input.val(encodedEntry);
+      input.attr('title', encodedEntry);
       bg.find('button').click(removeEntryClick);
       root.append(bg);
     }
@@ -49,7 +57,7 @@ return {
   {
     var current_items = [];
     $('[id="' + _id + '"].pog-checklist input[type="text"]').each(function() {
-      current_items.push($(this).val());
+      current_items.push($(this).attr('data-entry'));
     });
     return current_items;
   }
@@ -93,5 +101,5 @@ CheckList.init();
 
 var sample = ['s3:test'];
 CheckList.get('settings-remote-storage').update(sample);
-CheckList.get('settings-keyfiles').update(['looooooooooooooooooong/path/to/keyfile.txt']);
+CheckList.get('settings-keyfiles').update(['/looooooooooooooooooong/path/to/keyfile.txt']);
 //*/

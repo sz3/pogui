@@ -4,7 +4,7 @@ function getCreatePaths()
 {
   var sl = [];
   $('#create-archive-list input[type=text]').each(function() {
-    sl.push($(this).val());
+    sl.push($(this).attr('data-entry'));
   });
   return sl;
 }
