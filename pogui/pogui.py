@@ -39,11 +39,14 @@ def blob_details(path, blobs):
 
 class Api():
     def __init__(self, config):
-        self.cli = PogCli()
         self.config = config
-        self.cli.set_keyfiles(*self.config.get('keyfiles', []))
         self._refresh_list_manifests()
         self._progress_count = 0
+
+    def _cli(self):
+        cli = PogCli()
+        cli.set_keyfiles(*self.config.get('keyfiles', []))
+        return cli
 
     def _refresh_list_manifests(self):
         locations = self.config.get('fs', []) + ['local']
@@ -70,15 +73,11 @@ class Api():
 
         keyfiles = sorted([f for f in iglob(path_join(path, '*'))])
         self.config['keyfiles'] = keyfiles
-        self.cli.set_keyfiles(*keyfiles)
-
         return keyfiles
 
     def removeKeyfile(self, path):
         self.config.lpop('keyfiles', path)
-        keyfiles = self.listKeyfiles()
-        self.cli.set_keyfiles(*keyfiles)
-        return keyfiles
+        return self.listKeyfiles()
 
     def listKeyfiles(self, __=None):
         return self.config.get('keyfiles', [])
@@ -106,7 +105,7 @@ class Api():
         fs_name, bucket, path = split_fs_path(mfn)
         mfn = join_fs_path(fs_name, bucket, path)
 
-        blobs = self.cli.dumpManifest(mfn)
+        blobs = self._cli().dumpManifest(mfn)
         paths = backfill_parent_dirs(blobs.keys())
         return [{'path': p, **blob_details(p, blobs.get(p))} for p in paths]
 
@@ -131,7 +130,8 @@ class Api():
             return None
         path = path[0]
 
-        status_iter = self.cli.decrypt(real_mfn_path, cwd=path)
+        cli = self._cli()
+        status_iter = cli.decrypt(real_mfn_path, cwd=path)
         first_chunk = next(status_iter)
 
         self._progress_count += 1
@@ -151,7 +151,8 @@ class Api():
 
     def createArchive(self, params):
         paths, destinations = params
-        status_iter = self.cli.encrypt(paths, destinations)
+        cli = self._cli()
+        status_iter = cli.encrypt(paths, destinations)
         first_chunk = next(status_iter)
 
         self._progress_count += 1
