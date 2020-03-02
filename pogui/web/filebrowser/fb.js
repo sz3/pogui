@@ -389,7 +389,7 @@ return {
     {
       if (actions['download'])
       {
-        var download = $('<a href="javascript:;"><i class="gg-software-download"></i></a>');
+        var download = $('<a href="javascript:;" title="Download"><i class="gg-software-download"></i></a>');
         download.click(function() {
           Api.downloadArchive(id).then(function(res) {
             if (res)
