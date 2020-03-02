@@ -168,13 +168,13 @@ function render(data, currentPath, breadcrumbsUrls) {
   }
   else {
     _fileList.addClass('animated');
-    url += '<a href="📁"><span class="folderName">📁</span></a> · ';
+    url += '<a href="📁" title="Home"><span class="folderName"><i class="gg-folder"></i></span></a><i class="gg-chevron-right"></i>';
 
     breadcrumbsUrls.forEach(function (u, i) {
       var name = u.split('/');
 
       if (i !== breadcrumbsUrls.length - 1) {
-        url += '<a href="'+u+'"><span class="folderName">' + name[name.length-1] + '</span></a> · ';
+        url += '<a href="'+u+'"><span class="folderName">' + name[name.length-1] + '</span></a><i class="gg-chevron-right"></i>';
       }
       else {
         url += '<span class="folderName">' + name[name.length-1] + '</span>';
@@ -389,7 +389,7 @@ return {
     {
       if (actions['download'])
       {
-        var download = $('<a href="javascript:;" title="Download" class="download-icon">⇩</a>');
+        var download = $('<a href="javascript:;"><i class="gg-software-download"></i></a>');
         download.click(function() {
           Api.downloadArchive(id).then(function(res) {
             if (res)
@@ -400,7 +400,7 @@ return {
       }
       if (actions['refresh'])
       {
-        var refresh = $('<a href="javascript:;" title="Refresh">⟳</a>');
+        var refresh = $('<a href="javascript:;" title="Refresh"><i class="gg-redo"></i></a>');
         refresh.click(function() {
           _fb[id].listManifests();
         });

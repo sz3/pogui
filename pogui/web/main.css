@@ -102,20 +102,26 @@ Download, reload Links
 
 .filemanager-actions a {
   color: LightBlue;
-  margin-left: 20px;
-  margin-top: 5px;
-  font-size: 28px;
-  line-height: 35px;
+  margin-left: 25px;
+  margin-right: 5px;
+  margin-top: 15px;
   text-decoration: none;
 }
 
-.filemanager-actions .download-icon {
-  text-decoration: underline;
+.filemanager-actions i {
+  --ggs: 1.25;
+}
+
+.filemanager-actions .gg-software-download {
+  margin-top: 10px;
 }
 
 .filemanager-actions a:hover {
-  color: LightGray;
-  text-shadow: 0px 0px 1.5px white;
+  color: GhostWhite;
+}
+
+.filemanager-actions a:hover i {
+  box-shadow: 0px 0px 1.5px black;
 }
 
 /*-------------------------

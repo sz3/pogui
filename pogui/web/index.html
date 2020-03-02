@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>PogUI</title>
+<link rel="stylesheet" href="css.gg/icons.css">
 <link rel="stylesheet" href="pure/pure.css">
 <link rel="stylesheet" href="pure-layout-side-menu/side-menu.css">
 <link rel="stylesheet" href="hover-zoom/hover-zoom.css">
@@ -85,16 +86,16 @@
 <div id="create-archive" class="page create-archive">
   <div class="actions">
     <div class="hover-zoom-box" onclick="CreateArchive.askForFiles()"
-      title="Add Files" data-description="Add files to be archived">🔍</div>
+      title="Add Files" data-description="Add files to be archived"><i class="gg-file-add"></i></div>
 
     <div class="hover-zoom-box" onclick="CreateArchive.askForFolders()"
-      title="Add Folders" data-description="Add a folder or folders to be archived">🗁</div>
+      title="Add Folders" data-description="Add a folder or folders to be archived"><i class="gg-folder-add"></i></div>
 
     <div class="hover-zoom-box" onclick="CreateArchive.clearCandidatePaths()"
-      title="Clear" data-description="Start over, clearing all files and folders added">⌧</div>
+      title="Clear" data-description="Start over, clearing all files and folders added"><i class="gg-undo"></i></div>
 
     <div class="hover-zoom-box" onclick="CreateArchive.create()"
-      title="Upload" data-description="Confirm archive create, and upload the archive">📤</div>
+      title="Upload" data-description="Confirm archive create, and upload the archive"><i class="gg-software-upload"></i></div>
   </div>
   <h2 class="content-subhead">Destination(s)</h2>
   <div class="pure-button-group choose-destination" role="group" aria-label="..."></div>
