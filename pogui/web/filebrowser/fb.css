@@ -40,15 +40,19 @@
 }
 
 .filemanager .breadcrumbs a:hover {
-  color: LightGray;
-  font-style: oblique;
+	color: LightGray;
+	font-style: oblique;
 }
 
-.filemanager .breadcrumbs .arrow {
-	color:  #6a6a72;
-	font-size: 24px;
-	font-weight: 700;
-	line-height: 20px;
+.filemanager .breadcrumbs .gg-folder, .filemanager .breadcrumbs .gg-chevron-right {
+	display: inline-block;
+}
+
+.filemanager .breadcrumbs .gg-chevron-right {
+	color: grey;
+	top: 3px;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 
@@ -65,6 +69,7 @@
 	display: block;
 	width: 15px;
 	height: 40px;
+	z-index: 2;
 }
 
 .filemanager .search:before {
