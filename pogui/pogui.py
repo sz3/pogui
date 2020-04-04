@@ -113,7 +113,6 @@ class Api():
         for info in status_iter:
             # need to snapshot these better
             percent = info['current'] * 100 / info['total']
-            print('giving {} to window'.format(info))
             window.evaluate_js("ProgressBar.update('{}', '{:.2f}%');".format(progress_id, percent))
 
         if dest_path:
