@@ -5,6 +5,7 @@ from threading import Thread
 
 import webview
 from pog.cli import PogCli
+from pog.fs.pogfs import get_cloud_fs
 
 from pogui.config import Config
 from pogui.lib.async_ops import AsyncListManifests
@@ -146,6 +147,13 @@ class Api():
     def downloadFile(self, params):
         mfn, filename = params
         print('download {} {}'.format(mfn, filename))
+        return True
+
+    def deleteArchive(self, mfn):
+        print('remove {}'.format(mfn))
+        fs_name, bucket, path = split_fs_path(mfn)
+        fs = get_cloud_fs(fs_name)(bucket)
+        fs.remove_file(path)
         return True
 
     def createArchive(self, params):

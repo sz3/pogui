@@ -112,6 +112,11 @@ Download, reload Links
   --ggs: 1.25;
 }
 
+.filemanager-actions i.gg-close-r {
+  --ggs: 1.00;
+  margin-top: -4px;
+}
+
 .filemanager-actions .gg-software-download {
   margin-top: 10px;
 }

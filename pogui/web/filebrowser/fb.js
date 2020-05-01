@@ -387,6 +387,21 @@ return {
     var act = $('<div class="filemanager-actions">');
     if (actions)
     {
+      if (actions['delete'])
+      {
+        var deleteArchive = $('<a href="javascript:;" title="Delete"><i class="gg-close-r"></i></a>');
+        deleteArchive.click(function() {
+          Api.deleteArchive(id).then(function(res) {
+            if (res)
+            {
+              Navigation.goto('open-archive');
+              Navigation.remove(id);
+              _fb['open-archive'].listManifests();
+            }
+          });
+        });
+        act.append(deleteArchive);
+      }
       if (actions['download'])
       {
         var download = $('<a href="javascript:;" title="Download"><i class="gg-software-download"></i></a>');
