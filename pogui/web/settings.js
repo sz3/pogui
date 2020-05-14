@@ -1,5 +1,7 @@
 var Settings = function() {
 
+var _deletesAllowed = false;
+
 // private functions
 
 function addRemoteStorageClick()
@@ -81,6 +83,22 @@ return {
   zoomReset : function()
   {
     Api.zoomReset().then(Settings.zoom);
+  },
+
+  allowDeletes : function(allow)
+  {
+    if (allow && !_deletesAllowed)
+    {
+      var style = '<style type="text/css" id="allowDeletesStyle">' +
+        '.filemanager-actions .archive-delete-option { display: inline; }' +
+        '</style>';
+      $('head').append(style);
+    }
+    if (!allow)
+    {
+      $('#allowDeletesStyle').remove();
+    }
+    _deletesAllowed = allow;
   }
 }
 }();

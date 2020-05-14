@@ -389,7 +389,7 @@ return {
     {
       if (actions['delete'])
       {
-        var deleteArchive = $('<a href="javascript:;" title="Delete"><i class="gg-close-r"></i></a>');
+        var deleteArchive = $('<a href="javascript:;" title="Delete" class="archive-delete-option"><i class="gg-close-r"></i></a>');
         deleteArchive.click(function() {
           Api.deleteArchive(id).then(function(res) {
             if (res)

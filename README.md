@@ -20,6 +20,7 @@ on linux:
 ```
 pip install pogui[qt]
 ```
+(if the PyQt5 dependency fails, you may need to upgrade pip: `pip install -U pip`)
 
 From source,
 ```
