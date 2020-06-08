@@ -20,12 +20,21 @@ function toggleRemoteStorageClick(e)
   $(this).toggleClass('pure-button-active', true);
 }
 
+function toggleAllowDeletesClick(e)
+{
+  e.preventDefault();
+
+  $('.settings-allow-deletes button').toggleClass('pure-button-active', false);
+  $(this).toggleClass('pure-button-active', true);
+}
+
 // public interface
 return {
   init : function()
   {
     $('#settings form').submit(false);
     $('.settings-storage-choice button').unbind().click(toggleRemoteStorageClick);
+    $('.settings-allow-deletes button').unbind().click(toggleAllowDeletesClick);
     $('button.settings-storage-add').unbind().click(addRemoteStorageClick);
 
     CheckList.get('settings-remote-storage').setOnRemove(Settings.removeRemoteStorage);
