@@ -124,6 +124,12 @@ return {
     return _thenDoIt(_response['createArchive']);
   },
 
+  deleteArchive : function(mfn)
+  {
+    _calls.push('deleteArchive(' + mfn + ')');
+    return _thenDoIt(_response['deleteArchive']);
+  },
+
   getLocalFolders : function()
   {
     _calls.push('getLocalFolders()');

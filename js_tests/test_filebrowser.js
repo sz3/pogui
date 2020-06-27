@@ -104,11 +104,16 @@ QUnit.test( "open archive and download", function( assert ) {
   Api.clear();
 
   // download
-  var elem = $('[id="local:local.mfn"] .filemanager-actions a');
-  assert.equal(elem.attr('title'), 'Download');
-  $('[id="local:local.mfn"] .filemanager-actions a')[0].click();
-
+  var downloadElem = $('[id="local:local.mfn"] .filemanager-actions a[title="Download"]');
+  downloadElem.click();
   assert.deepEqual(Api.calls(), ['downloadArchive(local:local.mfn)']);
+
+  Api.clear()
+
+  // check delete element (should be invisible)
+  var deleteElem = $('[id="local:local.mfn"] .filemanager-actions a[title="Delete"]');
+  deleteElem.click();
+  assert.deepEqual(Api.calls(), ['deleteArchive(local:local.mfn)']);
 });
 
 QUnit.test( "open archive with absolute paths", function( assert ) {
