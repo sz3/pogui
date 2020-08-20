@@ -1,7 +1,7 @@
 from os.path import join as path_join
 from tempfile import TemporaryDirectory
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 import webview
 
@@ -210,6 +210,19 @@ class ApiTest(TestCase):
 
         mock_window.create_file_dialog.assert_called_once_with(webview.FOLDER_DIALOG)
         self.assertEqual(mock_cli.decrypt.call_count, 0)
+
+    @patch('pogui.pogui.get_cloud_fs', autospec=True)
+    def test_deleteArchive(self, mock_get_fs, mock_window, mock_cli):
+        mock_fs = MagicMock()
+        mock_get_fs.return_value = mock_fs
+        mock_fs.return_value = mock_fs
+
+        res = self.api.deleteArchive('s3:bucket/my.mfn')
+        self.assertEqual(res, True)
+
+        mock_get_fs.assert_called_once_with('s3')
+        mock_fs.assert_called_once_with('bucket')
+        mock_fs.remove_file.assert_called_once_with('my.mfn')
 
     @patch('pogui.pogui.Thread', autospec=True)
     def test_createArchive(self, mock_thread, mock_window, mock_cli):
