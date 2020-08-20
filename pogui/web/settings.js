@@ -1,5 +1,7 @@
 var Settings = function() {
 
+var _deletesAllowed = false;
+
 // private functions
 
 function addRemoteStorageClick()
@@ -18,12 +20,21 @@ function toggleRemoteStorageClick(e)
   $(this).toggleClass('pure-button-active', true);
 }
 
+function toggleAllowDeletesClick(e)
+{
+  e.preventDefault();
+
+  $('.settings-allow-deletes button').toggleClass('pure-button-active', false);
+  $(this).toggleClass('pure-button-active', true);
+}
+
 // public interface
 return {
   init : function()
   {
     $('#settings form').submit(false);
     $('.settings-storage-choice button').unbind().click(toggleRemoteStorageClick);
+    $('.settings-allow-deletes button').unbind().click(toggleAllowDeletesClick);
     $('button.settings-storage-add').unbind().click(addRemoteStorageClick);
 
     CheckList.get('settings-remote-storage').setOnRemove(Settings.removeRemoteStorage);
@@ -81,6 +92,22 @@ return {
   zoomReset : function()
   {
     Api.zoomReset().then(Settings.zoom);
+  },
+
+  allowDeletes : function(allow)
+  {
+    if (allow && !_deletesAllowed)
+    {
+      var style = '<style type="text/css" id="allowDeletesStyle">' +
+        '.filemanager-actions .archive-delete-option { display: inline; }' +
+        '</style>';
+      $('head').append(style);
+    }
+    if (!allow)
+    {
+      $('#allowDeletesStyle').remove();
+    }
+    _deletesAllowed = allow;
   }
 }
 }();

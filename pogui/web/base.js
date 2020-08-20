@@ -28,7 +28,7 @@ return {
   loadArchive : function(mfn)
   {
     var shortname = basename(mfn);
-    var actions = {'download': true};
+    var actions = {'download': true, 'delete': true};
     if (!FileBrowser.add(mfn, '#main .content', actions))
     {
       // just go to page if the archive is already loaded

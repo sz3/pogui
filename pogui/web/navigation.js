@@ -42,6 +42,11 @@ return {
     var html = '<li class="pure-menu-item menu-item-divided"><a href="#'
       + pagename + '" class="pure-menu-link">' + shortname + '</a></li>';
     $('.pure-menu-list').append(html);
+  },
+
+  remove : function(pagename)
+  {
+    $('.pure-menu-item a[href="#' + pagename + '"]').parent().remove();
   }
 }
 }();

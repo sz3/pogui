@@ -47,16 +47,16 @@ button:hover {
   text-shadow: 0 0 4px rgba(255, 200, 200, .4);
 }
 
-.settings-storage-choice button, .choose-destination button {
+.pog-choice button {
   font-size: 125%;
   background-image: linear-gradient(to top, #343434 0%, #404040 100%);
 }
 
-.settings-storage-choice button:hover, .choose-destination button:hover {
+.pog-choice button:hover {
   text-shadow: none;
 }
 
-.settings-storage-choice .pure-button-active, .choose-destination .pure-button-active {
+.pog-choice .pure-button-active {
   background-image: linear-gradient(to top, green 0%, white 100%);
   color: LightBlue;
   box-shadow: 0px 4px 25px 15px black inset, 0 5px 10px 0 black;
@@ -112,6 +112,11 @@ Download, reload Links
   --ggs: 1.25;
 }
 
+.filemanager-actions i.gg-close-r {
+  --ggs: 1.00;
+  margin-top: -4px;
+}
+
 .filemanager-actions .gg-software-download {
   margin-top: 10px;
 }
@@ -122,6 +127,10 @@ Download, reload Links
 
 .filemanager-actions a:hover i {
   box-shadow: 0px 0px 1.5px black;
+}
+
+.filemanager-actions .archive-delete-option {
+  display: none;
 }
 
 /*-------------------------

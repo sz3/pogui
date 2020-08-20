@@ -81,6 +81,11 @@ return {
     return window.pywebview.api.createArchive([paths, destinations]).catch(Page.showMessage);
   },
 
+  deleteArchive : function(mfn)
+  {
+    return window.pywebview.api.deleteArchive(mfn).catch(Page.showMessage);
+  },
+
   getLocalFolders : function()
   {
     return window.pywebview.api.getLocalFolders().catch(Page.showMessage);
