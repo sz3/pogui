@@ -1,4 +1,7 @@
-.PHONY: clean test js_test
+.PHONY: default pypi clean test js_test
+
+default:
+	test js_test
 
 pypi:
 	python setup.py sdist

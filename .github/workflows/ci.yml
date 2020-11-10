@@ -1,0 +1,40 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  test-py:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.6, 3.7, 3.8]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: install dependencies
+        run: |
+          pip install -r requirements
+          pip install --upgrade coveralls
+      - name: Test with pytest
+        run: CI=1 DANGER=1 coverage run -m unittest
+      - name: send coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: coveralls
+
+  test-js:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: install dependencies
+        run: npm install -g qunit node-qunit-phantomjs
+      - name: js test
+        run: node-qunit-phantomjs js_tests/tests.html

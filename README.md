@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sz3/pogui.svg?branch=master)](https://travis-ci.org/sz3/pogui)
+[![Build Status](https://github.com/sz3/pogui/workflows/ci/badge.svg)](https://github.com/sz3/pogui/actions?query=workflow%3Aci)
 [![Coverage Status](https://coveralls.io/repos/github/sz3/pogui/badge.svg?branch=master)](https://coveralls.io/github/sz3/pogui?branch=master)
 [![PyPI Version](https://img.shields.io/pypi/v/pogui.svg)](https://pypi.python.org/pypi/pogui)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/pogui.svg)](https://pypi.python.org/pypi/pogui)
