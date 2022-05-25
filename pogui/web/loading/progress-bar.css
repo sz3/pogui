@@ -8,7 +8,8 @@
 
 .progress-bar .bar {
   width: 0%;
-  background: linear-gradient(#03A9F4 0%, DarkSlateGrey 5%, #1C2F2F 95%, black 100%);
+  transition: all .33s ease;
+  background: #2A4747;
   height: 2.4em;
   margin-top: -2.4em;
   z-index: -2;
