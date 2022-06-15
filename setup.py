@@ -10,7 +10,7 @@ setup(
     name='pogui',
     license='MIT',
     url='https://github.com/sz3/pogui',
-    version='0.0.4',
+    version='0.1.0',
 
     entry_points={
         'console_scripts': [
@@ -27,7 +27,7 @@ setup(
     install_requires=[
         'b2',
         'boto3',
-        'pogcli==0.1.4',
+        'pogcli>=0.2.0',
         'pywebview',
         'pyyaml',
     ],
@@ -40,7 +40,7 @@ setup(
     long_description_content_type='text/markdown',
 
     author="Stephen Zimmerman",
-    author_email="sz@galacticicecube.com",
+    author_email="sz@recv.cc",
 
     classifiers=[
         "License :: OSI Approved :: MIT License",
@@ -49,5 +49,6 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
 )
