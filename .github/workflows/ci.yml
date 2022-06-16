@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python
@@ -17,12 +17,12 @@ jobs:
         run: |
           pip install -r requirements
           pip install --upgrade coveralls
-      - name: Test with pytest
+      - name: Test with coverage
         run: coverage run -m unittest
       - name: send coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: coveralls
+        run: coveralls --service=github
 
   test-js:
     runs-on: ubuntu-latest
